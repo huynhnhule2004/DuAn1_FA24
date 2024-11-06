@@ -11,14 +11,14 @@ class Header extends BaseView
     {
 
 
-        ?>
+?>
 
 
         <!DOCTYPE html>
         <html lang="en">
 
         <head>
-            <title>Waggy - Free eCommerce Pet Shop HTML Website Template</title>
+            <title>Waggy - Website bán phụ kiện thú cưng</title>
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,9 @@ class Header extends BaseView
         </head>
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
@@ -41,8 +43,9 @@ class Header extends BaseView
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Chilanka&family=Montserrat:wght@300;400;500&display=swap"
             rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/style.css">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         </head>
 
         <body>
@@ -111,20 +114,20 @@ class Header extends BaseView
                 </defs>
             </svg>
 
-            <div class="preloader-wrapper">
+            <!-- <div class="preloader-wrapper">
                 <div class="preloader">
                 </div>
-            </div>
+            </div> -->
 
             <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasCart"
                 aria-labelledby="My Cart">
-                <div class="offcanvas-header justify-content-center">
+                <div class="offcanvas-header justify-content-left">
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
                     <div class="order-md-last">
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="text-primary">Your cart</span>
+                            <span class="text-primary">Giỏ hàng</span>
                             <span class="badge bg-primary rounded-circle pt-2">3</span>
                         </h4>
                         <ul class="list-group mb-3">
@@ -150,12 +153,12 @@ class Header extends BaseView
                                 <span class="text-body-secondary">$5</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="fw-bold">Total (USD)</span>
+                                <span class="fw-bold">Tổng cộng (VND)</span>
                                 <strong>$20</strong>
                             </li>
                         </ul>
 
-                        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                        <a href="/checkout" class="w-100 btn btn-primary btn-lg" type="submit">Thanh toán</a>
                     </div>
                 </div>
             </div>
@@ -186,8 +189,8 @@ class Header extends BaseView
 
                         <div class="col-sm-4 col-lg-3 text-center text-sm-start">
                             <div class="main-logo">
-                                <a href="index.html">
-                                    <img src="public/assets/client/images/logo.png" alt="logo" class="img-fluid">
+                                <a href="/">
+                                    <img src="<?= APP_URL ?>public/assets/client/images/logo.png" alt="logo" class="img-fluid">
                                 </a>
                             </div>
                         </div>
@@ -196,7 +199,7 @@ class Header extends BaseView
                             <div class="search-bar border rounded-2 px-3 border-dark-subtle">
                                 <form id="search-form" class="text-center d-flex align-items-center" action="" method="">
                                     <input type="text" class="form-control border-0 bg-transparent"
-                                        placeholder="Search for more than 10,000 products" />
+                                        placeholder="Tìm kiếm..." />
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <path fill="currentColor"
                                             d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
@@ -209,7 +212,7 @@ class Header extends BaseView
                             class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
                             <div class="support-box text-end d-none d-xl-block">
                                 <span class="fs-6 secondary-font text-muted">Phone</span>
-                                <h5 class="mb-0">+980-34984089</h5>
+                                <h5 class="mb-0">0364402449</h5>
                             </div>
                             <div class="support-box text-end d-none d-xl-block">
                                 <span class="fs-6 secondary-font text-muted">Email</span>
@@ -232,13 +235,17 @@ class Header extends BaseView
                         <div class="d-flex d-lg-none align-items-end mt-3">
                             <ul class="d-flex justify-content-end list-unstyled m-0">
                                 <li>
-                                    <a href="account.html" class="mx-3">
+                                    <a href="/login" class="mx-3">
                                         <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="wishlist.html" class="mx-3">
-                                        <iconify-icon icon="mdi:heart" class="fs-4"></iconify-icon>
+                                    <a href="#" class="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
+                                        aria-controls="offcanvasCart">
+                                        <iconify-icon icon="mdi:heart" class="fs-4 position-relative"></iconify-icon>
+                                        <span class="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
+                                            03
+                                        </span>
                                     </a>
                                 </li>
 
@@ -277,7 +284,7 @@ class Header extends BaseView
 
                             <div class="offcanvas-body justify-content-between">
                                 <select class="filter-categories border-0 mb-0 me-5">
-                                    <option>Shop by Category</option>
+                                    <option>Mua sắm theo danh mục</option>
                                     <option>Clothes</option>
                                     <option>Food</option>
                                     <option>Food</option>
@@ -286,57 +293,57 @@ class Header extends BaseView
 
                                 <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
                                     <li class="nav-item">
-                                        <a href="index.html" class="nav-link active">Home</a>
+                                        <a href="/" class="nav-link active">Trang chủ</a>
                                     </li>
-                                    <li class="nav-item dropdown">
+                                    <!-- <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown"
                                             aria-expanded="false">Pages</a>
                                         <ul class="dropdown-menu" aria-labelledby="pages">
-                                            <li><a href="index.html" class="dropdown-item">About Us</a></li>
-                                            <li><a href="index.html" class="dropdown-item">Shop</a></li>
-                                            <li><a href="index.html" class="dropdown-item">Single Product</a></li>
-                                            <li><a href="index.html" class="dropdown-item">Cart</a></li>
-                                            <li><a href="index.html" class="dropdown-item">Wishlist</a></li>
-                                            <li><a href="index.html" class="dropdown-item">Checkout</a></li>
-                                            <li><a href="index.html" class="dropdown-item">Blog</a></li>
-                                            <li><a href="index.html" class="dropdown-item">Single Post</a></li>
-                                            <li><a href="index.html" class="dropdown-item">Contact</a></li>
-                                            <li><a href="index.html" class="dropdown-item">FAQs</a></li>
-                                            <li><a href="index.html" class="dropdown-item">Account</a></li>
-                                            <li><a href="index.html" class="dropdown-item">Thankyou</a></li>
-                                            <li><a href="index.html" class="dropdown-item">Error 404</a></li>
-                                            <li><a href="index.html" class="dropdown-item">Styles</a></li>
+                                            <li><a href="/" class="dropdown-item">About Us</a></li>
+                                            <li><a href="/" class="dropdown-item">Shop</a></li>
+                                            <li><a href="/" class="dropdown-item">Single Product</a></li>
+                                            <li><a href="/" class="dropdown-item">Cart</a></li>
+                                            <li><a href="/" class="dropdown-item">Wishlist</a></li>
+                                            <li><a href="/" class="dropdown-item">Checkout</a></li>
+                                            <li><a href="/" class="dropdown-item">Blog</a></li>
+                                            <li><a href="/" class="dropdown-item">Single Post</a></li>
+                                            <li><a href="/" class="dropdown-item">Contact</a></li>
+                                            <li><a href="/" class="dropdown-item">FAQs</a></li>
+                                            <li><a href="/" class="dropdown-item">Account</a></li>
+                                            <li><a href="/" class="dropdown-item">Thankyou</a></li>
+                                            <li><a href="/" class="dropdown-item">Error 404</a></li>
+                                            <li><a href="/" class="dropdown-item">Styles</a></li>
                                         </ul>
+                                    </li> -->
+                                    <li class="nav-item">
+                                        <a href="/" class="nav-link">Sản phẩm</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="index.html" class="nav-link">Shop</a>
+                                        <a href="/" class="nav-link">Bài viết</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="index.html" class="nav-link">Blog</a>
+                                        <a href="/" class="nav-link">Giới thiệu</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="index.html" class="nav-link">Contact</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="index.html" class="nav-link">Others</a>
+                                        <a href="/contact" class="nav-link">Liên hệ</a>
                                     </li>
                                 </ul>
 
                                 <div class="d-none d-lg-flex align-items-end">
                                     <ul class="d-flex justify-content-end list-unstyled m-0">
                                         <li>
-                                            <a href="index.html" class="mx-3">
+                                            <a href="/login" class="mx-3">
                                                 <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="index.html" class="mx-3">
+                                            <a href="/" class="mx-3">
                                                 <iconify-icon icon="mdi:heart" class="fs-4"></iconify-icon>
                                             </a>
                                         </li>
 
                                         <li class="">
-                                            <a href="index.html" class="mx-3" data-bs-toggle="offcanvas"
+                                            <a href="/" class="mx-3" data-bs-toggle="offcanvas"
                                                 data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                                 <iconify-icon icon="mdi:cart" class="fs-4 position-relative"></iconify-icon>
                                                 <span
@@ -392,9 +399,9 @@ class Header extends BaseView
                 </div>
             </nav> -->
 
-            <?php
+    <?php
 
     }
 }
 
-?>
+    ?>

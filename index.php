@@ -22,7 +22,14 @@ Route::get('/', 'App\Controllers\Client\HomeController@index');
 Route::get('/products', 'App\Controllers\Client\ProductController@index');
 Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');
 
+Route::get('/contact', 'App\Controllers\Client\ContactController@index');
 
+
+Route::get('/login', 'App\Controllers\Client\AuthController@login');
+
+Route::get('/register', 'App\Controllers\Client\AuthController@register');
+
+Route::get('/checkout', 'App\Controllers\Client\CheckoutController@index');
 // *** Admin
 
 Route::get('/admin', 'App\Controllers\Admin\HomeController@index');

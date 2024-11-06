@@ -15,9 +15,8 @@ class Footer extends BaseView
 
                     <div class="col-md-3">
                         <div class="footer-menu">
-                            <img src="public/assets/client/images/logo.png" alt="logo">
-                            <p class="blog-paragraph fs-6 mt-3">Subscribe to our newsletter to get updates about our grand
-                                offers.</p>
+                            <img src="<?= APP_URL ?>public/assets/client/images/logo.png" alt="logo">
+                            <p class="blog-paragraph fs-6 mt-3">Đăng ký nhận bản tin của chúng tôi để cập nhật thông tin về những ưu đãi lớn.</p>
                             <div class="social-links">
                                 <ul class="d-flex list-unstyled gap-2">
                                     <li class="social">
@@ -52,57 +51,57 @@ class Footer extends BaseView
                     </div>
                     <div class="col-md-3">
                         <div class="footer-menu">
-                            <h3>Quick Links</h3>
+                            <h3>Liên kết nhanh</h3>
                             <ul class="menu-list list-unstyled">
                                 <li class="menu-item">
-                                    <a href="#" class="nav-link">Home</a>
+                                    <a href="#" class="nav-link">Trang chủ</a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#" class="nav-link">About us</a>
+                                    <a href="#" class="nav-link">Sản phẩm</a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#" class="nav-link">Offer </a>
+                                    <a href="#" class="nav-link">Giới thiệu</a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#" class="nav-link">Services</a>
+                                    <a href="#" class="nav-link">Bài viết </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#" class="nav-link">Conatct Us</a>
+                                    <a href="#" class="nav-link">Liên hệ</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="footer-menu">
-                            <h3>Help Center</h5>
+                            <h3>Chính sách hỗ trợ</h5>
                                 <ul class="menu-list list-unstyled">
                                     <li class="menu-item">
                                         <a href="#" class="nav-link">FAQs</a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="#" class="nav-link">Payment</a>
+                                        <a href="#" class="nav-link">Phương thức thanh toán</a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="#" class="nav-link">Returns & Refunds</a>
+                                        <a href="#" class="nav-link">Chính sách đổi trả</a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="#" class="nav-link">Checkout</a>
+                                        <a href="#" class="nav-link">Thanh toán</a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="#" class="nav-link">Delivery Information</a>
+                                        <a href="#" class="nav-link">Thông tin giao hàng</a>
                                     </li>
                                 </ul>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div>
-                            <h3>Our Newsletter</h3>
-                            <p class="blog-paragraph fs-6">Subscribe to our newsletter to get updates about our grand offers.
+                            <h3>Bản tin</h3>
+                            <p class="blog-paragraph fs-6">Đăng ký nhận bản tin của chúng tôi để nhận thông tin cập nhật về các ưu đãi lớn.
                             </p>
                             <div class="search-bar border rounded-pill border-dark-subtle px-2">
                                 <form class="text-center d-flex align-items-center" action="" method="">
                                     <input type="text" class="form-control border-0 bg-transparent"
-                                        placeholder="Enter your email here" />
+                                        placeholder="Nhập Email của bạn..." />
                                     <iconify-icon class="send-icon" icon="tabler:location-filled"></iconify-icon>
                                 </form>
                             </div>
@@ -116,9 +115,10 @@ class Footer extends BaseView
         <div id="footer-bottom">
             <div class="container">
                 <hr class="m-0">
-                <div class="row mt-3">
-                    <div class="col-md-6 copyright">
-                        <p class="secondary-font">© 2023 Waggy. All rights reserved.</p>
+                <p class="secondary-font text-center mt-3">© Bản quyền thuộc về Waggy</p>
+                <!-- <div class="row mt-3">
+                    <div class="col-md-6 copyright ">
+                        <p class="secondary-font text-center">© Bản quyền thuộc về Waggy</p>
                     </div>
                     <div class="col-md-6 text-md-end">
                         <p class="secondary-font">Free HTML Template by <a href="https://templatesjungle.com/" target="_blank"
@@ -126,11 +126,11 @@ class Footer extends BaseView
                                 href="https://themewagon.com/" target="_blank"
                                 class="text-decoration-underline fw-bold text-black-50"> ThemeWagon</a></p>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="public/assets/client/js/jquery-1.11.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
