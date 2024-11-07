@@ -183,4 +183,34 @@
 
   }); // End of a document
 
+  $(document).ready(function() {
+
+    $('.counter').each(function () {
+    $(this).prop('Counter',0).animate({
+    Counter: $(this).text()
+    }, {
+    duration: 4000,
+    easing: 'swing',
+    step: function (now) {
+    $(this).text(Math.ceil(now));
+    }
+    });
+    });
+    
+    });
+
+var swiper = new Swiper(".mySwiper", {
+slidesPerView: 1,
+      grabCursor: true,
+      loop: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+
 })(jQuery);
