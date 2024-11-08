@@ -31,7 +31,7 @@ class Contact extends BaseView
 
                 <hr>
                 <p>Hãy liên hệ với Waggy để được tư vấn một cách cụ thể nhất, về những câu hỏi mà bạn đang thắc mắc, cũng như
-                    biết thêm thông tin về các chương trình khuyến mãi hiện có tại Hương Trà Beauty & Academy</p>
+                    biết thêm thông tin về các chương trình khuyến mãi hiện có tại Waggy</p>
 
             </div>
             <div class="col-sm-12 col-md-6">
