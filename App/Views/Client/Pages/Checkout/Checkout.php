@@ -115,7 +115,7 @@ class Checkout extends BaseView
                         </tbody>
                     </table>
 
-                    <button type="submit" class="btn btn-primary">Xác Nhận Thanh Toán</button>
+                    <a href="/orders" class="btn btn-primary">Xác Nhận Thanh Toán</a>
                 </div>
             </div>
         </div>
