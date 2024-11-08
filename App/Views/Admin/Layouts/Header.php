@@ -57,14 +57,14 @@ class Header extends BaseView
                                 <b class="logo-icon ps-2">
                                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                                     <!-- Dark Logo icon -->
-                                    <img src="<?= APP_URL ?>/public/assets/admin/images/logo-icon.png" alt="homepage" class="light-logo" />
+                                    <img src="<?= APP_URL ?>/public/assets/admin/images/logo.png" alt="homepage" class="light-logo" width="200px" />
 
                                 </b>
                                 <!--End Logo icon -->
                                 <!-- Logo text -->
                                 <span class="logo-text">
                                     <!-- dark Logo text -->
-                                    <img src="<?= APP_URL ?>/public/assets/admin/images/logo-text.png" alt="homepage" class="light-logo" />
+                                    
 
                                 </span>
                                 <!-- Logo icon -->
