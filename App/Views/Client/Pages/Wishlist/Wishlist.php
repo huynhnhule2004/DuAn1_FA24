@@ -66,9 +66,9 @@ class Wishlist extends BaseView
                                         </div>
                                         <br>
                                         <div class="d-flex justify-content-center">
-                                            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg">
-                                                <span>Thanh Toán</span>
-                                            </button>
+                                            <a href="/cart" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg text-nowrap">
+                                                Thêm vào giỏ hàng
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
