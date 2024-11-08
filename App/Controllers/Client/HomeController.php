@@ -104,7 +104,17 @@ class HomeController
                 'image' => 'blog3.jpg',
                 'category_id' => 3,
                 'create_at' => '2022-01-01'
-            ]
+            ],
+            // [
+            //     'id' => 3,
+            //     'title' => 'Thức ăn dinh dưỡng cho chim',
+            //     'content' => 'Lựa chọn thức ăn dinh dưỡng giúp chim phát triển tốt và khỏe mạnh.',
+            //     'image' => 'blog3.jpg',
+            //     'category_id' => 3,
+            //     'create_at' => '2022-01-01'
+            // ],
+            
+
         ];
         
         
