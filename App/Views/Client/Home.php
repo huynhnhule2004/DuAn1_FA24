@@ -173,10 +173,10 @@ class Home extends BaseView
                                                 ?>
 
                                                 <div class="d-flex flex-wrap mt-3">
-                                                    <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                                    <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
                                                         <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
                                                     </a>
-                                                    <a href="#" class="btn-wishlist px-4 pt-3 ">
+                                                    <a href="/wishlist" class="btn-wishlist px-4 pt-3 ">
                                                         <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
                                                     </a>
                                                 </div>
@@ -255,10 +255,10 @@ class Home extends BaseView
                                     <h3 class="secondary-font text-primary">$18.00</h3>
 
                                     <div class="d-flex flex-wrap mt-3">
-                                        <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                        <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
                                             <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
                                         </a>
-                                        <a href="#" class="btn-wishlist px-4 pt-3 ">
+                                        <a href="/wishlist" class="btn-wishlist px-4 pt-3 ">
                                             <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
                                         </a>
                                     </div>
@@ -682,10 +682,10 @@ class Home extends BaseView
                                                 ?>
 
                                                 <div class="d-flex flex-wrap mt-3">
-                                                    <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                                    <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
                                                         <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
                                                     </a>
-                                                    <a href="#" class="btn-wishlist px-4 pt-3 ">
+                                                    <a href="/wishlist" class="btn-wishlist px-4 pt-3 ">
                                                         <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
                                                     </a>
                                                 </div>
