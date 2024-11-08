@@ -22,7 +22,7 @@ class Home extends BaseView
                                 </div>
                                 <div class="content-wrapper col-md-7 p-5 mb-5">
                                     <div class="secondary-font text-primary text-uppercase mb-4">Tiết kiệm từ 10 đến 20%</div>
-                                    <h2 class="banner-title display-1 fw-normal">Điểm đến lý tưởng nhất cho
+                                    <h2 class="banner-title display-3 fw-normal">Điểm đến lý tưởng nhất cho
                                         <span class="text-primary">thú cưng của bạn</span>
                                     </h2>
                                     <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
@@ -41,7 +41,7 @@ class Home extends BaseView
                                 </div>
                                 <div class="content-wrapper col-md-7 p-5 mb-5">
                                     <div class="secondary-font text-primary text-uppercase mb-4">Tiết kiệm từ 10 - 20 %</div>
-                                    <h2 class="banner-title display-1 fw-normal">Điểm đến lý tưởng nhất cho <span
+                                    <h2 class="banner-title display-3 fw-normal">Điểm đến lý tưởng nhất cho <span
                                             class="text-primary">thú cưng của bạn</span>
                                     </h2>
                                     <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
@@ -60,7 +60,7 @@ class Home extends BaseView
                                 </div>
                                 <div class="content-wrapper col-md-7 p-5 mb-5">
                                     <div class="secondary-font text-primary text-uppercase mb-4">Tiết kiệm từ 10 - 20 %</div>
-                                    <h2 class="banner-title display-1 fw-normal">Điểm đến lý tưởng nhất cho <span
+                                    <h2 class="banner-title display-3 fw-normal">Điểm đến lý tưởng nhất cho <span
                                             class="text-primary">thú cưng của bạn</span>
                                     </h2>
                                     <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
