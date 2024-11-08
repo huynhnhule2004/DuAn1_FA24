@@ -110,6 +110,9 @@ class About extends BaseView
   font-weight: 400;
   color: #333;
 }
+.blog-paragraph{
+  line-height: 1.5rem;
+}
 /* swiper button css */
 .nav-btn {
   height: 40px;
@@ -197,7 +200,7 @@ class About extends BaseView
                 </div>
             </div>
             <div class="content-wrapper col-md-7 p-4">
-                <h6 class="display-4 fw-normal">Lí Do Chọn <span class="text-primary">Chúng Tôi?</span></h6>
+                <h6 class="display-5 fw-normal">Lí Do Chọn <span class="text-primary">Chúng Tôi?</span></h6>
                 <br>
                 <div class="d-flex align-items-center mb-3">
                     <img src="/public/assets/client/images/6385378.png" width="70px" alt="">
@@ -425,19 +428,19 @@ class About extends BaseView
       <div class="container ">
         <div class="row my-5 py-5">
           <div class="offset-md-3 col-md-6 my-5 ">
-            <h2 class="display-3 fw-normal text-center">Giảm giá 20%<span class="text-primary"><br>Mua lần đầu</span>
+            <h2 class="display-4 fw-normal text-center">Giảm giá 20%<span class="text-primary"><br>Mua lần đầu</span>
             </h2>
             <form>
               <div class="mb-3">
-                <input type="email" class="form-control form-control-lg" name="email" id="email"
+                <input type="email" class="form-control form-control-sm" name="email" id="email"
                   placeholder="Email">
               </div>
               <div class="mb-3">
-                <input type="password" class="form-control form-control-lg" name="email" id="password1"
+                <input type="password" class="form-control form-control-sm" name="email" id="password1"
                   placeholder="Mật khẩu">
               </div>
               <div class="mb-3">
-                <input type="password" class="form-control form-control-lg" name="email" id="password2"
+                <input type="password" class="form-control form-control-sm" name="email" id="password2"
                   placeholder="Nhập lại mật khẩu">
               </div>
 

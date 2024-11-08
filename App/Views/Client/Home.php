@@ -22,7 +22,7 @@ class Home extends BaseView
                                 </div>
                                 <div class="content-wrapper col-md-7 p-5 mb-5">
                                     <div class="secondary-font text-primary text-uppercase mb-4">Tiết kiệm từ 10 đến 20%</div>
-                                    <h2 class="banner-title display-3 fw-normal">Điểm đến lý tưởng nhất cho
+                                    <h2 class="banner-title display-4 fw-normal">Điểm đến lý tưởng nhất cho
                                         <span class="text-primary">thú cưng của bạn</span>
                                     </h2>
                                     <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
@@ -121,7 +121,7 @@ class Home extends BaseView
             <div class="container pb-5">
 
                 <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
-                    <h2 class="display-3 fw-normal">Quần áo</h2>
+                    <h2 class="display-6 fw-normal">Quần áo</h2>
                     <div>
                         <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                             Mua ngay
@@ -148,7 +148,7 @@ class Home extends BaseView
                                                 class="img-fluid rounded-4" alt="image"></a>
                                         <div class="card-body p-0">
                                             <a href="single-product.html">
-                                                <h3 class="card-title pt-4 m-0"><?= $item['name'] ?></h3>
+                                                <h4 class="card-title pt-4 m-0"><?= $item['name'] ?></h4>
                                             </a>
 
                                             <div class="card-text">
@@ -162,11 +162,11 @@ class Home extends BaseView
                                                 <?php
                                                 if ($item['discount_price'] > 0) :
                                                 ?>
-                                                    <h3 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ <strike style="font-size: medium; color: #333"><?= number_format($item['price']) ?> VNĐ</strike></h3>
+                                                    <h4 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ <strike style="font-size: medium; color: #333"><?= number_format($item['price']) ?> VNĐ</strike></h4>
                                                 <?php
                                                 else :
                                                 ?>
-                                                    <h3 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ</h3>
+                                                    <h4 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ</h4>
 
                                                 <?php
                                                 endif;
@@ -211,7 +211,7 @@ class Home extends BaseView
             <div class="container my-5 py-5">
 
                 <div class="section-header d-md-flex justify-content-between align-items-center">
-                    <h2 class="display-3 fw-normal">Thức ăn</h2>
+                    <h2 class="display-6 fw-normal">Thức ăn</h2>
                     <div class="mb-4 mb-md-0">
                         <p class="m-0">
                             <button class="filter-button me-4  active" data-filter="*">ALL</button>
@@ -237,7 +237,7 @@ class Home extends BaseView
                                     class="img-fluid rounded-4" alt="image"></a>
                             <div class="card-body p-0">
                                 <a href="single-product.html">
-                                    <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
+                                    <h4 class="card-title pt-4 m-0">Grey hoodie</h4>
                                 </a>
 
                                 <div class="card-text">
@@ -249,7 +249,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h3 class="secondary-font text-primary">$18.00</h3>
+                                    <h4 class="secondary-font text-primary">$18.00</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -276,7 +276,7 @@ class Home extends BaseView
                                     class="img-fluid rounded-4" alt="image"></a>
                             <div class="card-body p-0">
                                 <a href="single-product.html">
-                                    <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
+                                    <h4 class="card-title pt-4 m-0">Grey hoodie</h4>
                                 </a>
 
                                 <div class="card-text">
@@ -288,7 +288,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h3 class="secondary-font text-primary">$18.00</h3>
+                                    <h4 class="secondary-font text-primary">$18.00</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -315,7 +315,7 @@ class Home extends BaseView
                                     class="img-fluid rounded-4" alt="image"></a>
                             <div class="card-body p-0">
                                 <a href="single-product.html">
-                                    <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
+                                    <h4 class="card-title pt-4 m-0">Grey hoodie</h4>
                                 </a>
 
                                 <div class="card-text">
@@ -327,7 +327,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h3 class="secondary-font text-primary">$18.00</h3>
+                                    <h4 class="secondary-font text-primary">$18.00</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -354,7 +354,7 @@ class Home extends BaseView
                                     class="img-fluid rounded-4" alt="image"></a>
                             <div class="card-body p-0">
                                 <a href="single-product.html">
-                                    <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
+                                    <h4 class="card-title pt-4 m-0">Grey hoodie</h4>
                                 </a>
 
                                 <div class="card-text">
@@ -366,7 +366,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h3 class="secondary-font text-primary">$18.00</h3>
+                                    <h4 class="secondary-font text-primary">$18.00</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -393,7 +393,7 @@ class Home extends BaseView
                                     class="img-fluid rounded-4" alt="image"></a>
                             <div class="card-body p-0">
                                 <a href="single-product.html">
-                                    <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
+                                    <h4 class="card-title pt-4 m-0">Grey hoodie</h4>
                                 </a>
 
                                 <div class="card-text">
@@ -405,7 +405,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h3 class="secondary-font text-primary">$18.00</h3>
+                                    <h4 class="secondary-font text-primary">$18.00</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -432,7 +432,7 @@ class Home extends BaseView
                                     class="img-fluid rounded-4" alt="image"></a>
                             <div class="card-body p-0">
                                 <a href="single-product.html">
-                                    <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
+                                    <h4 class="card-title pt-4 m-0">Grey hoodie</h4>
                                 </a>
 
                                 <div class="card-text">
@@ -444,7 +444,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h3 class="secondary-font text-primary">$18.00</h3>
+                                    <h4 class="secondary-font text-primary">$18.00</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -471,7 +471,7 @@ class Home extends BaseView
                                     class="img-fluid rounded-4" alt="image"></a>
                             <div class="card-body p-0">
                                 <a href="single-product.html">
-                                    <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
+                                    <h4 class="card-title pt-4 m-0">Grey hoodie</h4>
                                 </a>
 
                                 <div class="card-text">
@@ -483,7 +483,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h3 class="secondary-font text-primary">$18.00</h3>
+                                    <h4 class="secondary-font text-primary">$18.00</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -508,7 +508,7 @@ class Home extends BaseView
                                     class="img-fluid rounded-4" alt="image"></a>
                             <div class="card-body p-0">
                                 <a href="single-product.html">
-                                    <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
+                                    <h4 class="card-title pt-4 m-0">Grey hoodie</h4>
                                 </a>
 
                                 <div class="card-text">
@@ -520,7 +520,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h3 class="secondary-font text-primary">$18.00</h3>
+                                    <h4 class="secondary-font text-primary">$18.00</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -625,7 +625,7 @@ class Home extends BaseView
             <div class="container py-5 mb-5">
 
                 <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
-                    <h2 class="display-3 fw-normal">Sản phẩm bán chạy</h2>
+                    <h2 class="display-6 fw-normal">Sản phẩm bán chạy</h2>
                     <div>
                         <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                             Mua ngay
@@ -652,7 +652,7 @@ class Home extends BaseView
                                                 class="img-fluid rounded-4" alt="image"></a>
                                         <div class="card-body p-0">
                                             <a href="single-product.html">
-                                                <h3 class="card-title pt-4 m-0"><?= $item['name'] ?></h3>
+                                                <h4 class="card-title pt-4 m-0"><?= $item['name'] ?></h4>
                                             </a>
 
                                             <div class="card-text">
@@ -666,11 +666,11 @@ class Home extends BaseView
                                                 <?php
                                                 if ($item['discount_price'] > 0) :
                                                 ?>
-                                                    <h3 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ <strike style="font-size: medium; color: #333"><?= number_format($item['price']) ?> VNĐ</strike></h3>
+                                                    <h4 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ <strike style="font-size: medium; color: #333"><?= number_format($item['price']) ?> VNĐ</strike></h4>
                                                 <?php
                                                 else :
                                                 ?>
-                                                    <h3 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ</h3>
+                                                    <h4 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ</h4>
 
                                                 <?php
                                                 endif;
@@ -716,21 +716,21 @@ class Home extends BaseView
             <div class="container ">
                 <div class="row my-5 py-5">
                     <div class="offset-md-3 col-md-6 my-5 ">
-                        <h2 class="display-3 fw-normal text-center">Giảm 20% cho <span class="text-primary">đơn hàng đầu
+                        <h2 class="display-4 fw-normal text-center">Giảm 20% cho <span class="text-primary">đơn hàng đầu
                                 tiên</span>
                         </h2>
 
                         <form>
                             <div class="mb-3">
-                                <input type="email" class="form-control form-control-lg" name="email" id="email"
+                                <input type="email" class="form-control form-control-sm" name="email" id="email"
                                     placeholder="Email">
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control form-control-lg" name="email" id="password1"
+                                <input type="password" class="form-control form-control-sm" name="email" id="password1"
                                     placeholder="Mật khẩu">
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control form-control-lg" name="email" id="password2"
+                                <input type="password" class="form-control form-control-sm" name="email" id="password2"
                                     placeholder="Nhập lại mật khẩu">
                             </div>
 
@@ -747,7 +747,7 @@ class Home extends BaseView
             <div class="container py-5 my-5">
                 <div class="row mt-5">
                     <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
-                        <h2 class="display-3 fw-normal">Bài viết mới nhất</h2>
+                        <h2 class="display-6 fw-normal">Bài viết mới nhất</h2>
                         <div>
                             <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                                 Xem thêm
@@ -796,7 +796,7 @@ class Home extends BaseView
                                         class="img-fluid rounded-4" alt="image"></a>
                                 <div class="card-body p-0">
                                     <a href="single-post.html">
-                                        <h3 class="card-title pt-4 pb-3 m-0"><?= $item['title'] ?></h3>
+                                        <h4 class="card-title pt-4 pb-3 m-0"><?= $item['title'] ?></h4>
                                     </a>
 
                                     <div class="card-text">
@@ -874,9 +874,9 @@ class Home extends BaseView
                             <div>
                                 <iconify-icon class="service-icon text-primary" icon="la:shopping-cart"></iconify-icon>
                             </div>
-                            <h4 class="card-title py-2 m-0">Giao hàng toàn quốc</h4>
+                            <h3 class="card-title py-2 m-0">Giao Hàng Miễn Phí</h3>
                             <div class="card-text">
-                                <p class="blog-paragraph fs-6" style="line-height: 24px">Thời gian giao hàng linh động từ 3 - 4 - 5 ngày tùy khu vực, đôi khi sẽ nhanh hơn hoặc chậm hơn. Mong Quý Khách hàng thông cảm và cố gắng đợi hàng giúp shop..</p>
+                                <p class="blog-paragraph fs-6">Chúng tôi hỗ trợ giao hàng miễn phí cho đơn hàng >200</p>
                             </div>
                         </div>
                     </div>
@@ -885,9 +885,9 @@ class Home extends BaseView
                             <div>
                                 <iconify-icon class="service-icon text-primary" icon="la:user-check"></iconify-icon>
                             </div>
-                            <h4 class="card-title py-2 m-0">Thanh toán an toàn</h4>
+                            <h3 class="card-title py-2 m-0">Thanh Toán Nhanh</h3>
                             <div class="card-text">
-                                <p class="blog-paragraph fs-6" style="line-height: 24px">Chúng tôi cam kết mang đến trải nghiệm thanh toán 100% an toàn. Mọi thông tin cá nhân và giao dịch của bạn đều được mã hóa và bảo vệ tối đa. Hãy yên tâm thực hiện thanh toán qua các phương thức an toàn và uy tín. Đặt hàng ngay hôm nay và tận hưởng sự tiện lợi mà không lo lắng!</p>
+                                <p class="blog-paragraph fs-6">Đảm bảo thanh toán an toàn, bảo mật tuyệt đối cho khách hàng.</p>
                             </div>
                         </div>
                     </div>
@@ -896,11 +896,9 @@ class Home extends BaseView
                             <div>
                                 <iconify-icon class="service-icon text-primary" icon="la:tag"></iconify-icon>
                             </div>
-                            <h4 class="card-title py-2 m-0">Ưu đãi hàng ngày</h4>
+                            <h3 class="card-title py-2 m-0">Ưu Đãi Hàng Ngày</h3>
                             <div class="card-text">
-                                <p class="blog-paragraph fs-6" style="line-height: 24px">Khám phá những ưu đãi hấp dẫn mỗi ngày với các sản phẩm chất lượng tại cửa hàng của chúng tôi! Mỗi ngày, chúng tôi cập nhật các chương trình khuyến mãi độc quyền giúp bạn tiết kiệm chi phí mà vẫn tận hưởng được những sản phẩm yêu thích. Đừng bỏ lỡ cơ hội nhận được những món hời tuyệt vời!
-
-                                </p>
+                                <p class="blog-paragraph fs-6">Nhận ngay các ưu đãi hấp dẫn mỗi ngày khi mua sắm tại cửa hàng.</p>
                             </div>
                         </div>
                     </div>
@@ -909,9 +907,9 @@ class Home extends BaseView
                             <div>
                                 <iconify-icon class="service-icon text-primary" icon="la:award"></iconify-icon>
                             </div>
-                            <h4 class="card-title py-2 m-0">Cam kết chất lượng</h4>
+                            <h3 class="card-title py-2 m-0">Đảm Bảo Yêu Cầu</h3>
                             <div class="card-text">
-                                <p class="blog-paragraph fs-6" style="line-height: 24px">Chúng tôi tự hào mang đến cho bạn những sản phẩm chất lượng cao nhất. Với cam kết chất lượng, mỗi sản phẩm đều trải qua quy trình kiểm tra nghiêm ngặt để đảm bảo sự hoàn hảo trước khi đến tay bạn. Nếu không hài lòng, chúng tôi sẵn sàng hỗ trợ đổi trả, giúp bạn an tâm khi mua sắm!</p>
+                                <p class="blog-paragraph fs-6">Cam kết mang đến sản phẩm chất lượng tốt nhất cho thú cưng của bạn.</p>
                             </div>
                         </div>
                     </div>
