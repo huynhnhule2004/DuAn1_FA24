@@ -14,7 +14,7 @@ class Footer extends BaseView
                 <!-- footer -->
                 <!-- ============================================================== -->
                 <footer class="footer text-center">
-                        Copyright &copy; by Chihihi
+                        Copyright &copy; by Camoi3cogai
                 </footer>
                 <!-- ============================================================== -->
                 <!-- End footer -->
@@ -73,7 +73,6 @@ class Footer extends BaseView
                 <script src="<?=APP_URL?>/public/assets/admin/libs/jquery-minicolors/jquery.minicolors.min.js"></script>
                 <script src="<?=APP_URL?>/public/assets/admin/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
                 <script src="<?=APP_URL?>/public/assets/admin/libs/quill/dist/quill.min.js"></script>
-
 
                 </script>
 

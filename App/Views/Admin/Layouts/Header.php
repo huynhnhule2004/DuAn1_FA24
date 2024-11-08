@@ -46,7 +46,7 @@ class Header extends BaseView
                 <!-- Topbar header - style you can find in pages.scss -->
                 <!-- ============================================================== -->
                 <header class="topbar" data-navbarbg="skin5">
-                    <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                    <nav class="navbar top-navbar navbar-expand-md navbar-light">
                         <div class="navbar-header" data-logobg="skin5">
 
                             <!-- ============================================================== -->
@@ -57,7 +57,7 @@ class Header extends BaseView
                                 <b class="logo-icon ps-2">
                                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                                     <!-- Dark Logo icon -->
-                                    <img src="<?= APP_URL ?>/public/assets/admin/images/logo.png" alt="homepage" class="light-logo" width="200px" />
+                                    <img src="<?= APP_URL ?>/public/assets/admin/images/logo.png" alt="homepage" class="light-logo" width="180px" />
 
                                 </b>
                                 <!--End Logo icon -->
@@ -165,9 +165,9 @@ class Header extends BaseView
                                     </ul>
                                 </li>
 
-                                <li class="sidebar-item p-3">
+                                <!-- <li class="sidebar-item p-3">
                                     <a href="https://github.com/wrappixel/matrix-admin-lite" target="_blank" class="w-100 btn btn-cyan d-flex align-items-center text-white"><i class="mdi mdi-cloud-download font-20 me-2"></i>Theme</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </nav>
                         <!-- End Sidebar navigation -->
