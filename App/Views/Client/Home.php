@@ -8,7 +8,7 @@ class Home extends BaseView
 {
     public static function render($data = null)
     {
-        ?>
+?>
 
         <section id="banner" style="background: #F9F3EC;">
             <div class="container">
@@ -22,7 +22,7 @@ class Home extends BaseView
                                 </div>
                                 <div class="content-wrapper col-md-7 p-5 mb-5">
                                     <div class="secondary-font text-primary text-uppercase mb-4">Tiết kiệm từ 10 đến 20%</div>
-                                    <h2 class="banner-title display-1 fw-normal">Điểm đến lý tưởng nhất cho 
+                                    <h2 class="banner-title display-1 fw-normal">Điểm đến lý tưởng nhất cho
                                         <span class="text-primary">thú cưng của bạn</span>
                                     </h2>
                                     <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
@@ -132,237 +132,74 @@ class Home extends BaseView
                 </div>
 
                 <div class="products-carousel swiper">
-                    <div class="swiper-wrapper">
-
-                        <div class="swiper-slide">
-                            <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                                New
-                            </div>
-                            <div class="card position-relative">
-                                <a href="single-product.html"><img src="public/assets/client/images/item1.jpg"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-product.html">
-                                        <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <span class="rating secondary-font">
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            5.0</span>
-
-                                        <h3 class="secondary-font text-primary">$18.00</h3>
-
-                                        <div class="d-flex flex-wrap mt-3">
-                                            <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                            </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
-                                        </div>
-
-
+                    <?php
+                    if (count($data) && count($data['products'])) :
+                    ?>
+                        <div class="swiper-wrapper">
+                            <?php
+                            foreach ($data['products'] as $item) :
+                            ?>
+                                <div class="swiper-slide">
+                                    <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
+                                        <?= number_format((($item['price'] - $item['discount_price']) / $item['price']) * 100) ?>%
                                     </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <!-- <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              New
-            </div> -->
-                            <div class="card position-relative">
-                                <a href="single-product.html"><img src="public/assets/client/images/item2.jpg"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-product.html">
-                                        <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <span class="rating secondary-font">
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            5.0</span>
-
-                                        <h3 class="secondary-font text-primary">$18.00</h3>
-
-                                        <div class="d-flex flex-wrap mt-3">
-                                            <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                    <div class="card position-relative">
+                                        <a href="single-product.html"><img src="<?= APP_URL ?>public/assets/client/images/<?= $item['image'] ?>"
+                                                class="img-fluid rounded-4" alt="image"></a>
+                                        <div class="card-body p-0">
+                                            <a href="single-product.html">
+                                                <h3 class="card-title pt-4 m-0"><?= $item['name'] ?></h3>
                                             </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
+
+                                            <div class="card-text">
+                                                <span class="rating secondary-font">
+                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                    5.0</span>
+                                                <?php
+                                                if ($item['discount_price'] > 0) :
+                                                ?>
+                                                    <h3 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ <strike style="font-size: medium; color: #333"><?= number_format($item['price']) ?> VNĐ</strike></h3>
+                                                <?php
+                                                else :
+                                                ?>
+                                                    <h3 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ</h3>
+
+                                                <?php
+                                                endif;
+                                                ?>
+
+                                                <div class="d-flex flex-wrap mt-3">
+                                                    <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                                        <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                                    </a>
+                                                    <a href="#" class="btn-wishlist px-4 pt-3 ">
+                                                        <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
+                                                    </a>
+                                                </div>
+
+
+                                            </div>
+
                                         </div>
-
                                     </div>
-
                                 </div>
-                            </div>
+                            <?php
+                            endforeach;
+                            ?>
+                        <?php
+                    else :
+                        ?>
+                            <h3 class="text-center text-danger">Không có sản phẩm</h3>
+
+                        <?php
+                    endif;
+                        ?>
+
                         </div>
-                        <div class="swiper-slide">
-                            <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                                -10%
-                            </div>
-                            <div class="card position-relative">
-                                <a href="single-product.html"><img src="public/assets/client/images/item3.jpg"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-product.html">
-                                        <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <span class="rating secondary-font">
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            5.0</span>
-
-                                        <h3 class="secondary-font text-primary">$18.00</h3>
-
-                                        <div class="d-flex flex-wrap mt-3">
-                                            <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                            </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <!-- <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              New
-            </div> -->
-                            <div class="card position-relative">
-                                <a href="single-product.html"><img src="public/assets/client/images/item4.jpg"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-product.html">
-                                        <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <span class="rating secondary-font">
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            5.0</span>
-
-                                        <h3 class="secondary-font text-primary">$18.00</h3>
-
-                                        <div class="d-flex flex-wrap mt-3">
-                                            <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                            </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <!-- <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              New
-            </div> -->
-                            <div class="card position-relative">
-                                <a href="single-product.html"><img src="public/assets/client/images/item7.jpg"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-product.html">
-                                        <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <span class="rating secondary-font">
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            5.0</span>
-
-                                        <h3 class="secondary-font text-primary">$18.00</h3>
-
-                                        <div class="d-flex flex-wrap mt-3">
-                                            <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                            </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <!-- <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              New
-            </div> -->
-                            <div class="card position-relative">
-                                <a href="single-product.html"><img src="public/assets/client/images/item8.jpg"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-product.html">
-                                        <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <span class="rating secondary-font">
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            5.0</span>
-
-                                        <h3 class="secondary-font text-primary">$18.00</h3>
-
-                                        <div class="d-flex flex-wrap mt-3">
-                                            <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                            </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
                 <!-- / products-carousel -->
 
@@ -803,240 +640,77 @@ class Home extends BaseView
                     </div>
                 </div>
 
-                <div class=" swiper bestselling-swiper">
-                    <div class="swiper-wrapper">
-
-                        <div class="swiper-slide">
-                            <!-- <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              New
-            </div> -->
-                            <div class="card position-relative">
-                                <a href="single-product.html"><img src="public/assets/client/images/item5.jpg"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-product.html">
-                                        <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <span class="rating secondary-font">
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            5.0</span>
-
-                                        <h3 class="secondary-font text-primary">$18.00</h3>
-
-                                        <div class="d-flex flex-wrap mt-3">
-                                            <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                            </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
-                                        </div>
-
-
+                <div class="products-carousel swiper">
+                    <?php
+                    if (count($data) && count($data['products'])) :
+                    ?>
+                        <div class="swiper-wrapper">
+                            <?php
+                            foreach ($data['products'] as $item) :
+                            ?>
+                                <div class="swiper-slide">
+                                    <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
+                                        <?= number_format((($item['price'] - $item['discount_price']) / $item['price']) * 100) ?>%
                                     </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <!-- <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              New
-            </div> -->
-                            <div class="card position-relative">
-                                <a href="single-product.html"><img src="public/assets/client/images/item6.jpg"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-product.html">
-                                        <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <span class="rating secondary-font">
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            5.0</span>
-
-                                        <h3 class="secondary-font text-primary">$18.00</h3>
-
-                                        <div class="d-flex flex-wrap mt-3">
-                                            <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                    <div class="card position-relative">
+                                        <a href="single-product.html"><img src="<?= APP_URL ?>public/assets/client/images/<?= $item['image'] ?>"
+                                                class="img-fluid rounded-4" alt="image"></a>
+                                        <div class="card-body p-0">
+                                            <a href="single-product.html">
+                                                <h3 class="card-title pt-4 m-0"><?= $item['name'] ?></h3>
                                             </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
+
+                                            <div class="card-text">
+                                                <span class="rating secondary-font">
+                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                    5.0</span>
+                                                <?php
+                                                if ($item['discount_price'] > 0) :
+                                                ?>
+                                                    <h3 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ <strike style="font-size: medium; color: #333"><?= number_format($item['price']) ?> VNĐ</strike></h3>
+                                                <?php
+                                                else :
+                                                ?>
+                                                    <h3 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ</h3>
+
+                                                <?php
+                                                endif;
+                                                ?>
+
+                                                <div class="d-flex flex-wrap mt-3">
+                                                    <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                                        <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                                    </a>
+                                                    <a href="#" class="btn-wishlist px-4 pt-3 ">
+                                                        <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
+                                                    </a>
+                                                </div>
+
+
+                                            </div>
+
                                         </div>
-
                                     </div>
-
                                 </div>
-                            </div>
+                            <?php
+                            endforeach;
+                            ?>
+                        <?php
+                    else :
+                        ?>
+                            <h3 class="text-center text-danger">Không có sản phẩm</h3>
+
+                        <?php
+                    endif;
+                        ?>
+
                         </div>
-                        <div class="swiper-slide">
-                            <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                                Sale
-                            </div>
-                            <div class="card position-relative">
-                                <a href="single-product.html"><img src="public/assets/client/images/item7.jpg"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-product.html">
-                                        <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <span class="rating secondary-font">
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            5.0</span>
-
-                                        <h3 class="secondary-font text-primary">$18.00</h3>
-
-                                        <div class="d-flex flex-wrap mt-3">
-                                            <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                            </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <!-- <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              New
-            </div> -->
-                            <div class="card position-relative">
-                                <a href="single-product.html"><img src="public/assets/client/images/item8.jpg"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-product.html">
-                                        <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <span class="rating secondary-font">
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            5.0</span>
-
-                                        <h3 class="secondary-font text-primary">$18.00</h3>
-
-                                        <div class="d-flex flex-wrap mt-3">
-                                            <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                            </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                                -10%
-                            </div>
-                            <div class="card position-relative">
-                                <a href="single-product.html"><img src="public/assets/client/images/item3.jpg"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-product.html">
-                                        <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <span class="rating secondary-font">
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            5.0</span>
-
-                                        <h3 class="secondary-font text-primary">$18.00</h3>
-
-                                        <div class="d-flex flex-wrap mt-3">
-                                            <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                            </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <!-- <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-              New
-            </div> -->
-                            <div class="card position-relative">
-                                <a href="single-product.html"><img src="public/assets/client/images/item4.jpg"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-product.html">
-                                        <h3 class="card-title pt-4 m-0">Grey hoodie</h3>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <span class="rating secondary-font">
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                            5.0</span>
-
-                                        <h3 class="secondary-font text-primary">$18.00</h3>
-
-                                        <div class="d-flex flex-wrap mt-3">
-                                            <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                            </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
                 </div>
+
                 <!-- / category-carousel -->
 
 
@@ -1089,32 +763,61 @@ class Home extends BaseView
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 my-4 my-md-0">
-                        <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
-                            <h3 class="secondary-font text-primary m-0">20</h3>
-                            <p class="secondary-font fs-6 m-0">Feb</p>
+                    <?php
+                    foreach ($data['blogs'] as $item) :
 
-                        </div>
-                        <div class="card position-relative">
-                            <a href="single-post.html"><img src="public/assets/client/images/blog1.jpg"
-                                    class="img-fluid rounded-4" alt="image"></a>
-                            <div class="card-body p-0">
-                                <a href="single-post.html">
-                                    <h3 class="card-title pt-4 pb-3 m-0">10 Reasons to be helpful towards any animals</h3>
-                                </a>
+                    ?>
+                        <?php
+                        $create_at = $item['create_at'];
+                        $date = date_create($create_at);
+                        $day = date_format($date, 'd');
+                        $monthNumber = date_format($date, 'm');
 
-                                <div class="card-text">
-                                    <p class="blog-paragraph fs-6">At the core of our practice is the idea that cities are the
-                                        incubators of
-                                        our greatest
-                                        achievements, and the best hope for a sustainable future.</p>
-                                    <a href="single-post.html" class="blog-read">Đọc thêm</a>
-                                </div>
+                        $months = [
+                            '01' => 'JAN',
+                            '02' => 'FEB',
+                            '03' => 'MAR',
+                            '04' => 'APR',
+                            '05' => 'MAY',
+                            '06' => 'JUN',
+                            '07' => 'JUL',
+                            '08' => 'AUG',
+                            '09' => 'SEP',
+                            '10' => 'OCT',
+                            '11' => 'NOV',
+                            '12' => 'DEC'
+                        ];
+
+                        $month = $months[$monthNumber];
+                        ?>
+                        <div class="col-md-4 my-4 my-md-0">
+                            <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
+                                <h3 class="secondary-font text-primary m-0"><?= $day ?></h3>
+                                <p class="secondary-font fs-6 m-0"><?= strtoupper($month) ?></p>
 
                             </div>
+                            <div class="card position-relative">
+                                <a href="single-post.html"><img src="<?= APP_URL ?>public/assets/client/images/<?= $item['image'] ?>"
+                                        class="img-fluid rounded-4" alt="image"></a>
+                                <div class="card-body p-0">
+                                    <a href="single-post.html">
+                                        <h3 class="card-title pt-4 pb-3 m-0"><?= $item['title'] ?></h3>
+                                    </a>
+
+                                    <div class="card-text">
+                                        <p class="blog-paragraph fs-6">
+                                            <?= strlen($item['content']) > 150 ? substr($item['content'], 0, 150) . '...' : $item['content'] ?>
+                                        </p>
+                                        <a href="single-post.html" class="blog-read">Đọc thêm</a>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4 my-4 my-md-0">
+                    <?php
+                    endforeach;
+                    ?>
+                    <!-- <div class="col-md-4 my-4 my-md-0">
                         <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
                             <h3 class="secondary-font text-primary m-0">21</h3>
                             <p class="secondary-font fs-6 m-0">Feb</p>
@@ -1163,7 +866,7 @@ class Home extends BaseView
 
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>
@@ -1202,7 +905,7 @@ class Home extends BaseView
                             <div class="card-text">
                                 <p class="blog-paragraph fs-6" style="line-height: 24px">Khám phá những ưu đãi hấp dẫn mỗi ngày với các sản phẩm chất lượng tại cửa hàng của chúng tôi! Mỗi ngày, chúng tôi cập nhật các chương trình khuyến mãi độc quyền giúp bạn tiết kiệm chi phí mà vẫn tận hưởng được những sản phẩm yêu thích. Đừng bỏ lỡ cơ hội nhận được những món hời tuyệt vời!
 
-</p>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -1274,8 +977,6 @@ class Home extends BaseView
                 </div>
             </div>
         </section>
-        <?php
+<?php
     }
 }
-
-
