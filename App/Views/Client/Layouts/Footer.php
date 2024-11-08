@@ -8,14 +8,16 @@ class Footer extends BaseView
 {
     public static function render($data = null)
     {
-        ?>
+?>
         <footer id="footer" class="my-5">
             <div class="container py-5 my-5">
                 <div class="row">
 
                     <div class="col-md-3">
                         <div class="footer-menu">
-                            <img src="<?= APP_URL ?>public/assets/client/images/logo.png" alt="logo">
+                            <a href="/">
+                                <img src="<?= APP_URL ?>/public/assets/client/images/logo.png" alt="logo">
+                            </a>
                             <p class="blog-paragraph fs-6 mt-3">Đăng ký nhận bản tin của chúng tôi để cập nhật thông tin về những ưu đãi lớn.</p>
                             <div class="social-links">
                                 <ul class="d-flex list-unstyled gap-2">
@@ -145,7 +147,7 @@ class Footer extends BaseView
         </html>
 
 
-        <?php
+<?php
 
         // unset($_SESSION['success']);
         // unset($_SESSION['error']);
