@@ -46,7 +46,8 @@ class Header extends BaseView
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        </head>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
 
         <body>
             <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -292,37 +293,26 @@ class Header extends BaseView
                                 </select>
 
                                 <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 mb-0">
-                                    <li class="nav-item">
-                                        <a href="/" class="nav-link active">Trang chủ</a>
+                                    <li class="nav-item" id="home-item">
+                                        <a href="/" class="nav-link">Trang chủ</a>
                                     </li>
-                                    <!-- <li class="nav-item dropdown">
+                                    <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown"
-                                            aria-expanded="false">Pages</a>
+                                            aria-expanded="false">Sản phẩm</a>
                                         <ul class="dropdown-menu" aria-labelledby="pages">
-                                            <li><a href="/" class="dropdown-item">About Us</a></li>
-                                            <li><a href="/" class="dropdown-item">Shop</a></li>
-                                            <li><a href="/" class="dropdown-item">Single Product</a></li>
-                                            <li><a href="/" class="dropdown-item">Cart</a></li>
-                                            <li><a href="/" class="dropdown-item">Wishlist</a></li>
-                                            <li><a href="/" class="dropdown-item">Checkout</a></li>
-                                            <li><a href="/" class="dropdown-item">Blog</a></li>
-                                            <li><a href="/" class="dropdown-item">Single Post</a></li>
-                                            <li><a href="/" class="dropdown-item">Contact</a></li>
-                                            <li><a href="/" class="dropdown-item">FAQs</a></li>
-                                            <li><a href="/" class="dropdown-item">Account</a></li>
-                                            <li><a href="/" class="dropdown-item">Thankyou</a></li>
-                                            <li><a href="/" class="dropdown-item">Error 404</a></li>
-                                            <li><a href="/" class="dropdown-item">Styles</a></li>
+                                            <li><a href="/products" class="dropdown-item">Thức ăn</a></li>
+                                            <li><a href="/products" class="dropdown-item">Phụ kiện cho chó</a></li>
+                                            <li><a href="/products" class="dropdown-item">Phụ kiện cho mèo</a></li>
                                         </ul>
+                                    </li>
+                                    <!-- <li class="nav-item">
+                                        <a href="/products" class="nav-link">Sản phẩm</a>
                                     </li> -->
                                     <li class="nav-item">
-                                        <a href="/" class="nav-link">Sản phẩm</a>
+                                        <a href="/blogs" class="nav-link">Bài viết</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="/" class="nav-link">Bài viết</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="/" class="nav-link">Giới thiệu</a>
+                                        <a href="/about" class="nav-link">Giới thiệu</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="/contact" class="nav-link">Liên hệ</a>
@@ -337,12 +327,20 @@ class Header extends BaseView
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/" class="mx-3">
+                                            <a href="/wishlist" class="mx-3">
                                                 <iconify-icon icon="mdi:heart" class="fs-4"></iconify-icon>
                                             </a>
                                         </li>
-
                                         <li class="">
+                                            <a href="/cart" class="mx-3">
+                                                <iconify-icon icon="mdi:cart" class="fs-4 position-relative"></iconify-icon>
+                                                <span
+                                                    class="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
+                                                    03
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <!-- <li class="">
                                             <a href="/" class="mx-3" data-bs-toggle="offcanvas"
                                                 data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                                 <iconify-icon icon="mdi:cart" class="fs-4 position-relative"></iconify-icon>
@@ -351,7 +349,7 @@ class Header extends BaseView
                                                     03
                                                 </span>
                                             </a>
-                                        </li>
+                                        </li> -->
                                     </ul>
 
                                 </div>
@@ -398,6 +396,25 @@ class Header extends BaseView
                     </form>
                 </div>
             </nav> -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const menuLinks = document.querySelectorAll('.nav-item a');
+
+                    const currentPath = window.location.pathname;
+
+                    let activeLink = document.querySelector('.nav-item a[href="/"]');
+
+                    menuLinks.forEach(link => {
+                        const linkHref = link.getAttribute('href');
+
+                        if (currentPath === linkHref || (currentPath === '/' && linkHref === '/')) {
+                            activeLink = link;
+                        }
+                    });
+
+                    activeLink.classList.add('active');
+                });
+            </script>
 
     <?php
 
