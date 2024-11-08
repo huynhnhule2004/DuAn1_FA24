@@ -134,9 +134,9 @@ class Cart extends BaseView
                                         </div>
 
                                         <div class="d-flex justify-content-center">
-                                            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg">
-                                                <span>Thanh Toán</span>
-                                            </button>
+                                            <a href="/checkout" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg">
+                                                Thanh Toán
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
