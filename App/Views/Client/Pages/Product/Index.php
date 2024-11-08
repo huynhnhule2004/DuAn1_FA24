@@ -25,14 +25,19 @@ class Index extends BaseView
         </div>
         <div class="mt-5">
         <?php
-              
-              Category::render($data['categories']);
+              Category::render();
               ?>
+              <h5 class="mb-3">Lọc giá</h5>
+              <select class="filter-categories border-0 m-0">
+                <option value="">Tất cả</option>
+                <option value="">10.000-100.000</option>
+                <option value="">100.000-500.000</option>
+                <option value="">500.000-1.000.000</option>
+              </select>
             </div>
         </div>
            
         </div>
-
         <div class="col-md-9">
 
           <div class="d-flex justify-content-between align-items-center mb-3">
@@ -55,15 +60,15 @@ class Index extends BaseView
                 <div class="col-md-4 mb-4">
                   <div class="swiper-slide">
                     <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                      -10%
+                    <?=$item['discount_price'] ?>%
                     </div>
                     <div class="card position-relative">
-                      <a href="Detail.php">
-                        <img src="public/assets/client/images/item3.jpg" class="img-fluid rounded-4" alt="image">
+                      <a href="/products/<?= $item['id'] ?>">
+                        <img src="<?= APP_URL ?>/public/assets/client/images/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
                       </a>
                       <div class="card-body p-0">
-                        <a href="Detail.php">
-                          <h3 class="card-title pt-4 m-0">Áo Hoodie Xám</h3>
+                        <a href="/products/<?= $item['id'] ?>">
+                          <h3 class="card-title pt-4 m-0"><?= $item['name'] ?></h3>
                         </a>
                         <div class="card-text">
                           <span class="rating secondary-font">
@@ -74,7 +79,7 @@ class Index extends BaseView
                             <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                             5.0
                           </span>
-                          <h3 class="secondary-font text-primary">$18.00</h3>
+                          <h3 class="secondary-font text-primary"><?= $item['price'] ?></h3>
 
                           <div class="d-flex flex-wrap mt-3">
                             <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
