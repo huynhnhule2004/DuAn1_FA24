@@ -99,7 +99,7 @@ class Index extends BaseView
             </div>
             <div class="row mt-5">
               <div class="col text-center">
-                <a href="#" class="btn btn-outline-primary">Xem thêm 78 sản phẩm khác</a>
+                <a href="#" class="btn btn-outline-primary">Xem thêm 79 sản phẩm khác</a>
               </div>
             </div>
           <?php else: ?>
