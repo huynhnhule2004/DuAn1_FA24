@@ -25,7 +25,7 @@ class Home extends BaseView
                                     <h2 class="banner-title display-1 fw-normal">Điểm đến lý tưởng nhất cho
                                         <span class="text-primary">thú cưng của bạn</span>
                                     </h2>
-                                    <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+                                    <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                                         Mua ngay
                                         <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                                             <use xlink:href="#arrow-right"></use>
@@ -44,7 +44,7 @@ class Home extends BaseView
                                     <h2 class="banner-title display-1 fw-normal">Điểm đến lý tưởng nhất cho <span
                                             class="text-primary">thú cưng của bạn</span>
                                     </h2>
-                                    <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+                                    <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                                         Mua ngay
                                         <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                                             <use xlink:href="#arrow-right"></use>
@@ -63,7 +63,7 @@ class Home extends BaseView
                                     <h2 class="banner-title display-1 fw-normal">Điểm đến lý tưởng nhất cho <span
                                             class="text-primary">thú cưng của bạn</span>
                                     </h2>
-                                    <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+                                    <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                                         Mua ngay
                                         <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                                             <use xlink:href="#arrow-right"></use>
@@ -123,7 +123,7 @@ class Home extends BaseView
                 <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
                     <h2 class="display-3 fw-normal">Quần áo</h2>
                     <div>
-                        <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+                        <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                             Mua ngay
                             <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                                 <use xlink:href="#arrow-right"></use>
@@ -221,7 +221,7 @@ class Home extends BaseView
                         </p>
                     </div>
                     <div>
-                        <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+                        <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                             Mua ngay
                             <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                                 <use xlink:href="#arrow-right"></use>
@@ -560,7 +560,7 @@ class Home extends BaseView
                         <div class="secondary-font text-primary text-uppercase mb-3 fs-4">Giảm giá lên đến 40%</div>
                         <h2 class="banner-title display-1 fw-normal">Xả hàng giảm giá !!!
                         </h2>
-                        <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+                        <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                             Mua ngay
                             <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                                 <use xlink:href="#arrow-right"></use>
@@ -632,7 +632,7 @@ class Home extends BaseView
                 <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
                     <h2 class="display-3 fw-normal">Sản phẩm bán chạy</h2>
                     <div>
-                        <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+                        <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                             Mua ngay
                             <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                                 <use xlink:href="#arrow-right"></use>
