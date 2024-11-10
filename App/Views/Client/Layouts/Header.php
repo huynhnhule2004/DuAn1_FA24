@@ -9,7 +9,8 @@ class Header extends BaseView
 {
     public static function render($data = null)
     {
-
+        unset($_SESSION['user']);
+        $is_login = AuthHelper::checkLogin();
 
 ?>
 
@@ -45,9 +46,16 @@ class Header extends BaseView
             rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    </head>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+        </head>
 
         <body>
             <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -199,8 +207,7 @@ class Header extends BaseView
                         <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
                             <div class="search-bar border rounded-2 px-3 border-dark-subtle">
                                 <form id="search-form" class="text-center d-flex align-items-center" action="" method="">
-                                    <input type="text" class="form-control border-0 bg-transparent"
-                                        placeholder="Tìm kiếm..." />
+                                    <input type="text" class="form-control border-0 bg-transparent" placeholder="Tìm kiếm..." />
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <path fill="currentColor"
                                             d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
@@ -322,20 +329,47 @@ class Header extends BaseView
                                 <div class="d-none d-lg-flex align-items-end">
                                     <ul class="d-flex justify-content-end list-unstyled m-0">
                                         <li>
-                                            <a href="/login" class="mx-3">
-                                                <iconify-icon icon="healthicons:person" class="fs-4"></iconify-icon>
-                                            </a>
+                                            <?php
+                                            if ($is_login):
+                                            ?>
+                                                <div class="dropdown show" style="display: inline-block;">
+                                                    <a class="dropdown-toggle fs-5" href="#" role="button" id="dropdownMenuLink"
+                                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa-solid fa-user"></i>
+                                                    </a>
+
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item m-0" href="/users/<?= $_SESSION['user']['id'] ?>"
+                                                            style="font-size: medium;"><?= $_SESSION['user']['username'] ?></a>
+                                                        <a class="dropdown-item m-0" href="/change-password"
+                                                            style="font-size: medium;">Đổi mật khẩu</a>
+                                                        <a class="dropdown-item m-0" href="/logout" style="font-size: medium;">Đăng
+                                                            xuất</a>
+                                                    </div>
+                                                </div>
+
+
+                                            <?php
+                                            else:
+                                            ?>
+                                                <a href="/login" class="mx-3 fs-5">
+                                                    <i class="fa-solid fa-user"></i>
+                                                </a>
+
+                                            <?php
+                                            endif;
+                                            ?>
                                         </li>
                                         <li>
-                                            <a href="/wishlist" class="mx-3">
-                                                <iconify-icon icon="mdi:heart" class="fs-4"></iconify-icon>
+                                            <a href="/wishlist" class="mx-3 fs-5">
+                                                <i class="fa-solid fa-heart "></i>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/cart" class="mx-3">
-                                                <iconify-icon icon="mdi:cart" class="fs-4 position-relative"></iconify-icon>
+                                            <a href="/cart" class="mx-3 fs-5">
+                                                <i class="fa-solid fa-cart-shopping "></i>
                                                 <span
-                                                    class="position-absolute translate-middle badge rounded-circle bg-primary pt-2">
+                                                    class="position-absolute badge rounded-circle bg-primary pt-2" style="transform: translate(-40%, -30%); font-size: 12px">
                                                     03
                                                 </span>
                                             </a>

@@ -109,87 +109,87 @@ class AuthController
 
         Header::render();
         Notification::render();
-        // NotificationHelper::unset();
+        NotificationHelper::unset();
         Login::render();
         Footer::render();
     }
 
-    // public static function loginAction()
-    // {
-    //     //Bắt lỗi
-    //     $is_valid = AuthValidation::login();
+    public static function loginAction()
+    {
+        //Bắt lỗi
+        $is_valid = AuthValidation::login();
 
-    //     if (!$is_valid) {
-    //         NotificationHelper::error('login', 'Đăng nhập thất bại');
-    //         header('location: /login');
-    //         exit();
-    //     }
+        if (!$is_valid) {
+            NotificationHelper::error('login', 'Đăng nhập thất bại');
+            header('location: /login');
+            exit();
+        }
 
-    //     $data = [
-    //         'username' => $_POST['username'],
-    //         'password' => $_POST['password'],
-    //         'remember' => isset($_POST['remember'])
-    //     ];
+        $data = [
+            'username' => $_POST['username'],
+            'password' => $_POST['password'],
+            'remember' => isset($_POST['remember'])
+        ];
 
-    //     $result = AuthHelper::login($data);
+        $result = AuthHelper::login($data);
 
-    //     if ($result) {
-    //         NotificationHelper::success('login', 'Đăng nhập thành công');
-    //         header('location: /');
-    //     } else {
-    //         NotificationHelper::error('login', 'Đăng nhập thất bại');
-    //         header('location: /login');
-    //     }
-    // }
+        if ($result) {
+            NotificationHelper::success('login', 'Đăng nhập thành công');
+            header('location: /');
+        } else {
+            NotificationHelper::error('login', 'Đăng nhập thất bại');
+            header('location: /login');
+        }
+    }
 
-    // public  static function logout()
-    // {
-    //     AuthHelper::logout();
-    //     NotificationHelper::success('logout', 'Đăng xuất thành công');
-    //     header('location: /');
-    // }
+    public  static function logout()
+    {
+        AuthHelper::logout();
+        NotificationHelper::success('logout', 'Đăng xuất thành công');
+        header('location: /');
+    }
 
-    // public static function edit($id)
-    // {
-    //     $category = new Category();
-    //     $categories = $category->getAllByStatus();
+    public static function edit($id)
+    {
+        // $category = new Category();
+        // $categories = $category->getAllByStatus();
 
-    //     $product = new Product();
-    //     $products = $product->getAllProductByStatus();
+        // $product = new Product();
+        // $products = $product->getAllProductByStatus();
 
-    //     $data = [
-    //         'products' => $products,
-    //         'categories' => $categories
-    //     ];
+        // $data = [
+        //     'products' => $products,
+        //     'categories' => $categories
+        // ];
 
-    //     $result = AuthHelper::edit($id);
+        $result = AuthHelper::edit($id);
 
-    //     if (!$result) {
-    //         if (isset($_SESSION['error']['login'])) {
-    //             header('location: /login');
-    //             exit;
-    //         }
+        if (!$result) {
+            if (isset($_SESSION['error']['login'])) {
+                header('location: /login');
+                exit;
+            }
 
-    //         if (isset($_SESSION['error']['user_id'])) {
+            if (isset($_SESSION['error']['user_id'])) {
 
-    //             $data = $_SESSION['user'];
-    //             $user_id = $data['id'];
-    //             header("location: /users/$user_id");
-    //             exit;
-    //         }
-    //     }
+                $data = $_SESSION['user'];
+                $user_id = $data['id'];
+                header("location: /users/$user_id");
+                exit;
+            }
+        }
 
-    //     $data = $_SESSION['user'];
-    //     Header::render($data);
-    //     Notification::render();
-    //     NotificationHelper::unset();
-    //     //Giao diện thông tin user
+        $data = $_SESSION['user'];
+        Header::render($data);
+        Notification::render();
+        NotificationHelper::unset();
+        //Giao diện thông tin user
 
-    //     Edit::render($data);
-    //     // var_dump($data);
+        // Edit::render($data);
+        // var_dump($data);
 
-    //     Footer::render();
-    // }
+        Footer::render();
+    }
 
     // public static function update($id)
     // {
