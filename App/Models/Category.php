@@ -33,4 +33,20 @@ class Category extends BaseModel
     {
         return $this->getAllByStatus();
     }
+    public function getOneCategoryByName($category_name)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM $this->table WHERE category_name=?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('s', $category_name);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy loại sản phẩm bằng tên: ' . $th->getMessage());
+            return $result;
+        }
+    }
 }

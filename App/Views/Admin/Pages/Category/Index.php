@@ -48,13 +48,15 @@ class Index extends BaseView
                                 if (count($data)) :
                                 ?>
                                     <div class="table-responsive">
-                                        <table id="" class="table table-striped ">
+                                        <table id="" class="table table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Tên</th>
-                                                    <th>Trạng thái</th>
-                                                    <th></th>
+                                                    <th>Tên Danh Mục</th>
+                                                    <th>Trạng Thái</th>
+                                                    <th>Mô Tả</th>
+                                                    <th>Hình Ảnh</th>
+                                                    <th>Hành Động</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -63,24 +65,36 @@ class Index extends BaseView
                                                 ?>
                                                     <tr>
                                                         <td><?= $item['id'] ?></td>
-                                                        <td><?= $item['name'] ?></td>
-                                                        <td><?= ($item['status'] == 1) ? 'Hiển thị' : 'Ẩn' ?></td>
+                                                        <td><?= $item['category_name'] ?></td>
+                                                        <td><?= ($item['status'] == 1) ? 'Activate' : 'Inactivate' ?></td>
+                                                        <td><?= $item['description'] ?></td>
                                                         <td>
-                                                            <a href="/admin/categories/<?= $item['id'] ?>" class="btn btn-primary ">Sửa</a>
-                                                            <form action="/admin/categories/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
-                                                                <input type="hidden" name="method" value="DELETE" id="">
-                                                                <button type="submit" class="btn btn-danger text-white">Xoá</button>
+                                                            <?php if ($item['image']) : ?>
+                                                                <img src="<?= APP_URL ?>/public/assets/client/images/<?= $item['image'] ?>" alt="" width="50px" height="50px">
+                                                            <?php else : ?>
+                                                                Không có ảnh
+                                                            <?php endif; ?>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/admin/categories/<?= $item['id'] ?>" class="btn btn-primary text-white" style="width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; padding: 0;">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                            <form action="/admin/categories/<?= $item['id'] ?>" method="post" style="display: inline-block; width: 40px; height: 40px; margin-top: 2px; " onsubmit="return confirm('Chắc chưa?')">
+                                                                <input type="hidden" name="method" value="DELETE">
+                                                                <button type="submit" class="btn btn-danger text-white" style="width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; padding: 0;">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </button>
                                                             </form>
                                                         </td>
+
                                                     </tr>
                                                 <?php
                                                 endforeach;
-
-
                                                 ?>
                                             </tbody>
                                         </table>
                                     </div>
+
                                 <?php
                                 else :
 
@@ -94,22 +108,7 @@ class Index extends BaseView
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
             </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-
 
     <?php
     }
