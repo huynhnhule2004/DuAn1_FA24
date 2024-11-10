@@ -73,25 +73,25 @@ class AuthController
         $password = $_POST['password'];
         $hash_password = password_hash($password, PASSWORD_DEFAULT);
         $email = $_POST['email'];
-        $name = $_POST['name'];
+        $first_name = $_POST['first_name'];
 
         // Đưa dữ liệu người dùng vào mảng, lưu ý "key" phải trùng với tên cột trong cơ sở dữ liệu
         $data = [
             'username' => $username,
             'password' => $hash_password,
             'email' => $email,
-            'name' => $name
+            'first_name' => $first_name
         ];
 
-        // $result = AuthHelper::register($data);
+        $result = AuthHelper::register($data);
 
-        // if ($result) {
-        //     // var_dump('Them ok');
-        //     header('Location: /login');
-        // } else {
-        //     // var_dump("Them loi");
-        //     header('Location: /register');
-        // }
+        if ($result) {
+            // var_dump('Them ok');
+            header('Location: /login');
+        } else {
+            // var_dump("Them loi");
+            header('Location: /register');
+        }
     }
 
     public static function login()

@@ -41,6 +41,7 @@ Route::get('/logout', 'App\Controllers\Client\AuthController@logout');
 
 
 Route::get('/register', 'App\Controllers\Client\AuthController@register');
+Route::post('/register', 'App\Controllers\Client\AuthController@registerAction');
 
 Route::get('/checkout', 'App\Controllers\Client\CheckoutController@index');
 // *** Admin
