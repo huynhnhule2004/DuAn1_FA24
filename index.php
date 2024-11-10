@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
@@ -33,6 +34,11 @@ Route::get('/contact', 'App\Controllers\Client\ContactController@index');
 
 
 Route::get('/login', 'App\Controllers\Client\AuthController@login');
+Route::post('/login', 'App\Controllers\Client\AuthController@loginAction');
+
+Route::get('/logout', 'App\Controllers\Client\AuthController@logout');
+
+
 
 Route::get('/register', 'App\Controllers\Client\AuthController@register');
 
