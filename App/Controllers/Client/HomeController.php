@@ -124,7 +124,9 @@ class HomeController
             'blogs' => $blogs
         ];
         
-        Header::render();
+        Header::render($data);
+        Notification::render();
+        NotificationHelper::unset();
         Home::render($data);
         Footer::render();
     }
