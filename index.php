@@ -38,6 +38,19 @@ Route::post('/login', 'App\Controllers\Client\AuthController@loginAction');
 
 Route::get('/logout', 'App\Controllers\Client\AuthController@logout');
 
+Route::get('/users/{id}', 'App\Controllers\Client\AuthController@edit');
+Route::put('/users/{id}', 'App\Controllers\Client\AuthController@update');
+
+Route::get('/change-password', 'App\Controllers\Client\AuthController@changePassword');
+Route::put('/change-password', 'App\Controllers\Client\AuthController@changePasswordAction');
+
+Route::get('/forgot-password', 'App\Controllers\Client\AuthController@forgotPassword');
+Route::post('/forgot-password', 'App\Controllers\Client\AuthController@forgotPasswordAction');
+
+Route::get('/reset-password', 'App\Controllers\Client\AuthController@resetPassword');
+Route::put('/reset-password', 'App\Controllers\Client\AuthController@resetPasswordAction');
+
+
 
 
 Route::get('/register', 'App\Controllers\Client\AuthController@register');
