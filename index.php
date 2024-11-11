@@ -7,7 +7,9 @@ error_reporting(E_ALL);
 ini_set('log_errors', TRUE); 
 ini_set('error_log', './logs/php/php-errors.log');
 
+use App\Helpers\AuthHelper;
 use App\Route;
+
 
 require_once 'vendor/autoload.php';
 
@@ -15,6 +17,8 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 require_once 'config.php';
+
+AuthHelper::middleware();
 
 
 
@@ -81,6 +85,44 @@ Route::put('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@u
 Route::delete('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@delete');
 
 
+//  *** Product
+// GET /products (lấy danh sách sản phẩm)
+Route::get('/admin/products', 'App\Controllers\Admin\ProductController@index');
+
+// GET /products/create (hiển thị form thêm sản phẩm)
+Route::get('/admin/products/create', 'App\Controllers\Admin\ProductController@create');
+
+// POST /products (tạo mới một sản phẩm)
+Route::post('/admin/products', 'App\Controllers\Admin\ProductController@store');
+
+// GET /products/{id} (lấy chi tiết sản phẩm với id cụ thể)
+Route::get('/admin/products/{id}', 'App\Controllers\Admin\ProductController@edit');
+
+// PUT /products/{id} (update sản phẩm với id cụ thể)
+Route::put('/admin/products/{id}', 'App\Controllers\Admin\ProductController@update');
+
+// DELETE /products/{id} (delete sản phẩm với id cụ thể)
+Route::delete('/admin/products/{id}', 'App\Controllers\Admin\ProductController@delete');
+
+
+//  *** User
+// GET /users (lấy danh sách người dùng)
+Route::get('/admin/users', 'App\Controllers\Admin\UserController@index');
+
+// GET /users/create (hiển thị form thêm người dùng)
+Route::get('/admin/users/create', 'App\Controllers\Admin\UserController@create');
+
+// POST /users (tạo mới một người dùng)
+Route::post('/admin/users', 'App\Controllers\Admin\UserController@store');
+
+// GET /users/{id} (lấy chi tiết người dùng với id cụ thể)
+Route::get('/admin/users/{id}', 'App\Controllers\Admin\UserController@edit');
+
+// PUT /users/{id} (update người dùng với id cụ thể)
+Route::put('/admin/users/{id}', 'App\Controllers\Admin\UserController@update');
+
+// DELETE /users/{id} (delete người dùng với id cụ thể)
+Route::delete('/admin/users/{id}', 'App\Controllers\Admin\UserController@delete');
 
 
 Route::dispatch($_SERVER['REQUEST_URI']);
