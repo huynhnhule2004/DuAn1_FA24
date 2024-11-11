@@ -55,8 +55,8 @@ class AuthValidation
         }
 
         // Họ và tên
-        if (!isset($_POST['name']) || $_POST['name'] === '') {
-            NotificationHelper::error('name', 'Không để trống họ và tên');
+        if (!isset($_POST['first_name']) || $_POST['first_name'] === '') {
+            NotificationHelper::error('first_name', 'Không để trống họ và tên');
             $is_valid = false;
         }
 
@@ -85,15 +85,13 @@ class AuthValidation
 
     public static function edit(): bool
     {
-
         $is_valid = true;
 
-        // Email
+        // Kiểm tra email
         if (!isset($_POST['email']) || $_POST['email'] === '') {
             NotificationHelper::error('email', 'Không để trống email');
             $is_valid = false;
         } else {
-            // Kiểm tra đúng định dạng email
             $emailPattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
             if (!preg_match($emailPattern, $_POST['email'])) {
                 NotificationHelper::error('email', 'Email không đúng định dạng');
@@ -101,14 +99,34 @@ class AuthValidation
             }
         }
 
-        // Họ và tên
-        if (!isset($_POST['name']) || $_POST['name'] === '') {
-            NotificationHelper::error('name', 'Không để trống họ và tên');
+        // Kiểm tra họ và tên
+        if (!isset($_POST['first_name']) || $_POST['first_name'] === '') {
+            NotificationHelper::error('first_name', 'Không để trống họ và tên');
             $is_valid = false;
         }
 
+        // Kiểm tra số điện thoại
+        if (!isset($_POST['phone_number']) || $_POST['phone_number'] === '') {
+            NotificationHelper::error('phone_number', 'Không để trống số điện thoại');
+            $is_valid = false;
+        }
+
+        // Kiểm tra địa chỉ
+        if (!isset($_POST['address']) || $_POST['address'] === '') {
+            NotificationHelper::error('address', 'Không để trống địa chỉ');
+            $is_valid = false;
+        }
+
+        // Kiểm tra ngày sinh
+        if (!isset($_POST['date_of_birth']) || $_POST['date_of_birth'] === '') {
+            NotificationHelper::error('date_of_birth', 'Không để trống ngày sinh');
+            $is_valid = false;
+        }
+        
+
         return $is_valid;
     }
+
 
     public static function uploadAvatar()
     {

@@ -102,7 +102,7 @@ abstract class BaseModel implements CrudInterface
             $stmt = $conn->prepare($sql);
             return $stmt->execute();
         } catch (\Throwable $th) {
-            error_log('Lỗi khi cập nhật dữ liệu: ', $th->getMessage());
+            error_log('Lỗi khi cập nhật dữ liệu: ' . $th->getMessage());  // Chỉnh sửa ở đây
             return false;
         }
     }
