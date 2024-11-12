@@ -8,33 +8,43 @@ class Notification extends BaseView
 {
     public static function render($data = null)
     {
-        if (isset($_SESSION['success'])):
-            foreach ($_SESSION['success'] as $key => $value):
-                ?>
-
-                <div class="alert alert-success alert-dismissible fade show">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    <strong><?= $value ?></strong>
-                </div>
-
-                <?php
+        // Kiểm tra có thông báo thành công không và hiển thị SweetAlert2
+        if (isset($_SESSION['success'])) :
+            foreach ($_SESSION['success'] as $key => $value) :
+?>
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: '<?= $value ?>',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+<?php
             endforeach;
+            // Xóa thông báo sau khi đã hiển thị
+            unset($_SESSION['success']);
         endif;
-        ?>
 
-        <?php
-        if (isset($_SESSION['error'])):
-            foreach ($_SESSION['error'] as $key => $value):
-                ?>
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    <strong><?= $value ?></strong>
-                </div>
-                <?php
+        // Kiểm tra có thông báo lỗi không và hiển thị SweetAlert2
+        if (isset($_SESSION['error'])) :
+            foreach ($_SESSION['error'] as $key => $value) :
+?>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: '<?= $value ?>',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+<?php
             endforeach;
-
+            // Xóa thông báo sau khi đã hiển thị
+            unset($_SESSION['error']);
         endif;
     }
 }
-
 ?>

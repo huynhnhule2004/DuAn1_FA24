@@ -4,11 +4,15 @@ namespace App\Views\Client\Pages\Auth;
 
 use App\Views\BaseView;
 
+// Thêm namespace cho Google Client
+use Google\Client;
+use Google\Service\Oauth2;
+
 class Login extends BaseView
 {
     public static function render($data = null)
     {
-        ?>
+?>
 
         <!-- Code HTML hiển thị giao diện  -->
         <h1 class="text-center my-3" style="color: var(--bs-primary)">Đăng nhập</h1>
@@ -34,12 +38,12 @@ class Login extends BaseView
                 </div>
                 <button type="submit" class="btn btn-primary mb-3 ">Đăng nhập</button>
                 <p class><a href="/forgot-password">Quên mật khẩu?</a> hoặc <a href="/register">Đăng ký</a></p>
-
+                <a href="">Đăng nhập với Google</a>
             </form>
         </div>
 
-
-        <?php
-
+<?php 
+        }
     }
-}
+
+?>

@@ -241,11 +241,11 @@ class AuthHelper
         $admin = $admin[1];
 
         if ($admin == 'admin') {
-            // if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 1) {
-            //     NotificationHelper::error('admin', 'Tài khoản này không có quyền truy cập');
-            //     header('location: /login');
-            //     exit;
-            // }
+            if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'admin') {
+                NotificationHelper::error('admin', 'Tài khoản này không có quyền truy cập');
+                header('location: /login');
+                exit;
+            }
 
             if (!isset($_SESSION['user'])) {
                 NotificationHelper::error('admin', 'Vui lòng đăng nhập');
