@@ -13,8 +13,8 @@ class ProductValidation
         $is_valid = true;
 
         // Tên sản phẩm
-        if (!isset($_POST['name']) || $_POST['name'] === '') {
-            NotificationHelper::error('name', 'Không để trống tên sản phẩm');
+        if (!isset($_POST['product_name']) || $_POST['product_name'] === '') {
+            NotificationHelper::error('product_name', 'Không để trống tên sản phẩm');
             $is_valid = false;
         }
 

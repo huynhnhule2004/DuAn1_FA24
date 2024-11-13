@@ -8,43 +8,52 @@ class Notification extends BaseView
 {
     public static function render($data = null)
     {
-        // Kiểm tra có thông báo thành công không và hiển thị SweetAlert2
-        if (isset($_SESSION['success'])) :
-            foreach ($_SESSION['success'] as $key => $value) :
-?>
-                <script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Thành công!',
-                        text: '<?= $value ?>',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                </script>
-<?php
-            endforeach;
-            // Xóa thông báo sau khi đã hiển thị
-            unset($_SESSION['success']);
-        endif;
+        echo '<script>';
+        
+        // Biến độ trễ ban đầu là 0
+        $delay = 0;
 
-        // Kiểm tra có thông báo lỗi không và hiển thị SweetAlert2
-        if (isset($_SESSION['error'])) :
-            foreach ($_SESSION['error'] as $key => $value) :
-?>
-                <script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Lỗi!',
-                        text: '<?= $value ?>',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                </script>
-<?php
-            endforeach;
-            // Xóa thông báo sau khi đã hiển thị
-            unset($_SESSION['error']);
-        endif;
+        // Thông báo thành công
+        if (isset($_SESSION['success'])) {
+            foreach ($_SESSION['success'] as $key => $value) {
+                echo "
+                    setTimeout(function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: '{$value}',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    }, {$delay});
+                ";
+                // Tăng độ trễ thêm 1000ms cho mỗi thông báo tiếp theo
+                $delay += 1000;
+            }
+            unset($_SESSION['success']); // Xóa session sau khi hiển thị
+        }
+
+        // Thông báo lỗi
+        if (isset($_SESSION['error'])) {
+            foreach ($_SESSION['error'] as $key => $value) {
+                echo "
+                    setTimeout(function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: '{$value}',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    }, {$delay});
+                ";
+                // Tăng độ trễ thêm 1000ms cho mỗi thông báo tiếp theo
+                $delay += 1000;
+            }
+            unset($_SESSION['error']); // Xóa session sau khi hiển thị
+        }
+
+        echo '</script>';
     }
 }
 ?>

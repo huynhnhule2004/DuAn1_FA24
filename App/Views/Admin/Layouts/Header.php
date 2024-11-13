@@ -36,6 +36,10 @@ class Header extends BaseView
             <!-- SweetAlert2 CSS -->
             <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.6/dist/sweetalert2.min.css" rel="stylesheet">
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.6/dist/sweetalert2.all.min.js"></script>
+            <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+            <!-- Thêm Toast.js CSS và JavaScript từ CDN -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+            <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 
 
@@ -113,7 +117,7 @@ class Header extends BaseView
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
 
-                                        <a class="dropdown-item" href=""><i class="fa fa-power-off me-1 ms-1"></i> Đăng xuất</a>
+                                        <a class="dropdown-item" href="/logout"><i class="fa fa-power-off me-1 ms-1"></i> Đăng xuất</a>
                                     </ul>
                                 </li>
                                 <!-- ============================================================== -->
