@@ -50,7 +50,7 @@ class Edit extends BaseView
                                     <input type="hidden" name="method" id="" value="PUT">
                                     <div class="form-group">
                                         <label for="id">ID</label>
-                                        <input type="text" class="form-control" id="id"  name="id" value="<?= $data['id'] ?>" disabled>
+                                        <input type="text" class="form-control" id="id" name="id" value="<?= $data['id'] ?>" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Tên*</label>
@@ -58,13 +58,13 @@ class Edit extends BaseView
                                     </div>
                                     <div class="form-group">
                                         <label for="status">Trạng thái*</label>
-                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="status" name="status" value="<?= $data['status'] ?>" required>
-                                            <option value="" selected disabled>Vui lòng chọn...</option>
-                                            <option value="1" <?= ($data['status'] == 1 ? 'selected' : '') ?>>Activate</option>
-                                            <option value="0" <?= ($data['status'] == 0 ? 'selected' : '') ?>>Inactivate</option>
-
+                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="status" name="status" required>
+                                            <option value="" disabled>Vui lòng chọn...</option>
+                                            <option value="1" <?= ($data['status'] == 'active' ? 'selected' : '') ?>>Còn hàng</option>
+                                            <option value="0" <?= ($data['status'] == 'inactive' ? 'selected' : '') ?>>Hết hàng</option>
                                         </select>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="description">Mô tả</label>
                                         <textarea class="form-control" id="description" placeholder="Nhập mô tả cho loại sản phẩm..." name="description" rows="3"><?= htmlspecialchars($data['description']) ?></textarea>
@@ -105,7 +105,13 @@ class Edit extends BaseView
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
             <!-- ============================================================== -->
-
+            <script>
+                ClassicEditor
+                    .create(document.querySelector('#description'))
+                    .catch(error => {
+                        console.error(error);
+                    });
+            </script>
     <?php
     }
 }

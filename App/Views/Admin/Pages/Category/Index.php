@@ -66,7 +66,7 @@ class Index extends BaseView
                                                     <tr>
                                                         <td><?= $item['id'] ?></td>
                                                         <td><?= $item['category_name'] ?></td>
-                                                        <td><?= ($item['status'] == 1) ? 'Activate' : 'Inactivate' ?></td>
+                                                        <td><?= ($item['status'] === 'active') ? 'Còn hàng' : 'Hết hàng' ?></td>
                                                         <td><?= $item['description'] ?></td>
                                                         <td>
                                                             <?php if ($item['image']) : ?>

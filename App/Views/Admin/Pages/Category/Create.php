@@ -28,7 +28,7 @@ class Create extends BaseView
                     </div>
                 </div>
             </div>
-            
+
             <!-- Container fluid  -->
             <div class="container-fluid">
                 <div class="row">
@@ -82,6 +82,13 @@ class Create extends BaseView
             </div>
         </div>
 
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#description'))
+                .catch(error => {
+                    console.error(error);
+                });
+        </script>
 <?php
     }
 }

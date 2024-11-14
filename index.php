@@ -35,8 +35,6 @@ Route::get('/wishlist', 'App\Controllers\Client\WishlistController@index');
 
 
 Route::get('/contact', 'App\Controllers\Client\ContactController@index');
-
-
 Route::get('/login', 'App\Controllers\Client\AuthController@login');
 Route::post('/login', 'App\Controllers\Client\AuthController@loginAction');
 
