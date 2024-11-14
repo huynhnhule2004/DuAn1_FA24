@@ -9,7 +9,6 @@ class UserValidation
 {
     public static function create(): bool
     {
-
         $is_valid = true;
 
         // Tên đăng nhập
@@ -74,11 +73,6 @@ class UserValidation
             NotificationHelper::error('phone_number', 'Không để trống số điện thoại');
             $is_valid = false;
         }
-        // Số điện thoại
-        if (!isset($_POST['date_of_birth']) || $_POST['date_of_birth'] === '') {
-            NotificationHelper::error('date_of_birth', 'Không để trống ngày sinh');
-            $is_valid = false;
-        }
 
         // Trạng thái
         if (!isset($_POST['status']) || $_POST['status'] === '') {
@@ -86,8 +80,10 @@ class UserValidation
             $is_valid = false;
         }
         // Ngày sinh
-
-        if (!empty($_POST['date_of_birth'])) {
+        if (empty($_POST['date_of_birth']) || $_POST['date_of_birth'] === '') {
+            NotificationHelper::error('date_of_birth', 'Không để trống ngày sinh');
+            $is_valid = false;
+        } else {
             $date = new DateTime($_POST['date_of_birth']);
             $currentDate = new DateTime();
             $age = $currentDate->diff($date)->y;
@@ -143,16 +139,47 @@ class UserValidation
             }
         }
 
-        // Họ và tên
-        if (!isset($_POST['name']) || $_POST['name'] === '') {
-            NotificationHelper::error('name', 'Không để trống họ và tên');
-            $is_valid = false;
-        }
-
         // Trạng thái
         if (!isset($_POST['status']) || $_POST['status'] === '') {
             NotificationHelper::error('status', 'Không để trống trạng thái');
             $is_valid = false;
+        }
+        // ten
+        if (!isset($_POST['first_name']) || $_POST['first_name'] === '') {
+            NotificationHelper::error('first_name', 'Không để trống tên');
+            $is_valid = false;
+        }
+        //ho
+        if (!isset($_POST['last_name']) || $_POST['last_name'] === '') {
+            NotificationHelper::error('last_name', 'Không để trống họ');
+            $is_valid = false;
+        }
+        // Địa chỉ
+        if (!isset($_POST['address']) || $_POST['address'] === '') {
+            NotificationHelper::error('address', 'Không để trống địa chỉ');
+            $is_valid = false;
+        }
+        // Số điện thoại
+        if (!isset($_POST['phone_number']) || $_POST['phone_number'] === '') {
+            NotificationHelper::error('phone_number', 'Không để trống số điện thoại');
+            $is_valid = false;
+        }
+        // Ngày sinh
+        if (empty($_POST['date_of_birth']) || $_POST['date_of_birth'] === '') {
+            NotificationHelper::error('date_of_birth', 'Không để trống ngày sinh');
+            $is_valid = false;
+        } else {
+            $date = new DateTime($_POST['date_of_birth']);
+            $currentDate = new DateTime();
+            $age = $currentDate->diff($date)->y;
+
+            if ($age < 13) {
+                NotificationHelper::error('date_of_birth', 'Khách hàng phải từ 13 tuổi trở lên');
+                $is_valid = false;
+            } elseif ($age > 100) {
+                NotificationHelper::error('date_of_birth', 'Khách hàng không được quá 100 tuổi');
+                $is_valid = false;
+            }
         }
 
         return $is_valid;
