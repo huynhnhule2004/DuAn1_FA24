@@ -84,6 +84,24 @@ Route::put('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@u
 // DELETE /categories/{id} (delete loại sản phẩm với id cụ thể)
 Route::delete('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@delete');
 
+//  *** BlogCategory
+// GET /blog_categories (lấy danh sách loại bài viết)
+Route::get('/admin/blog_categories', 'App\Controllers\Admin\BlogCategoryController@index');
+
+// GET /blog_categories/create (hiển thị form thêm loại sản phẩm)
+Route::get('/admin/blog_categories/create', 'App\Controllers\Admin\BlogCategoryController@create');
+
+// POST /blog_categories (tạo mới một loại sản phẩm)
+Route::post('/admin/blog_categories', 'App\Controllers\Admin\BlogCategoryController@store');
+
+// GET /blog_categories/{id} (lấy chi tiết loại sản phẩm với id cụ thể)
+Route::get('/admin/blog_categories/{id}', 'App\Controllers\Admin\BlogCategoryController@edit');
+
+// PUT /blog_categories/{id} (update loại sản phẩm với id cụ thể)
+Route::put('/admin/blog_categories/{id}', 'App\Controllers\Admin\BlogCategoryController@update');
+
+// DELETE /blog_categories/{id} (delete loại sản phẩm với id cụ thể)
+Route::delete('/admin/blog_categories/{id}', 'App\Controllers\Admin\BlogCategoryController@delete');
 
 //  *** Product
 // GET /products (lấy danh sách sản phẩm)

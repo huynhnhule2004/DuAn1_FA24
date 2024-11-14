@@ -65,10 +65,6 @@ class Checkout extends BaseView
                             <label for="city" class="form-label">Thành Phố</label>
                             <input type="text" class="form-control" id="city" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="postalCode" class="form-label">Mã Bưu Điện</label>
-                            <input type="text" class="form-control" id="postalCode" required>
-                        </div>
                         <h3>Phương Thức Thanh Toán</h3>
                         <div class="mb-3">
                             <label class="form-label">Chọn Phương Thức Thanh Toán</label>

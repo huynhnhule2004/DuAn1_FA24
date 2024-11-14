@@ -21,7 +21,7 @@ class CartController
                 'size' => '5kg',
                 'format' => 'Túi',
                 'quantity' => 2,
-                'price' => 9.99
+                'price' => 9,99
             ],
             [
                 'name' => 'Whiskas thức ăn mèo',
@@ -29,7 +29,7 @@ class CartController
                 'size' => '10kg',
                 'format' => 'Túi',
                 'quantity' => 1,
-                'price' => 13.50
+                'price' => 13,50
             ],
             [
                 'name' => 'Ganador thức ăn chó',
@@ -37,7 +37,7 @@ class CartController
                 'size' => '10kg',
                 'format' => 'Túi',
                 'quantity' => 1,
-                'price' => 13.50
+                'price' => 13,50
             ]
         ];
 

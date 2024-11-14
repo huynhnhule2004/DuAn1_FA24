@@ -249,7 +249,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h4 class="secondary-font text-primary">$18.00</h4>
+                                    <h4 class="secondary-font text-primary">31,000 VNĐ</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -288,7 +288,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h4 class="secondary-font text-primary">$18.00</h4>
+                                    <h4 class="secondary-font text-primary">31,000 VNĐ</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -327,7 +327,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h4 class="secondary-font text-primary">$18.00</h4>
+                                    <h4 class="secondary-font text-primary">31,000 VNĐ</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -366,7 +366,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h4 class="secondary-font text-primary">$18.00</h4>
+                                    <h4 class="secondary-font text-primary">31,000 VNĐ31,000 VNĐ</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -405,7 +405,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h4 class="secondary-font text-primary">$18.00</h4>
+                                    <h4 class="secondary-font text-primary">31,000 VNĐ</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -444,7 +444,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h4 class="secondary-font text-primary">$18.00</h4>
+                                    <h4 class="secondary-font text-primary">31,000 VNĐ</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -483,7 +483,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h4 class="secondary-font text-primary">$18.00</h4>
+                                    <h4 class="secondary-font text-primary">31,000 VNĐ</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
@@ -520,7 +520,7 @@ class Home extends BaseView
                                         <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                         5.0</span>
 
-                                    <h4 class="secondary-font text-primary">$18.00</h4>
+                                    <h4 class="secondary-font text-primary">31,000 VNĐ</h4>
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">

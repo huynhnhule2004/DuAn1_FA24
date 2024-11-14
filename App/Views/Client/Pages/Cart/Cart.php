@@ -101,7 +101,7 @@ class Cart extends BaseView
                                                 </div>
                                             </td>
                                             <td class="align-middle" data-label="Giá">
-                                                <p class="mb-0" style="font-weight: 500;">$<?php echo number_format($product['price'], 2); ?></p>
+                                                <p class="mb-0" style="font-weight: 500;"><?php echo number_format($product['price'], 2); ?> VNĐ</p>
                                             </td>
                                         </tr>
                                     <?php 
@@ -118,19 +118,19 @@ class Cart extends BaseView
                                     <div class="col-lg-4 col-xl-3 ms-auto">
                                         <div class="d-flex justify-content-between" style="font-weight: 500;">
                                             <p class="mb-2">Tổng cộng</p>
-                                            <p class="mb-2">$<?php echo number_format($totalPrice, 2); ?></p>
+                                            <p class="mb-2"><?php echo number_format($totalPrice, 2); ?> VNĐ</p>
                                         </div>
 
                                         <div class="d-flex justify-content-between" style="font-weight: 500;">
                                             <p class="mb-0">Vận Chuyển</p>
-                                            <p class="mb-0">$2.99</p>
+                                            <p class="mb-0">31.000 VNĐ</p>
                                         </div>
 
                                         <hr class="my-4">
 
                                         <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
                                             <p class="mb-2">Tổng cộng</p>
-                                            <p class="mb-2">$<?php echo number_format($totalPrice + 2.99, 2); ?></p>
+                                            <p class="mb-2"><?php echo number_format($totalPrice + 2.99, 2); ?> VNĐ</p>
                                         </div>
 
                                         <div class="d-flex justify-content-center">
