@@ -141,4 +141,19 @@ Route::put('/admin/users/{id}', 'App\Controllers\Admin\UserController@update');
 Route::delete('/admin/users/{id}', 'App\Controllers\Admin\UserController@delete');
 
 
+
+//  *** Comment
+// GET /Comment (lấy danh sách bình luận)
+Route::get('/admin/comments', 'App\Controllers\Admin\CommentController@index');
+
+// GET /Comment/{id} (lấy chi tiết bình luận với id cụ thể)
+Route::get('/admin/comments/{id}', 'App\Controllers\Admin\CommentController@edit');
+
+// PUT /Comment/{id} (update bình luậnvới id cụ thể)
+Route::put('/admin/comments/{id}', 'App\Controllers\Admin\CommentController@update');
+
+// DELETE /Comment/{id} (delete bình luận với id cụ thể)
+Route::delete('/admin/comments/{id}', 'App\Controllers\Admin\CommentController@delete');
+
+
 Route::dispatch($_SERVER['REQUEST_URI']);
