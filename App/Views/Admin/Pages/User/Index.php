@@ -47,61 +47,51 @@ class Index extends BaseView
                                 <?php
                                 if (count($data)) :
                                 ?>
-                                    <div class="table-responsive">
-                                        <table id="" class="table table-striped ">
+                                    <div class="table-responsive" style="overflow-x: auto;">
+                                        <table id="" class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
-                                                    <th>Ảnh đại diện</th>
-                                                    <th>Tên đăng nhập</th>
-                                                    <th>Tên</th>
-                                                    <th>Họ</th>
-                                                    <th>Email</th>
-                                                    <th>Số điện thoại</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th>Ngày sinh</th>
-                                                    <th>Quyền</th>
-                                                    <th>Trạng thái</th>
-                                                    <th></th>
+                                                    <th style="white-space: nowrap;">ID</th>
+                                                    <th style="white-space: nowrap;">Ảnh đại diện</th>
+                                                    <th style="white-space: nowrap;">Tên đăng nhập</th>
+                                                    <th style="white-space: nowrap;">Tên</th>
+                                                    <th style="white-space: nowrap;">Họ</th>
+                                                    <th style="white-space: nowrap;">Email</th>
+                                                    <th style="white-space: nowrap;">Số điện thoại</th>
+                                                    <th style="white-space: nowrap;">Địa chỉ</th>
+                                                    <th style="white-space: nowrap;">Ngày sinh</th>
+                                                    <th style="white-space: nowrap;">Quyền</th>
+                                                    <th style="white-space: nowrap;">Trạng thái</th>
+                                                    <th style="white-space: nowrap;"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-
-                                                <?php
-                                                foreach ($data as $item) :
-                                                ?>
+                                                <?php foreach ($data as $item) : ?>
                                                     <tr>
-                                                        <td><?= $item['id'] ?></td>
-                                                        <td>
-                                                            <img src="<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>" alt="" width="50px">
-                                                        </td>
-                                                        <td><?= $item['username'] ?></td>
-                                                        <td><?= $item['first_name'] ?></td>
-                                                        <td><?= $item['last_name'] ?></td>
-                                                        <td><?= $item['email'] ?></td>
-                                                        <td><?= $item['phone_number'] ?></td>
-                                                        <td><?= $item['address'] ?></td>
-                                                        <td><?= $item['date_of_birth'] ?></td>
-                                                        <td><?= ($item['role'] === 'admin') ? 'Quản trị viên' : 'Khách hàng' ?></td>
-                                                        <td><?= ($item['status'] === 'active') ? 'Hoạt động' : 'Khoá' ?></td>
-                                                        <td>
-                                                            <a href="/admin/users/<?= $item['id'] ?>" class="btn btn-primary ">Sửa</a>
-
+                                                        <td style="white-space: nowrap;"><?= $item['id'] ?></td>
+                                                        <td style="white-space: nowrap;"><img src="<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>" alt="" width="50px"></td>
+                                                        <td style="white-space: nowrap;"><?= $item['username'] ?></td>
+                                                        <td style="white-space: nowrap;"><?= $item['first_name'] ?></td>
+                                                        <td style="white-space: nowrap;"><?= $item['last_name'] ?></td>
+                                                        <td style="white-space: nowrap;"><?= $item['email'] ?></td>
+                                                        <td style="white-space: nowrap;"><?= $item['phone_number'] ?></td>
+                                                        <td style="white-space: nowrap;"><?= $item['address'] ?></td>
+                                                        <td style="white-space: nowrap;"><?= $item['date_of_birth'] ?></td>
+                                                        <td style="white-space: nowrap;"><?= ($item['role'] === 'admin') ? 'Quản trị viên' : 'Khách hàng' ?></td>
+                                                        <td style="white-space: nowrap;"><?= ($item['status'] === 'active') ? 'Hoạt động' : 'Khoá' ?></td>
+                                                        <td style="white-space: nowrap;">
+                                                            <a href="/admin/users/<?= $item['id'] ?>" class="btn btn-primary">Sửa</a>
                                                             <form action="/admin/users/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
-                                                                <input type="hidden" name="method" value="DELETE" id="">
+                                                                <input type="hidden" name="method" value="DELETE">
                                                                 <button type="submit" class="btn btn-danger text-white">Xoá</button>
                                                             </form>
-
                                                         </td>
                                                     </tr>
-                                                <?php
-                                                endforeach;
-
-
-                                                ?>
+                                                <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>
+
                                 <?php
                                 else :
 
