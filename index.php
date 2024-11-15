@@ -101,24 +101,24 @@ Route::put('/admin/blog_categories/{id}', 'App\Controllers\Admin\BlogCategoryCon
 // DELETE /blog_categories/{id} (delete loại sản phẩm với id cụ thể)
 Route::delete('/admin/blog_categories/{id}', 'App\Controllers\Admin\BlogCategoryController@delete');
 
-//  *** Product
-// GET /products (lấy danh sách sản phẩm)
-Route::get('/admin/products', 'App\Controllers\Admin\ProductController@index');
+//  *** Blog
+// GET /blogs (lấy danh sách sản phẩm)
+Route::get('/admin/blogs', 'App\Controllers\Admin\BlogController@index');
 
-// GET /products/create (hiển thị form thêm sản phẩm)
-Route::get('/admin/products/create', 'App\Controllers\Admin\ProductController@create');
+// GET /blogs/create (hiển thị form thêm sản phẩm)
+Route::get('/admin/blogs/create', 'App\Controllers\Admin\BlogController@create');
 
-// POST /products (tạo mới một sản phẩm)
-Route::post('/admin/products', 'App\Controllers\Admin\ProductController@store');
+// POST /blogs (tạo mới một sản phẩm)
+Route::post('/admin/blogs', 'App\Controllers\Admin\BlogController@store');
 
-// GET /products/{id} (lấy chi tiết sản phẩm với id cụ thể)
-Route::get('/admin/products/{id}', 'App\Controllers\Admin\ProductController@edit');
+// GET /blogs/{id} (lấy chi tiết sản phẩm với id cụ thể)
+Route::get('/admin/blogs/{id}', 'App\Controllers\Admin\BlogController@edit');
 
-// PUT /products/{id} (update sản phẩm với id cụ thể)
-Route::put('/admin/products/{id}', 'App\Controllers\Admin\ProductController@update');
+// PUT /blogs/{id} (update sản phẩm với id cụ thể)
+Route::put('/admin/blogs/{id}', 'App\Controllers\Admin\BlogController@update');
 
-// DELETE /products/{id} (delete sản phẩm với id cụ thể)
-Route::delete('/admin/products/{id}', 'App\Controllers\Admin\ProductController@delete');
+// DELETE /blogs/{id} (delete sản phẩm với id cụ thể)
+Route::delete('/admin/blogs/{id}', 'App\Controllers\Admin\BlogController@delete');
 
 
 //  *** User
