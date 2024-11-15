@@ -19,16 +19,16 @@ class Index extends BaseView
                 <p class="secondary-font fs-6 m-0">Feb</p>
               </div>
               <div class="card position-relative">
-                <a href="single-post.html">
+                <a href="/moreblogs">
                   <img src="<?= APP_URL ?>/public/assets/client/images/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
                 </a>
                 <div class="card-body p-0">
-                  <a href="single-post.html">
+                  <a href="/moreblogs">
                     <h3 class="card-title pt-4 pb-3 m-0"><?= $item['title'] ?></h3>
                   </a>
                   <div class="card-text">
                     <p class="blog-paragraph fs-6"><?= $item['content'] ?></p>
-                    <a href="single-post.html" class="blog-read">Đọc thêm</a>
+                    <a href="/moreblogs" class="blog-read">Đọc thêm</a>
                   </div>
                 </div>
               </div>
