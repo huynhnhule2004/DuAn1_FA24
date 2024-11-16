@@ -56,7 +56,7 @@ class Index extends BaseView
                                                     <th>Quản trị viên</th>
                                                     <th>Loại</th>
                                                     <th>Tiêu đề</th>
-                                                    <th>Nội dung</th>
+                                                    <!-- <th>Nội dung</th> -->
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -72,7 +72,7 @@ class Index extends BaseView
                                                         <td><?= $item['username'] ?></td>
                                                         <td><?= $item['category_name'] ?></td>
                                                         <td><?=$item['title'] ?></td>
-                                                        <td><?= $item['content'] ?></td>
+                                                        
 
                                                         <td>
                                                             <a href="/admin/blogs/<?= $item['id'] ?>" class="btn btn-primary ">Sửa</a>

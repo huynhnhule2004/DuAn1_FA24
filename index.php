@@ -54,6 +54,8 @@ Route::get('/reset-password', 'App\Controllers\Client\AuthController@resetPasswo
 Route::put('/reset-password', 'App\Controllers\Client\AuthController@resetPasswordAction');
 
 
+Route::get('/blogs/{id}', 'App\Controllers\Client\BlogController@detail');
+
 
 
 Route::get('/register', 'App\Controllers\Client\AuthController@register');

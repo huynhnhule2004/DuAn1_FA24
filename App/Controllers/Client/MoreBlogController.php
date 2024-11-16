@@ -7,6 +7,7 @@ use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Pages\Blog\Moreblog;
 use App\Views\Client\Layouts\Header;
+use App\Models\Blog;
 
 class MoreBlogController
 {

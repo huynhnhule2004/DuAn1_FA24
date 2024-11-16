@@ -95,17 +95,17 @@ class ChangePassword extends BaseView
                                     <!-- Tên -->
                                     <div class="col-md-6">
                                         <label for="old_password" class="form-label">Mật khẩu cũ*</label>
-                                        <input type="password" class="form-control" id="old_password" name="old_password" placeholder="nhập mật khẩu cũ" >
+                                        <input type="password" class="form-control" id="old_password" name="old_password" placeholder="Nhập mật khẩu cũ" >
                                     </div>
                                     <!-- Số điện thoại -->
                                     <div class="col-md-6">
                                         <label for="new_password" class="form-label">Mật khẩu mới*</label>
-                                        <input type="password" class="form-control" id="new_password" name="new_password" placeholder="nhập mật khẩu mới" >
+                                        <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Nhập mật khẩu mới" >
                                     </div>
                                     <!-- Địa chỉ -->
                                     <div class="col-md-6">
                                         <label for="re_password" class="form-label">Nhập lại mật khẩu mới*</label>
-                                        <input type="password" class="form-control" id="re_password" name="re_password" placeholder="nhập lại mật khẩu mới" >
+                                        <input type="password" class="form-control" id="re_password" name="re_password" placeholder="Nhập lại mật khẩu mới" >
                                     </div>
                                 </div> <!-- Row END -->
                             </div>
