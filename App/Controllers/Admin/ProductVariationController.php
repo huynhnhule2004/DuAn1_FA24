@@ -13,7 +13,7 @@ use App\Views\Admin\Pages\Product\Create;
 use App\Views\Admin\Pages\Product\Edit;
 use App\Views\Admin\Pages\Product\Index;
 
-class ProductController
+class ProductVariationController
 {
 
 

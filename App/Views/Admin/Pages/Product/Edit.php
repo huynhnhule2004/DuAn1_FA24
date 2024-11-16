@@ -48,9 +48,6 @@ class Edit extends BaseView
                                 <div class="card-body">
                                     <h4 class="card-title">Sửa sản phẩm</h4>
                                     <input type="hidden" name="method" id="" value="PUT">
-                                    <div align="center">
-                                        <img src="<?= APP_URL ?>/public/uploads/products/<?= $data['product']['image'] ?>" alt="" width="300px">
-                                    </div>
                                     <div class="form-group">
                                         <label for="id">ID</label>
                                         <input type="text" class="form-control" id="id" name="id" value="<?= $data['product']['id'] ?>" disabled>
@@ -58,10 +55,6 @@ class Edit extends BaseView
                                     <div class="form-group">
                                         <label for="product_name">Tên*</label>
                                         <input type="text" class="form-control" id="product_name" placeholder="Nhập tên sản phẩm..." name="product_name" value="<?= $data['product']['product_name'] ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="image">Hình ảnh</label>
-                                        <input type="file" class="form-control" id="image" placeholder="Chọn hình ảnh..." name="image">
                                     </div>
                                     <div class="form-group">
                                         <label for="price">Giá tiền*</label>
@@ -88,10 +81,6 @@ class Edit extends BaseView
                                     <div class="form-group">
                                         <label for="format">Định dạng</label>
                                         <input type="text" class="form-control" id="format" placeholder="Nhập định dạng sản phẩm.." name="format" value="<?= $data['product']['format'] ?>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="stock_quantity">Số lượng</label>
-                                        <input type="number" class="form-control" id="stock_quantity" placeholder="Nhập số lượng..." name="stock_quantity" required value="<?= $data['product']['stock_quantity'] ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="category_id">Loại sản phẩm*</label>

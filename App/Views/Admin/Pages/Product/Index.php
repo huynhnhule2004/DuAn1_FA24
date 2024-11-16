@@ -52,12 +52,13 @@ class Index extends BaseView
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Hình ảnh</th>
                                                     <th>Tên</th>
                                                     <th>Giá</th>
                                                     <th>Giá giảm</th>
                                                     <th>Loại</th>
                                                     <th>Trạng thái</th>
+                                                    <th>Nổi bật</th>
+                                                    <th>Mô tả ngắn</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -66,15 +67,12 @@ class Index extends BaseView
                                                 foreach ($data as $item) :
                                                 ?>
                                                     <tr>
-                                                        <td><?= $item['id'] ?></td>
-                                                        <td>
-                                                            <img src="<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>" alt="" width="100px">
-                                                        </td>
-                                                        <td><?= $item['product_name'] ?></td>
-                                                        <td><?= number_format($item['price']) ?></td>
-                                                        <td><?= number_format($item['discount_price']) ?></td>
-                                                        <td><?= $item['category_name'] ?></td>
-                                                        <td>
+                                                        <td style="white-space: nowrap;"><?= $item['id'] ?></td>
+                                                        <td style="white-space: nowrap;"><?= $item['product_name'] ?></td>
+                                                        <td style="white-space: nowrap;"><?= number_format($item['price']) ?></td>
+                                                        <td style="white-space: nowrap;"><?= number_format($item['discount_price']) ?></td>
+                                                        <td style="white-space: nowrap;"><?= $item['category_name'] ?></td>
+                                                        <td style="white-space: nowrap;">
                                                             <?php
                                                             switch ($item['status']) {
                                                                 case 'available':
@@ -92,8 +90,9 @@ class Index extends BaseView
                                                             }
                                                             ?>
                                                         </td>
-
-                                                        <td>
+                                                        <td style="white-space: nowrap;"><?= $item['is_feature'] == 1 ? 'Nổi bật' : 'Không nổi bật' ?></td>
+                                                        <td style="white-space: nowrap;"><?= strlen($item['short_description']) > 50 ? substr($item['short_description'], 0, 50) . '...' : $item['short_description'] ?></td>
+                                                        <td style="white-space: nowrap;">
                                                             <a href="/admin/products/<?= $item['id'] ?>" class="btn btn-primary ">Sửa</a>
                                                             <form action="/admin/products/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
                                                                 <input type="hidden" name="method" value="DELETE" id="">
