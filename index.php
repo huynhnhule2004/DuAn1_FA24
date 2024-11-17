@@ -26,7 +26,11 @@ AuthHelper::middleware();
 Route::get('/', 'App\Controllers\Client\HomeController@index');
 Route::get('/products', 'App\Controllers\Client\ProductController@index');
 Route::get('/blogs', 'App\Controllers\Client\BlogController@index');
-Route::get('/moreblogs', 'App\Controllers\Client\MoreBlogController@Moreblog');
+Route::get('/moreblog', 'App\Controllers\Client\MoreBlogController@Moreblog');
+
+
+
+
 Route::get('/orders', 'App\Controllers\Client\OrderController@index');
 Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');
 Route::get('/about', 'App\Controllers\Client\AboutController@index');

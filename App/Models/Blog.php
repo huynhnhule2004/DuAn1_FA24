@@ -205,6 +205,25 @@ class Blog extends BaseModel
             return $result;
         }
     }
+    public function getBlogById($id)
+    {
+        $sql = "SELECT blogs.*, blog_categories.category_name, users.username
+            FROM blogs
+            INNER JOIN blog_categories ON blogs.category_id = blog_categories.id
+            INNER JOIN users ON blogs.user_id = users.id
+            WHERE blogs.id = ?";
+
+        $stmt = $this->_conn->MySQLi()->prepare($sql);
+        $stmt->bind_param("i", $id);  // Bảo vệ khỏi SQL injection
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+
+        return null;  // Nếu không có bài viết
+    }
     public function getBlogsByCategory($categoryId)
     {
         $result = [];
@@ -220,21 +239,23 @@ class Blog extends BaseModel
         }
     }
 
-    public function getBlogDetail($blogId)
+    public function getBlogDetail($id)
     {
         $result = [];
         try {
-            $sql = "SELECT blogs.*, blog_categories.category_name FROM blogs
+            $sql = "SELECT blogs.*, blog_categories.category_name 
+                FROM blogs
                 INNER JOIN blog_categories ON blogs.category_id = blog_categories.id
                 WHERE blogs.id = ?";
             $stmt = $this->_conn->MySQLi()->prepare($sql);
-            $stmt->bind_param('i', $blogId);
+            $stmt->bind_param('i', $id);
             $stmt->execute();
-            return $stmt->get_result()->fetch_assoc();
+
+            $result = $stmt->get_result()->fetch_assoc();  // Lấy chi tiết bài viết
+            return $result;
         } catch (\Throwable $th) {
             error_log('Lỗi khi lấy chi tiết bài viết: ' . $th->getMessage());
             return $result;
         }
     }
-    
 }
