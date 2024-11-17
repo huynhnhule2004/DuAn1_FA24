@@ -163,6 +163,9 @@ class Header extends BaseView
                                         <li class="sidebar-item">
                                             <a href="/admin/products/create" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Thêm mới </span></a>
                                         </li>
+                                        <li class="sidebar-item">
+                                            <a href="/admin/products/attributes" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Thuộc tính </span></a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li class="sidebar-item">

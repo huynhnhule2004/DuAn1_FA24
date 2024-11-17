@@ -11,7 +11,7 @@ class ProductVariation extends BaseModel
     {
         return $this->getAll();
     }
-    public function getOneProduct($id)
+    public function getOneProductVariation($id)
     {
         return $this->getOne($id);
     }

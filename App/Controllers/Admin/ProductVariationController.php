@@ -5,13 +5,15 @@ namespace App\Controllers\Admin;
 use App\Helpers\NotificationHelper;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductVariation;
 use App\Validations\ProductValidation;
+use App\Validations\ProductVariationValidation;
 use App\Views\Admin\Layouts\Footer;
 use App\Views\Admin\Layouts\Header;
 use App\Views\Admin\Components\Notification;
-use App\Views\Admin\Pages\Product\Create;
-use App\Views\Admin\Pages\Product\Edit;
-use App\Views\Admin\Pages\Product\Index;
+use App\Views\Admin\Pages\ProductVariation\Create;
+use App\Views\Admin\Pages\ProductVariation\Edit;
+use App\Views\Admin\Pages\ProductVariation\Index;
 
 class ProductVariationController
 {
@@ -37,8 +39,9 @@ class ProductVariationController
     // hiển thị giao diện form thêm
     public static function create()
     {
-        $category = new Category();
-        $data = $category->getAllCategory();
+        $product = new Product();
+        $data = $product->getAllProduct();
+        
         // echo "<pre>";
         // var_dump($data);
         Header::render();
@@ -54,57 +57,49 @@ class ProductVariationController
     public static function store()
     {
         // validation các trường dữ liệu
-        $is_valid = ProductValidation::create();
+        $is_valid = ProductVariationValidation::create();
 
         if (!$is_valid) {
             NotificationHelper::error('store', 'Thêm sản phẩm thất bại');
-            header('location: /admin/products/create');
+            header('location: /admin/products/attributes');
             exit;
         }
 
-        $name = $_POST['product_name'];
+        $name = $_POST['name'];
 
         //kiểm tra tên sản phẩm có tồn tại chưa => không được trùng tên
 
-        $product = new Product();
-        $is_exist = $product->getOneProductByName($name);
+        $product_variation  = new ProductVariation();
+        $is_exist = $product_variation->getOneProductByName($name);
 
         if ($is_exist) {
-            NotificationHelper::error('store', 'Tên sản phẩm này đã tồn tại');
-            header('location: /admin/products/create');
+            NotificationHelper::error('store', 'Tên thuộc tính này đã tồn tại');
+            header('location: /admin/products/attributes');
             exit;
         }
 
         // Thực hiện thêm
         $data = [
-            'product_name' => $_POST['product_name'],
-            'price' => $_POST['price'],
-            'discount_price' => $_POST['discount_price'],
-            'is_feature' => $_POST['is_feature'],
-            'status' => $_POST['status'],
-            'category_id' => $_POST['category_id'],
-            'short_description' => $_POST['short_description'],
-            'long_description' => $_POST['long_description'],
-            'how_to_use' => $_POST['how_to_use'],
-            'format' => $_POST['format']
+            'product_id' => $_POST['product_id'],
+            'name' => $_POST['name']
         ];
 
         // var_dump($data);
-        $is_upload = ProductValidation::uploadImage();
+        // $is_upload = ProductValidation::uploadImage();
 
-        if ($is_upload) {
-            $data['image'] = $is_upload;
-        }
+        // if ($is_upload) {
+        //     $data['image'] = $is_upload;
+        // }
         // var_dump($data);
 
-        $result = $product->createProduct($data);
+        $result = $product_variation->createProduct($data);
 
         if ($result) {
-            NotificationHelper::success('store', 'Thêm sản phẩm thành công');
-            header('location: /admin/products');
+            NotificationHelper::success('store', 'Thêm thuộc tính thành công');
+            header('location: /admin/products/attributes');
         } else {
-            NotificationHelper::error('store', 'Thêm sản phẩm thất bại');
-            header('location: /admin/products/create');
+            NotificationHelper::error('store', 'Thêm thuộc tính thất bại');
+            header('location: /admin/products/attributes');
         }
     }
 
