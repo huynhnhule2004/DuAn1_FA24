@@ -8,7 +8,7 @@ class Index extends BaseView
 {
   public static function render($data = null)
   {
-?>
+    ?>
     <div class="container">
       <?php if (!empty($data['blogs'])): ?>
         <div class="row entry-container">
@@ -19,20 +19,20 @@ class Index extends BaseView
                 <p class="secondary-font fs-6 m-0">Feb</p>
               </div>
               <div class="card position-relative">
-                <a href="/moreblog?blog_id=<?= $item['id'] ?>">
+                <a href="/blogs/<?= $item['id'] ?>">
                   <img src="<?= APP_URL ?>/public/uploads/blogs/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
                 </a>
                 <div class="card-body p-0">
                   <!-- Cập nhật href tại đây -->
-                  <a href="/moreblog?blog_id=<?= $item['id'] ?>"> 
+                  <a href="/blogs/<?= $item['id'] ?>">
                     <h4 class="card-title pt-4 pb-3 m-0"><?= $item['title'] ?></h4>
                   </a>
                   <div class="card-text">
                     <p class="blog-paragraph fs-6">
-                      <?= mb_strlen($item['content']) > 100 ? mb_substr($item['content'], 0, 100) . '...' : $item['content']; ?>
+                      <?= strlen($item['content']) > 100 ? substr($item['content'], 0, 100) . '...' : $item['content'] ?>
                     </p>
                     <!-- Cập nhật href tại đây -->
-                    <a href="/moreblog?blog_id=<?= $item['id'] ?>" class="blog-read">Đọc thêm</a>
+                    <a href="/blogs/<?= $item['id'] ?>" class="blog-read">Đọc thêm</a>
                   </div>
                 </div>
               </div>
@@ -100,11 +100,11 @@ class Index extends BaseView
             </a>
           </div>
         </div>
-    </div>
+      </div>
 
-  <?php else: ?>
-    <p class="text-center">Không có blog</p>
-  <?php endif; ?>
-<?php
+    <?php else: ?>
+      <p class="text-center">Không có blog</p>
+    <?php endif; ?>
+  <?php
   }
 }

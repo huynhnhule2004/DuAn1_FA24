@@ -11,7 +11,7 @@ use App\Models\Blog;
 class MoreBlogController
 {
     // hiển thị danh sách
-    public static function Moreblog()
+    public static function moreblog()
     {
         // Lấy giá trị blog_id từ query string
         $id = isset($_GET['blog_id']) ? $_GET['blog_id'] : null;

@@ -224,17 +224,22 @@ class Blog extends BaseModel
 
         return null;  // Nếu không có bài viết
     }
-    public function getBlogsByCategory($categoryId)
+    public function getAllBlogsByCategory(int $id)
     {
         $result = [];
         try {
-            $sql = "SELECT * FROM blogs WHERE category_id = ? ORDER BY created_at DESC";
-            $stmt = $this->_conn->MySQLi()->prepare($sql);
-            $stmt->bind_param('i', $categoryId);
+            $sql = "SELECT blogs.*, blog_categories.category_name 
+            FROM blogs 
+            INNER JOIN blog_categories ON blogs.category_id = blog_categories.id 
+            WHERE blogs.category_id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('i', $id);
             $stmt->execute();
             return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {
-            error_log('Lỗi khi lấy bài viết theo danh mục: ' . $th->getMessage());
+            error_log('Lỗi khi hiển thị dữ liệu: ' . $th->getMessage());
             return $result;
         }
     }

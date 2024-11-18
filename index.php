@@ -26,9 +26,8 @@ AuthHelper::middleware();
 Route::get('/', 'App\Controllers\Client\HomeController@index');
 Route::get('/products', 'App\Controllers\Client\ProductController@index');
 Route::get('/blogs', 'App\Controllers\Client\BlogController@index');
-Route::get('/moreblog', 'App\Controllers\Client\MoreBlogController@Moreblog');
-
-
+Route::get('/blogs/{id}', 'App\Controllers\Client\BlogController@detail');
+Route::get('/blogs/categories/{id}', 'App\Controllers\Client\BlogController@getBlogByCategory');
 
 
 Route::get('/orders', 'App\Controllers\Client\OrderController@index');
@@ -58,7 +57,6 @@ Route::get('/reset-password', 'App\Controllers\Client\AuthController@resetPasswo
 Route::put('/reset-password', 'App\Controllers\Client\AuthController@resetPasswordAction');
 
 
-Route::get('/blogs/{id}', 'App\Controllers\Client\BlogController@detail');
 
 
 
