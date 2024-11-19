@@ -46,21 +46,6 @@ class Create extends BaseView
                         <form class="form-horizontal" action="/admin/products/attributes" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="method" id="" value="POST">
                             <div class="mb-3">
-                                <label for="productSelect" class="form-label">Tên sản phẩm</label>
-                                <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="productSelect" name="product_id" onchange="fetchAttributes()" required>
-                                    <option value="" selected disabled>Vui lòng chọn...</option>
-
-                                    <?php
-                                    foreach ($data as $item) :
-                                    ?>
-                                        <option value="<?= $item['id'] ?>"><?= $item['product_name'] ?></option>
-                                    <?php
-                                    endforeach
-                                    ?>
-
-                                </select>
-                            </div>
-                            <div class="mb-3">
                                 <label for="attributeName" class="form-label">Tên thuộc tính</label>
                                 <input type="text" name="name" class="form-control" id="attributeName" placeholder="Nhập tên thuộc tính">
                             </div>
@@ -70,13 +55,54 @@ class Create extends BaseView
 
                     <!-- Cột phải: Danh sách thuộc tính -->
                     <div class="col-md-6">
-                        <h3>Danh sách thuộc tính</h3>
-                        <ul class="list-group">
-                            <li class="list-group-item">Thuộc tính 1</li>
-                            <li class="list-group-item">Thuộc tính 2</li>
-                            <li class="list-group-item">Thuộc tính 3</li>
-                            <li class="list-group-item">Thuộc tính 4</li>
-                        </ul>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3>Danh sách thuộc tính</h3>
+                            <a href="/admin/products/product_variant_options" class="btn btn-primary">Thêm giá trị</a>
+                        </div>
+                        <?php
+                        if (count($data)) :
+                        ?>
+                            <div class="table-responsive">
+                                <table id="" class="table table-striped ">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Tên</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        foreach ($data as $item) :
+                                        ?>
+                                            <tr>
+                                                <td style="white-space: nowrap;"><?= $item['id'] ?></td>
+                                                <td style="white-space: nowrap;"><?= $item['name'] ?></td>
+                                                <td style="white-space: nowrap;">
+                                                    <a href="/admin/products/attributes/<?= $item['id'] ?>" class="btn btn-primary ">Sửa</a>
+                                                    <form action="/admin/products/attributes/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa thuộc tính này?')">
+                                                        <input type="hidden" name="method" value="DELETE" id="">
+                                                        <button type="submit" class="btn btn-danger text-white">Xoá</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        endforeach;
+
+
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php
+                        else :
+
+                        ?>
+                            <h4 class="text-center text-danger">Không có dữ liệu</h4>
+                        <?php
+                        endif;
+
+                        ?>
                     </div>
                 </div>
             </div>

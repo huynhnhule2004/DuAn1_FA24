@@ -7,7 +7,7 @@ class ProductVariation extends BaseModel
     protected $table = 'product_variations';
     protected $id = 'id';
 
-    public function getAllProduct()
+    public function getAllProductVariation()
     {
         return $this->getAll();
     }
@@ -20,12 +20,12 @@ class ProductVariation extends BaseModel
     {
         return $this->create($data);
     }
-    public function updateProduct($id, $data)
+    public function updateProductVariation($id, $data)
     {
         return $this->update($id, $data);
     }
 
-    public function deleteProduct($id)
+    public function deleteProductVariation($id)
     {
         return $this->delete($id);
     }

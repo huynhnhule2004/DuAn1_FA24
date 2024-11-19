@@ -24,7 +24,7 @@ class Edit extends BaseView
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/admin">Trang chủ</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Sửa sản phẩm</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Sửa thuộc tính</li>
                                 </ol>
                             </nav>
                         </div>
@@ -37,110 +37,70 @@ class Edit extends BaseView
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
+            <div class="container mt-5">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <form class="form-horizontal" action="/admin/products/<?= $data['product']['id'] ?>" method="POST" enctype="multipart/form-data">
-                                <div class="card-body">
-                                    <h4 class="card-title">Sửa sản phẩm</h4>
-                                    <input type="hidden" name="method" id="" value="PUT">
-                                    <div class="form-group">
-                                        <label for="id">ID</label>
-                                        <input type="text" class="form-control" id="id" name="id" value="<?= $data['product']['id'] ?>" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="product_name">Tên*</label>
-                                        <input type="text" class="form-control" id="product_name" placeholder="Nhập tên sản phẩm..." name="product_name" value="<?= $data['product']['product_name'] ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="price">Giá tiền*</label>
-                                        <input type="number" class="form-control" id="price" placeholder="Nhập giá tiền..." name="price" value="<?= $data['product']['price'] ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="discount_price">Giá giảm*</label>
-                                        <input type="number" class="form-control" id="discount_price" placeholder="Nhập giá giảm..." name="discount_price" value="<?= $data['product']['discount_price'] ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="short_description">Mô tả ngắn</label>
-                                        <textarea class="form-control" name="short_description" id="short_description_editor" placeholder="Nhập mô tả ngắn..."><?= htmlspecialchars($data['product']['short_description']) ?></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="long_description">Mô tả</label>
-                                        <textarea class="form-control" name="long_description" id="long_description_editor" placeholder="Nhập mô tả..."><?= htmlspecialchars($data['product']['long_description']) ?></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="how_to_use">Cách sử dụng</label>
-                                        <textarea class="form-control" name="how_to_use" id="how_to_use_editor" placeholder="Nhập cách sử dụng..."><?= htmlspecialchars($data['product']['how_to_use']) ?></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="format">Định dạng</label>
-                                        <input type="text" class="form-control" id="format" placeholder="Nhập định dạng sản phẩm.." name="format" value="<?= $data['product']['format'] ?>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="category_id">Loại sản phẩm*</label>
-                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="category_id" name="category_id" required>
-                                            <option value="" selected disabled>Vui lòng chọn...</option>
-
-                                            <?php
-                                            foreach ($data['category'] as $item) :
-                                            ?>
-                                                <option value="<?= $item['id'] ?>" <?= ($item['id'] == $data['product']['category_id']) ? 'selected' : '' ?>><?= $item['category_name'] ?></option>
-                                            <?php
-                                            endforeach
-                                            ?>
-
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="is_feature">Nổi bật*</label>
-                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="is_feature" name="is_feature" required>
-                                            <option value="" selected disabled>Vui lòng chọn...</option>
-                                            <option value="1" <?= ($data['product']['is_feature'] == 1 ? 'selected' : '') ?>>Nổi bật</option>
-                                            <option value="0" <?= ($data['product']['is_feature'] == 0 ? 'selected' : '') ?>>Không</option>
-
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="status">Trạng thái*</label>
-                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="status" name="status" value="<?= $data['product']['status'] ?>" required>
-                                            <option value="" selected disabled>Vui lòng chọn...</option>
-                                            <option value="available" <?= ($data['product']['status'] == 'available' ? 'selected' : '') ?>>Còn hàng</option>
-                                            <option value="out_of_stock" <?= ($data['product']['status'] == 'out_of_stock' ? 'selected' : '') ?>>Hết hàng</option>
-                                            <option value="discontinued" <?= ($data['product']['status'] == 'discontinued' ? 'selected' : '') ?>>Ngừng hoạt động</option>
-
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="border-top">
-                                    <div class="card-body">
-                                        <button type="reset" class="btn btn-danger text-white" name="">Làm lại</button>
-                                        <button type="submit" class="btn btn-primary" name="">Cập nhật</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
+                    <!-- Cột trái: Form thêm thuộc tính -->
+                    <div class="col-md-6 min-vh-100">
+                        <h3>Sửa thuộc tính</h3>
+                        <form class="form-horizontal" action="/admin/products/attributes/<?= $data['product_variation']['id'] ?>" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="method" id="" value="PUT">
+                            <div class="mb-3">
+                                <label for="attributeName" class="form-label">Tên thuộc tính</label>
+                                <input type="text" name="name" class="form-control" id="attributeName" placeholder="Nhập tên thuộc tính" value="<?= $data['product_variation']['name'] ?>">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sửa thuộc tính</button>
+                        </form>
                     </div>
 
-                </div>
+                    <!-- Cột phải: Danh sách thuộc tính -->
+                    <div class="col-md-6">
+                        <h3>Danh sách thuộc tính</h3>
+                        <?php
+                                if (count($data)) :
+                                ?>
+                                    <div class="table-responsive">
+                                        <table id="" class="table table-striped ">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Tên</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                foreach ($data['data_product_variations'] as $item) :
+                                                ?>
+                                                    <tr>
+                                                        <td style="white-space: nowrap;"><?= $item['id'] ?></td>
+                                                        <td style="white-space: nowrap;"><?= $item['name'] ?></td>
+                                                        <td style="white-space: nowrap;">
+                                                            <a href="/admin/products/attributes/<?= $item['id'] ?>" class="btn btn-primary ">Sửa</a>
+                                                            <form action="/admin/products/attributes/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa thuộc tính này?')">
+                                                                <input type="hidden" name="method" value="DELETE" id="">
+                                                                <button type="submit" class="btn btn-danger text-white">Xoá</button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                endforeach;
 
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
+
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <?php
+                                else :
+
+                                ?>
+                                    <h4 class="text-center text-danger">Không có dữ liệu</h4>
+                                <?php
+                                endif;
+
+                                ?>
+                    </div>
+                </div>
             </div>
             <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 
