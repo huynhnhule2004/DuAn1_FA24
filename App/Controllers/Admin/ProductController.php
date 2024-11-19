@@ -12,6 +12,7 @@ use App\Views\Admin\Components\Notification;
 use App\Views\Admin\Pages\Product\Create;
 use App\Views\Admin\Pages\Product\Edit;
 use App\Views\Admin\Pages\Product\Index;
+use App\Models\ProductVariantOption;
 
 class ProductController
 {
@@ -38,7 +39,15 @@ class ProductController
     public static function create()
     {
         $category = new Category();
-        $data = $category->getAllCategory();
+        $categories = $category->getAllCategory();
+
+        $product_variant_option = new ProductVariantOption();
+        $product_variant_options = $product_variant_option->getAllVariationJoinOption();
+
+        $data = [
+            'product_variant_options' => $product_variant_options,
+            'categories' => $categories,
+        ];
         // echo "<pre>";
         // var_dump($data);
         Header::render();
@@ -152,7 +161,7 @@ class ProductController
     {
         // validation các trường dữ liệu
         $is_valid = ProductValidation::edit();
-// var_dump($is_valid);
+        // var_dump($is_valid);
         if (!$is_valid) {
             NotificationHelper::error('update', 'Cập nhật sản phẩm thất bại');
             header("location: /admin/products/$id");
