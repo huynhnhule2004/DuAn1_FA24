@@ -86,7 +86,7 @@ class Create extends BaseView
                                     </div>
                                     <div class="form-group">
                                         <label for="avatar">Hình đại diện</label>
-                                        <input type="file" class="form-control" id="avatar" placeholder="Chọn ảnh đại diện..." name="avatar" required>
+                                        <input type="file" class="form-control" id="avatar" placeholder="Chọn ảnh đại diện..." name="avatar">
                                     </div>
                                     <div class="form-group">
                                         <label for="status">Trạng thái*</label>

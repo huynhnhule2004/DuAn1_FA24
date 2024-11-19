@@ -21,7 +21,7 @@ class Detail extends BaseView
                                             <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image'] ?>" class="img-fluid" style="width: 624px; opacity: 1; transform: translate3d(0px, 0px, 0px);">
                                         </div>
                                         <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 4" style="width: 624px; opacity: 0; transform: translate3d(-624px, 0px, 0px);">
-                                            <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image1'] ?>" class="img-fluid" >
+                                            <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image1'] ?>" class="img-fluid">
                                         </div>
                                         <div class="swiper-slide" role="group" aria-label="3 / 4" style="width: 624px; opacity: 0; transform: translate3d(-1248px, 0px, 0px);">
                                             <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image2'] ?>" class="img-fluid">
@@ -74,76 +74,76 @@ class Detail extends BaseView
                                 <strong class="text-primary display-6 fw-bold"><?= $data['product']['discount_price'] ?></strong><del class="ms-2"><?= $data['product']['price'] ?></del>
                             </div>
                             <p><?= $data['product']['short_description'] ?></p>
-                                <div class="swatch product-select pt-3" data-option-index="1">
-                                    <h6 class="item-title fw-bold">Kích thước</h6>
-                                    <ul class="select-list list-unstyled d-flex">
-                                        <li data-value="S" class="select-item pe-3">
-                                            <a href="#" class="btn btn-light"><?= $data['product']['Size1'] ?></a>
-                                        </li>
-                                        <li data-value="M" class="select-item pe-3">
-                                            <a href="#" class="btn btn-light active"><?= $data['product']['Size2'] ?></a>
-                                        </li>
-                                        <li data-value="L" class="select-item pe-3">
-                                            <a href="#" class="btn btn-light"><?= $data['product']['Size3'] ?></a>
-                                        </li>
-                                        <li data-value="L" class="select-item">
-                                            <a href="#" class="btn btn-light"><?= $data['product']['Size4'] ?></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product-quantity pt-2">
-                                    <div class="stock-number text-dark"><em>Số lượng còn trong kho: <?= $data['product']['stock_quantity'] ?></em></div>
-                                    <div class="stock-button-wrap">
+                            <div class="swatch product-select pt-3" data-option-index="1">
+                                <h6 class="item-title fw-bold">Kích thước</h6>
+                                <ul class="select-list list-unstyled d-flex">
+                                    <li data-value="S" class="select-item pe-3">
+                                        <a href="#" class="btn btn-light"><?= $data['product']['Size1'] ?></a>
+                                    </li>
+                                    <li data-value="M" class="select-item pe-3">
+                                        <a href="#" class="btn btn-light active"><?= $data['product']['Size2'] ?></a>
+                                    </li>
+                                    <li data-value="L" class="select-item pe-3">
+                                        <a href="#" class="btn btn-light"><?= $data['product']['Size3'] ?></a>
+                                    </li>
+                                    <li data-value="L" class="select-item">
+                                        <a href="#" class="btn btn-light"><?= $data['product']['Size4'] ?></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="product-quantity pt-2">
+                                <div class="stock-number text-dark"><em>Số lượng còn trong kho: <?= $data['product']['stock_quantity'] ?></em></div>
+                                <div class="stock-button-wrap">
 
-                                        <div class="input-group product-qty align-items-center w-25">
-                                            <span class="input-group-btn">
-                                                <button type="button" class="quantity-left-minus btn btn-light btn-number" data-type="minus">
-                                                    <svg width="16" height="16">
-                                                        <use xlink:href="#minus"></use>
-                                                    </svg>
-                                                </button>
-                                            </span>
-                                            <input type="text" id="quantity" name="quantity" class="form-control input-number text-center p-2 mx-1" value="1">
-                                            <span class="input-group-btn">
-                                                <button type="button" class="quantity-right-plus btn btn-light btn-number" data-type="plus" data-field="">
-                                                    <svg width="16" height="16">
-                                                        <use xlink:href="#plus"></use>
-                                                    </svg>
-                                                </button>
-                                            </span>
-                                        </div>
-
-                                        <div class="d-flex flex-wrap pt-4">
-                                            <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
-                                                <h5 class="text-uppercase m-0">Thêm vào giỏ</h5>
-                                            </a>
-                                            <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                            </a>
-                                        </div>
-
+                                    <div class="input-group product-qty align-items-center w-25">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="quantity-left-minus btn btn-light btn-number" data-type="minus">
+                                                <svg width="16" height="16">
+                                                    <use xlink:href="#minus"></use>
+                                                </svg>
+                                            </button>
+                                        </span>
+                                        <input type="text" id="quantity" name="quantity" class="form-control input-number text-center p-2 mx-1" value="1">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="quantity-right-plus btn btn-light btn-number" data-type="plus" data-field="">
+                                                <svg width="16" height="16">
+                                                    <use xlink:href="#plus"></use>
+                                                </svg>
+                                            </button>
+                                        </span>
                                     </div>
+
+                                    <div class="d-flex flex-wrap pt-4">
+                                        <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
+                                            <h5 class="text-uppercase m-0">Thêm vào giỏ</h5>
+                                        </a>
+                                        <a href="#" class="btn-wishlist px-4 pt-3 ">
+                                            <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
+                                        </a>
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="meta-product pt-4">
-                                <div class="meta-item d-flex align-items-baseline">
-                                    <h6 class="item-title fw-bold no-margin pe-2">SKU:</h6>
-                                    <ul class="select-list list-unstyled d-flex">
-                                        <li data-value="S" class="select-item"><?= $data['product']['sku'] ?></li>
-                                    </ul>
-                                </div>
-                                <div class="meta-item d-flex align-items-baseline">
-                                    <h6 class="item-title fw-bold no-margin pe-2">Danh mục:</h6>
-                                    <ul class="select-list list-unstyled d-flex">
-                                        <li data-value="S" class="select-item">
-                                            <a href="#"><?= $data['product']['category'] ?></a>
-                                        </li>
-                                    </ul>
-                                </div>
+                        </div>
+                        <div class="meta-product pt-4">
+                            <div class="meta-item d-flex align-items-baseline">
+                                <h6 class="item-title fw-bold no-margin pe-2">SKU:</h6>
+                                <ul class="select-list list-unstyled d-flex">
+                                    <li data-value="S" class="select-item"><?= $data['product']['sku'] ?></li>
+                                </ul>
+                            </div>
+                            <div class="meta-item d-flex align-items-baseline">
+                                <h6 class="item-title fw-bold no-margin pe-2">Danh mục:</h6>
+                                <ul class="select-list list-unstyled d-flex">
+                                    <li data-value="S" class="select-item">
+                                        <a href="#"><?= $data['product']['category'] ?></a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </section>
 
@@ -159,58 +159,70 @@ class Detail extends BaseView
                         <div class="tab-content" id="v-pills-tabContent">
                             <div class="tab-pane fade active show" id="v-pills-description" role="tabpanel" aria-labelledby="v-pills-description-tab" tabindex="0">
                                 <h2>Mô tả sản phẩm</h2>
-                                <p><?= $data['product']['long_description'] ?>   </div>
+                                <p><?= $data['product']['long_description'] ?>
+                            </div>
                             <div class="tab-pane fade" id="v-pills-additional" role="tabpanel" aria-labelledby="v-pills-additional-tab" tabindex="0">
                                 <h2>Cách sử dụng sản phẩm</h2>
                                 <p><?= $data['product']['how_to'] ?></p>
                             </div>
                             <div class="tab-pane fade" id="v-pills-reviews" role="tabpanel" aria-labelledby="v-pills-reviews-tab" tabindex="0">
                                 <div class="review-box d-flex flex-wrap">
-                                    <div class="col-lg-6 d-flex flex-wrap gap-3">
-                                        <div class="col-md-2">
-                                            <div class="image-holder">
-                                                <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image_rate'] ?>" alt="review" class="img-fluid rounded-circle">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="review-content">
-                                                <div class="rating-container d-flex align-items-center">
-                                                    <div class="rating" data-rating="1">
-                                                        <svg width="24" height="24" class="text-primary">
-                                                            <use xlink:href="#star-solid"></use>
-                                                        </svg>
+
+                                    <?php if (isset($data['comments']) && is_array($data['comments'])): ?>
+                                        <?php foreach ($data['comments'] as $comment): ?>
+
+                                            <div class="col-lg-6 d-flex flex-wrap gap-3">
+                                                <div class="col-md-2">
+                                                    <div class="image-holder">
+                                                        <img src="<?= APP_URL ?>/public/uploads/users/<?= htmlspecialchars($comment['image_rate']) ?>" alt="review" class="img-fluid rounded-circle">
                                                     </div>
-                                                    <div class="rating" data-rating="2">
-                                                        <svg width="24" height="24" class="text-primary">
-                                                            <use xlink:href="#star-solid"></use>
-                                                        </svg>
-                                                    </div>
-                                                    <div class="rating" data-rating="3">
-                                                        <svg width="24" height="24" class="text-primary">
-                                                            <use xlink:href="#star-solid"></use>
-                                                        </svg>
-                                                    </div>
-                                                    <div class="rating" data-rating="4">
-                                                        <svg width="24" height="24" class="text-secondary">
-                                                            <use xlink:href="#star-solid"></use>
-                                                        </svg>
-                                                    </div>
-                                                    <div class="rating" data-rating="5">
-                                                        <svg width="24" height="24" class="text-secondary">
-                                                            <use xlink:href="#star-solid"></use>
-                                                        </svg>
-                                                    </div>
-                                                    <span class="rating-count"><?= $data['product']['rating_count'] ?></span>
                                                 </div>
-                                                <div class="review-header">
-                                                    <span class="author-name"><?= $data['product']['name_rate'] ?></span>
-                                                    <span class="review-date">– <?= $data['product']['date_rate'] ?>/span>
+                                                <div class="col-md-8">
+                                                    <div class="review-content">
+                                                        <div class="rating-container d-flex align-items-center">
+                                                            <div class="rating" data-rating="1">
+                                                                <svg width="24" height="24" class="text-primary">
+                                                                    <use xlink:href="#star-solid"></use>
+                                                                </svg>
+                                                            </div>
+                                                            <div class="rating" data-rating="2">
+                                                                <svg width="24" height="24" class="text-primary">
+                                                                    <use xlink:href="#star-solid"></use>
+                                                                </svg>
+                                                            </div>
+                                                            <div class="rating" data-rating="3">
+                                                                <svg width="24" height="24" class="text-primary">
+                                                                    <use xlink:href="#star-solid"></use>
+                                                                </svg>
+                                                            </div>
+                                                            <div class="rating" data-rating="4">
+                                                                <svg width="24" height="24" class="text-secondary">
+                                                                    <use xlink:href="#star-solid"></use>
+                                                                </svg>
+                                                            </div>
+                                                            <div class="rating" data-rating="5">
+                                                                <svg width="24" height="24" class="text-secondary">
+                                                                    <use xlink:href="#star-solid"></use>
+                                                                </svg>
+                                                            </div>
+                                                            <span class="rating-count"><?= htmlspecialchars($comment['rating_count']) ?></span>
+                                                        </div>
+                                                        <div class="review-header">
+                                                            <span class="author-name"><?= htmlspecialchars($comment['name_rate']) ?></span>
+                                                            <span class="review-date">– <?= htmlspecialchars($comment['date_rate']) ?></span>
+                                                        </div>
+                                                        <p><?= htmlspecialchars($comment['comment']) ?></p>
+                                                    </div>
                                                 </div>
-                                                <p><?= $data['product']['comment'] ?></p>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 d-flex flex-wrap gap-3">
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <p>Chưa có bình luận nào.</p>
+                                    <?php endif; ?>
+
+
+
+                                    <!-- <div class="col-lg-6 d-flex flex-wrap gap-3">
                                         <div class="col-md-2">
                                             <div class="image-holder">
                                                 <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image_rate2'] ?>" alt="review" class="img-fluid rounded-circle">
@@ -253,7 +265,7 @@ class Detail extends BaseView
                                                 <p><?= $data['product']['comment2'] ?></p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <div class="add-review mt-5">
@@ -434,6 +446,5 @@ class Detail extends BaseView
             </div>
         </section>
 <?php
-  }
+    }
 }
-

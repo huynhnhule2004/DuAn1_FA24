@@ -74,7 +74,7 @@ class Comment extends BaseModel
         }
         return $result;
     }
-    public function get5CommentNewestByProductAndStatus(int $id)
+    public function get2CommentNewestByProductAndStatus(int $id)
     {
         $result = [];
         try {
@@ -83,7 +83,7 @@ class Comment extends BaseModel
                 INNER JOIN users ON comments.user_id = users.id 
                 WHERE comments.product_id = ? AND comments.status = " . self::STATUS_ENABLE . " 
                 ORDER BY comments.created_at DESC 
-                LIMIT 5;";
+                LIMIT 2;";
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
 

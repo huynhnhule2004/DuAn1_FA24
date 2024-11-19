@@ -50,8 +50,8 @@ class Create extends BaseView
                                         <label for="status">Trạng thái*</label>
                                         <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="status" name="status" required>
                                             <option value="" selected disabled>Vui lòng chọn...</option>
-                                            <option value="1">Activate</option>
-                                            <option value="0">Inactivate</option>
+                                            <option value="1">Hoạt động</option>
+                                            <option value="0">Không hoạt động</option>
                                         </select>
                                     </div>
 

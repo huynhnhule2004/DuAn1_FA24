@@ -5,9 +5,12 @@ namespace App\Controllers\Client;
 use App\Helpers\NotificationHelper;
 use App\Models\Comment;
 use App\Validations\CommentValidation;
+use App\Views\Client\Pages\Product\Index;
+
 
 class CommentController
 {
+
 
     // xử lý chức năng thêm
     public static function store()
@@ -109,6 +112,4 @@ class CommentController
             header("location: /products");
         }
     }
-
-    
 }
