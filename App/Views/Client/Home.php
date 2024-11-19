@@ -619,7 +619,7 @@ class Home extends BaseView
             <div class="container py-5 mb-5">
 
                 <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
-                    <h2 class="display-6 fw-normal">Sản phẩm bán chạy</h2>
+                    <h2 class="display-6 fw-normal">Sản phẩm nổi bật</h2>
                     <div>
                         <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                             Mua ngay
@@ -630,23 +630,20 @@ class Home extends BaseView
                 </div>
 
                 <div class="products-carousel swiper">
-                    <?php
-                    if (count($data) && count($data['products'])) :
-                    ?>
-                        <div class="swiper-wrapper">
-                            <?php
-                            foreach ($data['products'] as $item) :
-                            ?>
+                    <div class="swiper-wrapper">
+                        <?php if (isset($data['featuredProducts']) && count($data['featuredProducts']) > 0): ?>
+                            <?php foreach ($data['featuredProducts'] as $item): ?>
                                 <div class="swiper-slide">
                                     <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                                        <?= number_format((($item['price'] - $item['discount_price']) / $item['price']) * 100) ?>%
+                                    <?= number_format((($item['discount_price']) / $item['price']) * 100) ?>%
+
                                     </div>
                                     <div class="card position-relative">
-                                        <a href="single-product.html"><img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>"
+                                        <a href="single-product.html"><img src="<?= APP_URL ?>public/assets/client/images/<?= $item['image'] ?>"
                                                 class="img-fluid rounded-4" alt="image"></a>
                                         <div class="card-body p-0">
                                             <a href="single-product.html">
-                                                <h4 class="card-title pt-4 m-0"><?= $item['product_name'] ?></h4>
+                                                <h4 class="card-title pt-4 m-0"><?= $item['name'] ?></h4>
                                             </a>
 
                                             <div class="card-text">
@@ -656,49 +653,36 @@ class Home extends BaseView
                                                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                                     <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                                    5.0</span>
-                                                <?php
-                                                if ($item['discount_price'] > 0) :
-                                                ?>
-                                                    <h4 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ <strike style="font-size: medium; color: #333"><?= number_format($item['price']) ?> VNĐ</strike></h4>
-                                                <?php
-                                                else :
-                                                ?>
-                                                    <h4 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ</h4>
-
-                                                <?php
-                                                endif;
-                                                ?>
+                                                    5.0
+                                                </span>
+                                                <?php if ($item['discount_price'] > 0): ?>
+                                                    <h4 class="secondary-font text-primary">
+                                                        <?= number_format($item['price'] - $item['discount_price']) ?> VNĐ
+                                                        <strike style="font-size: medium; color: #333"><?= number_format($item['price']) ?> VNĐ</strike>
+                                                    </h4>
+                                                <?php else: ?>
+                                                    <h4 class="secondary-font text-primary"><?= number_format($item['price']) ?> VNĐ</h4>
+                                                <?php endif; ?>
 
                                                 <div class="d-flex flex-wrap mt-3">
                                                     <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
                                                         <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
                                                     </a>
-                                                    <a href="/wishlist" class="btn-wishlist px-4 pt-3 ">
+                                                    <a href="/wishlist" class="btn-wishlist px-4 pt-3">
                                                         <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
                                                     </a>
                                                 </div>
-
-
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
-                            <?php
-                            endforeach;
-                            ?>
-                        <?php
-                    else :
-                        ?>
-                            <h3 class="text-center text-danger">Không có sản phẩm</h3>
-
-                        <?php
-                    endif;
-                        ?>
-
-                        </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <h3 class="text-center text-danger">Không có sản phẩm nổi bật</h3>
+                        <?php endif; ?>
+                    </div>
                 </div>
+
 
                 <!-- / category-carousel -->
 
@@ -752,60 +736,62 @@ class Home extends BaseView
                     </div>
                 </div>
                 <div class="row">
-                    <?php
-                    foreach ($data['blogs'] as $item) :
+                <?php if (!empty($data['latestBlogs'])): ?>
+                    <?php foreach ($data['latestBlogs'] as $item): ?>
+                            <?php
+                            $create_at = $item['created_at'];
+                            $date = date_create($create_at);
+                            $day = date_format($date, 'd');
+                            $monthNumber = date_format($date, 'm');
 
-                    ?>
-                        <?php
-                        $create_at = $item['create_at'];
-                        $date = date_create($create_at);
-                        $day = date_format($date, 'd');
-                        $monthNumber = date_format($date, 'm');
+                            $months = [
+                                '01' => 'JAN',
+                                '02' => 'FEB',
+                                '03' => 'MAR',
+                                '04' => 'APR',
+                                '05' => 'MAY',
+                                '06' => 'JUN',
+                                '07' => 'JUL',
+                                '08' => 'AUG',
+                                '09' => 'SEP',
+                                '10' => 'OCT',
+                                '11' => 'NOV',
+                                '12' => 'DEC'
+                            ];
 
-                        $months = [
-                            '01' => 'JAN',
-                            '02' => 'FEB',
-                            '03' => 'MAR',
-                            '04' => 'APR',
-                            '05' => 'MAY',
-                            '06' => 'JUN',
-                            '07' => 'JUL',
-                            '08' => 'AUG',
-                            '09' => 'SEP',
-                            '10' => 'OCT',
-                            '11' => 'NOV',
-                            '12' => 'DEC'
-                        ];
-
-                        $month = $months[$monthNumber];
-                        ?>
-                        <div class="col-md-4 my-4 my-md-0">
-                            <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
-                                <h3 class="secondary-font text-primary m-0"><?= $day ?></h3>
-                                <p class="secondary-font fs-6 m-0"><?= strtoupper($month) ?></p>
-
-                            </div>
-                            <div class="card position-relative">
-                                <a href="single-post.html"><img src="<?= APP_URL ?>public/assets/client/images/<?= $item['image'] ?>"
-                                        class="img-fluid rounded-4" alt="image"></a>
-                                <div class="card-body p-0">
-                                    <a href="single-post.html">
-                                        <h4 class="card-title pt-4 pb-3 m-0"><?= $item['title'] ?></h4>
-                                    </a>
-
-                                    <div class="card-text">
-                                        <p class="blog-paragraph fs-6">
-                                            <?= strlen($item['content']) > 150 ? substr($item['content'], 0, 150) . '...' : $item['content'] ?>
-                                        </p>
-                                        <a href="single-post.html" class="blog-read">Đọc thêm</a>
-                                    </div>
+                            $month = $months[$monthNumber];
+                            ?>
+                            <div class="col-md-4 my-4 my-md-0">
+                                <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
+                                    <h3 class="secondary-font text-primary m-0"><?= $day ?></h3>
+                                    <p class="secondary-font fs-6 m-0"><?= strtoupper($month) ?></p>
 
                                 </div>
+                                <div class="card position-relative">
+                                    <a href="/blogs/<?= $item['id'] ?>"><img src="<?= APP_URL ?>public/uploads/blogs/<?= $item['image'] ?>"
+                                            class="img-fluid rounded-4" alt="image"></a>
+                                    <div class="card-body p-0">
+                                        <a href="/blogs/<?= $item['id'] ?>">
+                                            <h4 class="card-title pt-4 pb-3 m-0"><?= $item['title'] ?></h4>
+                                        </a>
+
+                                        <div class="card-text">
+                                            <p class="blog-paragraph fs-6">
+                                                <?= strlen($item['content']) > 150 ? substr($item['content'], 0, 150) . '...' : $item['content'] ?>
+                                            </p>
+                                            <a href="/blogs/<?= $item['id'] ?>" class="blog-read">Đọc thêm</a>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    <?php
-                    endforeach;
-                    ?>
+                        <?php
+                        endforeach;
+                        ?>
+                    <?php else: ?>
+                        <p>Không có bài viết mới nhất.</p>
+                    <?php endif; ?>
+
                     <!-- <div class="col-md-4 my-4 my-md-0">
                         <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
                             <h3 class="secondary-font text-primary m-0">21</h3>

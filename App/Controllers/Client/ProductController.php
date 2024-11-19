@@ -55,26 +55,39 @@ class ProductController
             'sku' => 1223,
             'category' => 'Dành cho chó',
             'how_to' => 'Để sử dụng bộ Jump Suit cho thú cưng, trước tiên bạn hãy kiểm tra trang phục để đảm bảo không có chi tiết gây khó chịu. Khi mặc vào, nhẹ nhàng xỏ từng chân của thú cưng vào ống quần, sau đó kéo bộ đồ lên và điều chỉnh cho vừa vặn, tránh bó sát quá mức để thú cưng có thể di chuyển thoải mái. Hãy quan sát phản ứng của thú cưng, nếu thấy chúng cào cấu hay gỡ bỏ, hãy tháo ra và thử lại từ từ để chúng quen dần. Sau khi sử dụng, giặt sạch và phơi khô tự nhiên để trang phục luôn bền đẹp cho lần mặc tiếp theo. Bộ Jump Suit sẽ giúp thú cưng của bạn vừa ấm áp vừa nổi bật trong mọi dịp!',
-            'image_rate' =>'reviewer-1.jpg',
-            'image_rate2' => 'reviewer-2.jpg',
-            'name_rate' => 'Trung sơn',
-            'name_rate2' => 'Lê Vinh',
-            'date_rate' => '03/07/2023',
-            'date_rate2' => '03/07/2023',
-            'comment' => 'Bộ Jump Suit cho thú cưng thực sự là một sản phẩm đáng yêu và tiện lợi! Thiết kế hình chuối vui nhộn và màu sắc tươi sáng làm cho thú cưng trông thật nổi bật và dễ thương. Chất liệu vải mềm mại, co giãn tốt, thú cưng của tôi cảm thấy thoải mái ngay cả khi mặc trong thời gian dài. Việc mặc vào và tháo ra cũng rất dễ dàng, không gây khó khăn gì. Đặc biệt, trang phục này giữ ấm khá tốt, rất thích hợp cho những ngày se lạnh. Đây chắc chắn là một lựa chọn tuyệt vời cho các chủ nuôi muốn tạo phong cách cho thú cưng của mình.',
-            'comment2' => 'Tôi rất hài lòng với bộ Jump Suit này cho thú cưng! Trang phục không chỉ đẹp mà còn rất thực tế, giúp giữ ấm cho bé trong những ngày trời mát mẻ. Mỗi khi mặc vào, thú cưng của tôi trông rất đáng yêu và nhận được nhiều lời khen từ bạn bè khi đi dạo. Đặc biệt, chất liệu vải không gây kích ứng cho da, thú cưng của tôi hoàn toàn thoải mái khi mặc, không gặp bất kỳ vấn đề khó chịu nào. Đây là sản phẩm hoàn hảo cho những ai muốn chăm sóc và làm đẹp cho thú cưng của mình.',
-            'status' => 1,
-            'rating_count' => '3,5',
-            'rating_count2' => '3,5'
+              'status' => 1,
+        
 
         ];
-        $data = [
-            'product' => $product_detail
+        $comments = [
+            [
+                'image_rate' => '20241118151114.jpg',
+                'name_rate' => 'Trung Sơn',
+                'date_rate' => '03/07/2023',
+                'comment' => 'Bộ Jump Suit cho thú cưng thực sự là một sản phẩm đáng yêu và tiện lợi! Thiết kế hình chuối vui nhộn và màu sắc tươi sáng làm cho thú cưng trông thật nổi bật và dễ thương. Chất liệu vải mềm mại, co giãn tốt, thú cưng của tôi cảm thấy thoải mái ngay cả khi mặc trong thời gian dài. Việc mặc vào và tháo ra cũng rất dễ dàng, không gây khó khăn gì. Đặc biệt, trang phục này giữ ấm khá tốt, rất thích hợp cho những ngày se lạnh. Đây chắc chắn là một lựa chọn tuyệt vời cho các chủ nuôi muốn tạo phong cách cho thú cưng của mình.',
+                'rating_count' => '4.5',
+            ],
+            [
+                'image_rate' => '20241118151114.jpg',
+                'name_rate' => 'Minh Anh',
+                'date_rate' => '02/07/2023',
+                'comment' => 'Chất liệu vải mềm mại, co giãn tốt, thú cưng của tôi cảm thấy thoải mái ngay cả khi mặc trong thời gian dài. Việc mặc vào và tháo ra cũng rất dễ dàng, không gây khó khăn gì. Đặc biệt, trang phục này giữ ấm khá tốt, rất thích hợp cho những ngày se lạnh. Đây chắc chắn là một lựa chọn tuyệt vời cho các chủ nuôi muốn tạo phong cách cho thú cưng của mình.',
+                'rating_count' => '5.0',
+            ],
         ];
+        
+        $data = [
+            'product' => $product_detail,
+            'comments' => $comments, // Đổi 'comment' thành 'comments'
+        ];
+        
+        // Debug dữ liệu
+
+        
         Header::render();
         Detail::render($data);
         Footer::render();
-    }
+    }        
     public static function getProductByCategory($id)
     {
     }

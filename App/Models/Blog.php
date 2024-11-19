@@ -263,4 +263,23 @@ class Blog extends BaseModel
             return $result;
         }
     }
+    public function getLatestBlogs()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM blogs ORDER BY created_at DESC LIMIT 3";
+            $result = $this->_conn->MySQLi()->query($sql);
+            if ($result && $result->num_rows > 0) {
+                return $result->fetch_all(MYSQLI_ASSOC);
+            } else {
+                error_log('Không có bài viết nào được trả về từ cơ sở dữ liệu.');
+                return [];
+            }
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy bài viết mới nhất: ' . $th->getMessage());
+            return $result;
+        }
+    }
+    
+
 }
