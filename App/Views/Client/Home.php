@@ -141,7 +141,7 @@ class Home extends BaseView
                             ?>
                                 <div class="swiper-slide">
                                     <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                                        <?= number_format((($item['price'] - $item['discount_price']) / $item['price']) * 100) ?>%
+                                        <?= number_format((($item['discount_price']) / $item['price']) * 100) ?>%
                                     </div>
                                     <div class="card position-relative">
                                         <a href="single-product.html"><img src="<?= APP_URL ?>public/assets/client/images/<?= $item['image'] ?>"
