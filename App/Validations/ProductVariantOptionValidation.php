@@ -5,7 +5,7 @@ namespace App\Validations;
 use App\Helpers\NotificationHelper;
 
 
-class ProductVariationValidation
+class ProductVariantOptionValidation
 {
     public static function create(): bool
     {
@@ -14,7 +14,7 @@ class ProductVariationValidation
 
         // Tên thuộc tính
         if (!isset($_POST['name']) || $_POST['name'] === '') {
-            NotificationHelper::error('product_name', 'Không để trống tên sản phẩm');
+            NotificationHelper::error('product_name', 'Không để trống giá trị thuộc tính');
             $is_valid = false;
         }
 
