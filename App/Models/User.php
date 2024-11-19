@@ -78,4 +78,6 @@ class User extends BaseModel
     // {
     //     return $this->countTotal();
     // }
+
+    
 }

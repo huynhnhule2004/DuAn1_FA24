@@ -137,71 +137,65 @@ class Home extends BaseView
                     ?>
                         <div class="swiper-wrapper">
                             <?php
-                            foreach ($data['products'] as $item) :
+                                foreach ($data['products'] as $item) :
                             ?>
-                                <div class="swiper-slide">
+                                    <div class="swiper-slide">
                                     <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
                                         <?= number_format((($item['discount_price']) / $item['price']) * 100) ?>%
                                     </div>
-                                    <div class="card position-relative">
-                                        <a href="single-product.html"><img src="<?= APP_URL ?>public/assets/client/images/<?= $item['image'] ?>"
-                                                class="img-fluid rounded-4" alt="image"></a>
-                                        <div class="card-body p-0">
-                                            <a href="single-product.html">
-                                                <h4 class="card-title pt-4 m-0"><?= $item['name'] ?></h4>
-                                            </a>
+                                        <div class="card position-relative">
+                                            
+                                            <a href="single-product.html"><img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image"></a>
+                                            <div class="card-body p-0">
+                                                <a href="single-product.html">
+                                                    <h4 class="card-title pt-4 m-0"><?= $item['product_name'] ?></h4>
+                                                </a>
 
-                                            <div class="card-text">
-                                                <span class="rating secondary-font">
-                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                                    <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                                    5.0</span>
-                                                <?php
-                                                if ($item['discount_price'] > 0) :
-                                                ?>
-                                                    <h4 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ <strike style="font-size: medium; color: #333"><?= number_format($item['price']) ?> VNĐ</strike></h4>
-                                                <?php
-                                                else :
-                                                ?>
-                                                    <h4 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ</h4>
+                                                <div class="card-text">
+                                                    <span class="rating secondary-font">
+                                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                        5.0</span>
+                                                    <?php
+                                                    if ($item['discount_price'] > 0) :
+                                                    ?>
+                                                        <h4 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ <strike style="font-size: medium; color: #333"><?= number_format($item['price']) ?> VNĐ</strike></h4>
+                                                    <?php
+                                                    else :
+                                                    ?>
+                                                        <h4 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ</h4>
+                                                    <?php endif; ?>
 
-                                                <?php
-                                                endif;
-                                                ?>
-
-                                                <div class="d-flex flex-wrap mt-3">
-                                                    <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                        <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                                    </a>
-                                                    <a href="/wishlist" class="btn-wishlist px-4 pt-3 ">
-                                                        <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                                    </a>
+                                                    <div class="d-flex flex-wrap mt-3">
+                                                        <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                                            <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                                        </a>
+                                                        <a href="/wishlist" class="btn-wishlist px-4 pt-3 ">
+                                                            <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
+                                                        </a>
+                                                    </div>
                                                 </div>
-
-
                                             </div>
-
                                         </div>
                                     </div>
-                                </div>
-                            <?php
-                            endforeach;
-                            ?>
-                        <?php
-                    else :
-                        ?>
-                            <h3 class="text-center text-danger">Không có sản phẩm</h3>
-
-                        <?php
-                    endif;
-                        ?>
-
+                                <?php
+                                endforeach;
+                            else :
+                                ?>
+                                <h3 class="text-center text-danger">Không có sản phẩm</h3>
+                            <?php endif; ?>
                         </div>
+                       
+
+                    <?php
+                    ?>
+
                 </div>
-                <!-- / products-carousel -->
+            </div>
+            <!-- / products-carousel -->
 
 
             </div>
@@ -648,11 +642,11 @@ class Home extends BaseView
                                         <?= number_format((($item['price'] - $item['discount_price']) / $item['price']) * 100) ?>%
                                     </div>
                                     <div class="card position-relative">
-                                        <a href="single-product.html"><img src="<?= APP_URL ?>public/assets/client/images/<?= $item['image'] ?>"
+                                        <a href="single-product.html"><img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>"
                                                 class="img-fluid rounded-4" alt="image"></a>
                                         <div class="card-body p-0">
                                             <a href="single-product.html">
-                                                <h4 class="card-title pt-4 m-0"><?= $item['name'] ?></h4>
+                                                <h4 class="card-title pt-4 m-0"><?= $item['product_name'] ?></h4>
                                             </a>
 
                                             <div class="card-text">

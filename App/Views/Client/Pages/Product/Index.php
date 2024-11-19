@@ -15,16 +15,16 @@ class Index extends BaseView
       <div class="row">
         <div class="col-md-3">
           <div class="category-section mb-4 mt-3">
-          <div class="search-bar border rounded-2 border-dark-subtle pe-3">
-            <form id="search-form" class="text-center d-flex align-items-center" action="" method="">
+            <div class="search-bar border rounded-2 border-dark-subtle pe-3">
+              <form id="search-form" class="text-center d-flex align-items-center" action="" method="">
                 <input type="text" class="form-control border-0 bg-transparent" placeholder="Tìm kiếm sản phẩm">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"></path>
+                  <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"></path>
                 </svg>
-            </form>
-        </div>
-        <div class="mt-5">
-        <?php
+              </form>
+            </div>
+            <div class="mt-5">
+              <?php
               Category::render();
               ?>
               <h5 class="mb-3">Lọc giá</h5>
@@ -35,8 +35,8 @@ class Index extends BaseView
                 <option value="">500.000-1.000.000</option>
               </select>
             </div>
-        </div>
-           
+          </div>
+
         </div>
         <div class="col-md-9">
 
@@ -44,27 +44,28 @@ class Index extends BaseView
 
             <h2 class="mb-0">Sản phẩm</h2>
             <select class="filter-categories border-0 m-0">
-                <option value="">Sắp xếp mặc định</option>
-                <option value="">Tên (A - Z)</option>
-                <option value="">Tên (Z - A)</option>
-              </select>
+              <option value="">Sắp xếp mặc định</option>
+              <option value="">Tên (A - Z)</option>
+              <option value="">Tên (Z - A)</option>
+            </select>
           </div>
 
           <?php if (!empty($data['products'])): ?>
             <div class="row">
               <?php foreach ($data['products'] as $item): ?>
                 <div class="col-md-4 mb-4">
+
                   <div class="swiper-slide">
                     <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                    <?=$item['discount_price'] ?>%
+                      <?= number_format((($item['discount_price']) / $item['price']) * 100) ?>%
                     </div>
                     <div class="card position-relative">
                       <a href="/products/<?= $item['id'] ?>">
-                        <img src="<?= APP_URL ?>/public/assets/client/images/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
+                        <img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
                       </a>
                       <div class="card-body p-0">
                         <a href="/products/<?= $item['id'] ?>">
-                          <h4 class="card-title pt-4 m-0"><?= $item['name'] ?></h4>
+                          <h4 class="card-title pt-4 m-0"><?= $item['product_name'] ?></h4>
                         </a>
                         <div class="card-text">
                           <span class="rating secondary-font">

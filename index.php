@@ -39,6 +39,8 @@ Route::get('/wishlist', 'App\Controllers\Client\WishlistController@index');
 
 
 Route::get('/contact', 'App\Controllers\Client\ContactController@index');
+Route::post('/contact', 'App\Controllers\Client\ContactController@PostContact');
+
 Route::get('/login', 'App\Controllers\Client\AuthController@login');
 Route::post('/login', 'App\Controllers\Client\AuthController@loginAction');
 
@@ -54,7 +56,7 @@ Route::get('/forgot-password', 'App\Controllers\Client\AuthController@forgotPass
 Route::post('/forgot-password', 'App\Controllers\Client\AuthController@forgotPasswordAction');
 
 Route::get('/reset-password', 'App\Controllers\Client\AuthController@resetPassword');
-Route::put('/reset-password', 'App\Controllers\Client\AuthController@resetPasswordAction');
+Route::post('/reset-password', 'App\Controllers\Client\AuthController@resetPasswordAction');
 
 
 

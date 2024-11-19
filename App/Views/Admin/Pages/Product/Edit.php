@@ -53,6 +53,10 @@ class Edit extends BaseView
                                         <input type="text" class="form-control" id="id" name="id" value="<?= $data['product']['id'] ?>" disabled>
                                     </div>
                                     <div class="form-group">
+                                        <label for="image">Hình ảnh</label>
+                                        <input type="file" class="form-control" id="image" placeholder="Chọn hình ảnh..." name="image" value="<?=APP_URL ?>/public/uploads/products/<?= $data['product']['image']?>">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="product_name">Tên*</label>
                                         <input type="text" class="form-control" id="product_name" placeholder="Nhập tên sản phẩm..." name="product_name" value="<?= $data['product']['product_name'] ?>" required>
                                     </div>

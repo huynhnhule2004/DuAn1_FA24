@@ -8,7 +8,7 @@ class Contact extends BaseView
 {
     public static function render($data = null)
     {
-        ?>
+?>
 
         <!-- Code HTML hiển thị giao diện  -->
 
@@ -35,26 +35,27 @@ class Contact extends BaseView
 
             </div>
             <div class="col-sm-12 col-md-6">
-                <form>
+                <form action="/contact" method="post">
+                    <input type="hidden" name="method" id="" value="POST">
                     <div class="mb-3">
-                        <label for="fullName" class="form-label">Họ tên</label>
-                        <input type="text" class="form-control" id="fullName" required>
+                        <label for="name" class="form-label">Họ tên</label>
+                        <input type="text" class="form-control" id="name" name="name" >
                     </div>
 
                     <div class="mb-3 row">
                         <div class="col-md-6">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
+                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" >
                         </div>
                         <div class="col-md-6">
                             <label for="phone" class="form-label">Số điện thoại</label>
-                            <input type="tel" class="form-control" id="phone" required>
+                            <input type="tel" class="form-control" id="phone" name="phone" >
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="message" class="form-label">Lời nhắn</label>
-                        <textarea class="form-control" id="message" rows="3" required></textarea>
+                        <textarea class="form-control" id="message" name="message" rows="3" ></textarea>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Gửi</button>
@@ -68,7 +69,7 @@ class Contact extends BaseView
             referrerpolicy="no-referrer-when-downgrade"></iframe>
         <!-- </div> -->
 
-        <?php
+<?php
 
     }
 }

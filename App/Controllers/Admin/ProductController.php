@@ -95,7 +95,7 @@ class ProductController
             'short_description' => $_POST['short_description'],
             'long_description' => $_POST['long_description'],
             'how_to_use' => $_POST['how_to_use'],
-            'format' => $_POST['format']
+            'format' => $_POST['format'],
         ];
 
         // var_dump($data);
@@ -193,7 +193,7 @@ class ProductController
             'short_description' => $_POST['short_description'],
             'long_description' => $_POST['long_description'],
             'how_to_use' => $_POST['how_to_use'],
-            'format' => $_POST['format']
+            'format' => $_POST['format'],
 
         ];
 

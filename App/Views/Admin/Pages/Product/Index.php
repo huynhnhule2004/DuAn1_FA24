@@ -52,6 +52,7 @@ class Index extends BaseView
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
+                                                    <th>Hình ảnh</th>
                                                     <th>Tên</th>
                                                     <th>Giá</th>
                                                     <th>Giá giảm</th>
@@ -68,6 +69,9 @@ class Index extends BaseView
                                                 ?>
                                                     <tr>
                                                         <td style="white-space: nowrap;"><?= $item['id'] ?></td>
+                                                        <td>
+                                                            <img src="<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>" alt="" width="100px">
+                                                        </td>
                                                         <td style="white-space: nowrap;"><?= $item['product_name'] ?></td>
                                                         <td style="white-space: nowrap;"><?= number_format($item['price']) ?></td>
                                                         <td style="white-space: nowrap;"><?= number_format($item['discount_price']) ?></td>

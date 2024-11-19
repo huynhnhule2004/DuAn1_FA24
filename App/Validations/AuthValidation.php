@@ -198,15 +198,15 @@ class AuthValidation
 
         $is_valid = true;
 
-        // Tên đăng nhập
-        if (!isset($_POST['username']) || $_POST['username'] === '') {
-            NotificationHelper::error('username', 'Không để trống tên đăng nhập');
-            $is_valid = false;
-        }
+        // // Tên đăng nhập
+        // if (!isset($_POST['username']) || $_POST['username'] === '') {
+        //     NotificationHelper::error('username', 'Không để trống tên đăng nhập');
+        //     $is_valid = false;
+        // }
 
         // Email
         if (!isset($_POST['email']) || $_POST['email'] === '') {
-            NotificationHelper::error('email', 'Không để trống email');
+            NotificationHelper::error('email', 'Không để trống  email');
             $is_valid = false;
         } else {
             // Kiểm tra đúng định dạng email

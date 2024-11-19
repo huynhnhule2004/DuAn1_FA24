@@ -17,39 +17,15 @@ use App\Views\Client\Pages\Product\Detail;
 
 
 
+
 class ProductController
 {
     // hiển thị danh sách
     public static function index()
     {
-        // giả sử data là mảng dữ liệu lấy được từ database
-        $products = [
-            [
-                'id' => 1,
-                'name' => 'Áo Hoodie Xám',
-                'price' => '400,000',
-                'discount_price' => 10,
-                'image' => 'item1.jpg',
-                'status' => 1
-            ],
-            [
-                'id' => 2,
-                'name' => 'Áo Yếm Jean',
-                'price' => '200,000',
-                'discount_price' => 20,
-                'image' => 'item2.jpg',
-                'status' => 1
-            ],
-            [
-                'id' => 3,
-                'name' => 'Áo Thun Hồng',
-                'price' => '300,000',
-                'discount_price' => 30,
-                'image' => 'item3.jpg',
-                'status' => 1
-            ],
-
-        ];
+        $productModel = new Product();
+        $products = $productModel->getAllProductByStatus();
+        
         $data = [
             'products' => $products,
             

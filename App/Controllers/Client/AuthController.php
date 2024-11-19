@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controllers\Client;
 
 use App\Helpers\AuthHelper;
@@ -16,110 +15,59 @@ use App\Views\Client\Pages\Auth\ForgotPassword;
 use App\Views\Client\Pages\Auth\Login;
 use App\Views\Client\Pages\Auth\Register;
 use App\Views\Client\Pages\Auth\ResetPassword;
-use App\Models\Category;
-use App\Models\Product;
+use App\Helpers\Mailer;
 
 class AuthController
 {
+    // Hiển thị giao diện form đăng ký
+    public static function renderView($view, $data = [])
+    {
+        Header::render($data);
+        Notification::render();
+        NotificationHelper::unset();
+        $view::render($data);
+        Footer::render();
+    }
 
-    // Hiển thị giao diện form register
+    // Hiển thị form đăng ký
     public static function register()
     {
-        // $category = new Category();
-        // $categories = $category->getAllByStatus();
-
-        // $product = new Product();
-        // $products = $product->getAllProductByStatus();
-
-        // $data = [
-        //     'products' => $products,
-        //     'categories' => $categories
-        // ];
-        // Hiển thị Header
-        Header::render();
-
-        // Hiển thị thông báo
-        Notification::render();
-
-        // Hủy session thông báo
-        // NotificationHelper::unset();
-
-        // Hiển thị form đăng ký
-        Register::render();
-
-        // Hiển thị footer
-        Footer::render();
+        self::renderView(Register::class);
     }
 
     // Thực hiện đăng ký
     public static function registerAction()
     {
-        // Bắt lỗi validation
-        //kiểm tra có thỏa điều kiện không
-        //nếu có: tiếp tục chạy lệnh ở dưới
-        //nếu ko thỏa(có lỗi): thông báo và chuyển hướng về trang đăng ký
+        if (!AuthValidation::register()) {
+            NotificationHelper::error('register_valid', 'Đăng ký thất bại');
+            header('location: /register');
+            exit();
+        }
 
-        // $is_valid = AuthValidation::register();
-
-        // if (!$is_valid) {
-        //     NotificationHelper::error('register_valid', 'Đăng ký thất bại');
-        //     header('location: /register');
-        //     exit();
-        // }
-
-
-        // Lấy dữ liệu người dùng nhập vào
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $hash_password = password_hash($password, PASSWORD_DEFAULT);
-        $email = $_POST['email'];
-        $first_name = $_POST['first_name'];
-
-        // Đưa dữ liệu người dùng vào mảng, lưu ý "key" phải trùng với tên cột trong cơ sở dữ liệu
         $data = [
-            'username' => $username,
-            'password' => $hash_password,
-            'email' => $email,
-            'first_name' => $first_name
+            'username' => $_POST['username'],
+            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+            'email' => $_POST['email'],
+            'first_name' => $_POST['first_name']
         ];
 
-        $result = AuthHelper::register($data);
-
-        if ($result) {
-            // var_dump('Them ok');
+        if (AuthHelper::register($data)) {
             header('Location: /login');
         } else {
-            // var_dump("Them loi");
             header('Location: /register');
         }
     }
 
+    // Hiển thị form đăng nhập
     public static function login()
     {
-        // $category = new Category();
-        // $categories = $category->getAllByStatus();
-
-        // $product = new Product();
-        // $products = $product->getAllProductByStatus();
-
-        // $data = [
-        //     'products' => $products,
-        //     'categories' => $categories
-        // ];
-
-        Header::render();
-        Notification::render();
-        NotificationHelper::unset();
-        Login::render();
-        Footer::render();
+        self::renderView(Login::class);
     }
 
+    // Thực hiện đăng nhập
     public static function loginAction()
     {
-        //Bắt lỗi
-        $is_valid = AuthValidation::login();
-
-        if (!$is_valid) {
+        if (!AuthValidation::login()) {
             NotificationHelper::error('login', 'Đăng nhập thất bại');
             header('location: /login');
             exit();
@@ -131,9 +79,7 @@ class AuthController
             'remember' => isset($_POST['remember'])
         ];
 
-        $result = AuthHelper::login($data);
-
-        if ($result) {
+        if (AuthHelper::login($data)) {
             NotificationHelper::success('login', 'Đăng nhập thành công');
             header('location: /');
         } else {
@@ -142,62 +88,33 @@ class AuthController
         }
     }
 
-    public  static function logout()
+    // Đăng xuất
+    public static function logout()
     {
         AuthHelper::logout();
         NotificationHelper::success('logout', 'Đăng xuất thành công');
         header('location: /');
     }
 
+    // Hiển thị thông tin người dùng
     public static function edit($id)
     {
-        // $category = new Category();
-        // $categories = $category->getAllByStatus();
-
-        // $product = new Product();
-        // $products = $product->getAllProductByStatus();
-
-        // $data = [
-        //     'products' => $products,
-        //     'categories' => $categories
-        // ];
-
-        $result = AuthHelper::edit($id);
-
-        if (!$result) {
-            if (isset($_SESSION['error']['login'])) {
-                header('location: /login');
-                exit;
-            }
-
-            if (isset($_SESSION['error']['user_id'])) {
-
-                $data = $_SESSION['user'];
-                $user_id = $data['id'];
-                header("location: /users/$user_id");
-                exit;
-            }
-        }
-
         $data = $_SESSION['user'];
-        Header::render($data);
-        Notification::render();
-        NotificationHelper::unset();
-        //Giao diện thông tin user
-        Edit::render($data);
-        // var_dump($data); 
-
-        Footer::render();
+        if (!AuthHelper::edit($id)) {
+            NotificationHelper::error('edit_error', 'Lỗi khi sửa thông tin');
+            header('location: /login');
+            exit;
+        }
+        self::renderView(Edit::class, $data);
     }
 
+    // Cập nhật thông tin người dùng
     public static function update($id)
     {
-        $is_valid = AuthValidation::edit();
-
-        if (!$is_valid) {
-            NotificationHelper::error('update_user', 'Cập nhật thông tin tài khoản thất bại');
+        if (!AuthValidation::edit()) {
+            NotificationHelper::error('update_user', 'Cập nhật thông tin thất bại');
             header("location: /users/$id");
-            exit;
+            exit();
         }
 
         $data = [
@@ -208,202 +125,152 @@ class AuthController
             'date_of_birth' => $_POST['date_of_birth']
         ];
 
-        // Kiểm tra có upload hình ảnh không
-        $is_upload = AuthValidation::uploadAvatar();
-        if ($is_upload) {
-            $data['avatar'] = $is_upload;
+        if ($avatar = AuthValidation::uploadAvatar()) {
+            $data['avatar'] = $avatar;
         }
 
-        // Gọi helper để update
-        $result = AuthHelper::update($id, $data);
-
-        if ($result) {
+        if (AuthHelper::update($id, $data)) {
             header("location: /users/$id");
         } else {
-            NotificationHelper::error('update_user', 'Cập nhật thông tin tài khoản thất bại');
+            NotificationHelper::error('update_user', 'Cập nhật thất bại');
             header("location: /users/$id");
         }
-
-        exit;
     }
-    // //Hiển thị form đổi mật khẩu
+
+    // Hiển thị form đổi mật khẩu
     public static function changePassword()
     {
-        // $category = new Category();
-        // $categories = $category->getAllByStatus();
-
-        // $product = new Product();
-        // $products = $product->getAllProductByStatus();
-
-        // $data = [
-        //     'products' => $products,
-        //     'categories' => $categories
-        // ];
-
-        $is_login = AuthHelper::checkLogin();
-
-        if (!$is_login) {
+        if (!AuthHelper::checkLogin()) {
             NotificationHelper::error('login', 'Vui lòng đăng nhập để đổi mật khẩu');
             header('location: /login');
             exit;
         }
-
-        $data = $_SESSION['user'];
-
-        Header::render($data);
-        Notification::render();
-        NotificationHelper::unset();
-        ChangePassword::render($data);
-        Footer::render();
+        self::renderView(ChangePassword::class);
     }
 
-    // //Thực hiện đổi mật khẩu
+    // Thực hiện đổi mật khẩu
     public static function changePasswordAction()
     {
-        //Validation
-        $is_valid = AuthValidation::changePassword();
-        if (!$is_valid) {
+        if (!AuthValidation::changePassword()) {
             NotificationHelper::error('change-password', 'Đổi mật khẩu thất bại');
             header('location: /change-password');
             exit;
         }
 
         $id = $_SESSION['user']['id'];
-
         $data = [
             'old_password' => $_POST['old_password'],
-            'new_password' => $_POST['new_password'],
+            'new_password' => $_POST['new_password']
         ];
 
-        //Gọi AuthHelper
-
-        $result = AuthHelper::changePassword($id, $data);
-
-        header('location: /change-password');
+        if (AuthHelper::changePassword($id, $data)) {
+            header('location: /change-password');
+        } else {
+            NotificationHelper::error('change-password', 'Đổi mật khẩu thất bại');
+            header('location: /change-password');
+        }
     }
 
-    // //Hiển thị giao diện form lấy lại mật khẩu
+    // Hiển thị form lấy lại mật khẩu
     public static function forgotPassword()
     {
-        // $category = new Category();
-        // $categories = $category->getAllByStatus();
-
-        // $product = new Product();
-        // $products = $product->getAllProductByStatus();
-
-        // $data = [
-        //     'products' => $products,
-        //     'categories' => $categories
-        // ];
-
-        Header::render();
-        Notification::render();
-        NotificationHelper::unset();
-        ForgotPassword::render();
-        Footer::render();
+        self::renderView(ForgotPassword::class);
     }
 
-    // //Thực hiện lấy lại mật khẩu
-
+    // Thực hiện lấy lại mật khẩu
     public static function forgotPasswordAction()
     {
-        //Validation
-        $is_valid = AuthValidation::forgotPassword();
-
-        if (!$is_valid) {
-            NotificationHelper::error('forgot_password', 'Lấy lại mật khẩu thất bại');
+        // Validate the POST data before processing
+        if (!isset($_POST['email']) || empty($_POST['email'])) {
+            NotificationHelper::error('forgot_password', 'Vui lòng nhập email');
             header('location: /forgot-password');
-            exit;
+            exit();
         }
 
-        $username = $_POST['username'];
         $email = $_POST['email'];
 
-        $data = [
-            'username' => $username,
 
-        ];
-        //AuthHelper
-        $result = AuthHelper::forgotPassword($data);
-
-        if (!$result) {
-            NotificationHelper::error('username_exist', 'Không tồn tại tài khoản này');
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            NotificationHelper::error('email_invalid', 'Email không hợp lệ');
             header('location: /forgot-password');
-            exit;
+            exit();
         }
 
-        if ($result['email'] != $email) {
-            NotificationHelper::error('email_exist', 'Email không đúng');
+
+
+        $_SESSION['otp'] = rand(100000, 999999);
+
+        if (AuthHelper::sendEmail($email, $_SESSION['otp'])) {
+            NotificationHelper::success('send_otp', 'Mã OTP đã được gửi tới email của bạn');
+            header('location: /reset-password');
+        } else {
+            NotificationHelper::error('send_otp', 'Không thể gửi email. Vui lòng thử lại');
             header('location: /forgot-password');
-            exit;
         }
-
-        $_SESSION['reset_password'] = [
-            'username' => $username,
-            'email' => $email
-        ];
-
-        header('location: /reset-password');
-
-        // echo 'Thành công';
     }
 
-    // //Hiển thị giao diện form lấy lại mật khẩu
+    // Hiển thị form reset mật khẩu
     public static function resetPassword()
     {
-        // $category = new Category();
-        // $categories = $category->getAllByStatus();
-
-        // $product = new Product();
-        // $products = $product->getAllProductByStatus();
-
-        // $data = [
-        //     'products' => $products,
-        //     'categories' => $categories
-        // ];
-
-        if (!isset($_SESSION['reset_password'])) {
-            NotificationHelper::error('reset_password', 'Vui lòng nhập đầy đủ thông tin của form này');
+        if (!isset($_SESSION['otp'])) {
+            NotificationHelper::error('otp_not_found', 'Vui lòng nhập đúng mã OTP');
             header('location: /forgot-password');
             exit;
         }
-
-        Header::render();
-        Notification::render();
-        NotificationHelper::unset();
-        ResetPassword::render();
-        Footer::render();
+        self::renderView(ResetPassword::class);
     }
 
+    // Thực hiện reset mật khẩu
     public static function resetPasswordAction()
     {
-        //Validation
-        $is_valid = AuthValidation::resetPassword();
-
-        if (!$is_valid) {
-            NotificationHelper::error('reset_password', 'Đặt lại mật khẩu thất bại');
-            header('Location: /reset-password');
-            exit;
+        // Kiểm tra mã OTP trong session
+        if (!isset($_SESSION['reset_password'])) {
+            NotificationHelper::error('otp_not_found', 'Mã OTP không tồn tại hoặc đã hết hạn');
+            header('location: /forgot-password');
+            exit();
         }
 
-        $password = $_POST['password'];
-        $hash_password = password_hash($password, PASSWORD_DEFAULT);
+        $otp = (int)$_POST['otp'];
 
-        $data = [
-            'username' => $_SESSION['reset_password']['username'],
-            'email' => $_SESSION['reset_password']['email'],
-            'password' => $hash_password
-        ];
-
-        $result = AuthHelper::resetPassword($data);
-
-        if ($result) {
-            NotificationHelper::success('reset_password', 'Đặt lại mật khẩu thành công');
-            unset($_SESSION['reset_password']);
-            header('location: /login');
-        } else {
-            NotificationHelper::error('reset_password', 'Đặt lại mật khẩu thất bại');
+        // Kiểm tra mã OTP có hợp lệ không
+        if ($_SESSION['reset_password']['otp'] !== $otp) {
+            NotificationHelper::error('otp_invalid', 'Mã OTP không hợp lệ');
             header('location: /reset-password');
+            exit();
         }
+
+        // Nếu OTP hợp lệ, chuyển hướng người dùng đến trang chủ
+        unset($_SESSION['reset_password']); // Xóa OTP khỏi session
+        NotificationHelper::success('otp_verified', 'Xác minh OTP thành công');
+        header('location: /'); // Chuyển hướng đến trang chủ
+        exit();
+    }
+
+    public static function verifyOtpAction()
+    {
+        // Kiểm tra nếu không có mã OTP trong session
+        if (!isset($_SESSION['reset_password']) || !isset($_SESSION['reset_password']['otp'])) {
+            NotificationHelper::error('otp_not_found', 'Mã OTP không tồn tại hoặc đã hết hạn');
+            header('location: /forgot-password');
+            exit();
+        }
+
+        // Lấy mã OTP người dùng nhập
+        $userOtp = (int)$_POST['otp'];
+
+        // Kiểm tra mã OTP
+        if ($_SESSION['reset_password']['otp'] !== $userOtp) {
+            NotificationHelper::error('otp_invalid', 'Mã OTP không hợp lệ');
+            header('location: /verify-otp');
+            exit();
+        }
+
+        // OTP đúng, xoá OTP khỏi session
+        unset($_SESSION['reset_password']);
+
+        // Đăng nhập thành công, chuyển hướng tới trang chủ
+        NotificationHelper::success('otp_verified', 'Xác minh OTP thành công!');
+        header('location: /'); // Trang chủ
+        exit();
     }
 }
