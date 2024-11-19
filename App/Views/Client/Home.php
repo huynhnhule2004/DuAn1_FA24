@@ -141,7 +141,7 @@ class Home extends BaseView
                             ?>
                                     <div class="swiper-slide">
                                     <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                                        <?= number_format((($item['discount_price']) / $item['price']) * 100) ?>%
+                                        <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
                                     </div>
                                         <div class="card position-relative">
                                             
@@ -162,11 +162,11 @@ class Home extends BaseView
                                                     <?php
                                                     if ($item['discount_price'] > 0) :
                                                     ?>
-                                                        <h4 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ <strike style="font-size: medium; color: #333"><?= number_format($item['price']) ?> VNĐ</strike></h4>
+                                                        <h4 class="secondary-font text-primary"><?= number_format($item['price_default'] - $item['discount_price']) ?> VNĐ <strike style="font-size: medium; color: #333"><?= number_format($item['price_default']) ?> VNĐ</strike></h4>
                                                     <?php
                                                     else :
                                                     ?>
-                                                        <h4 class="secondary-font text-primary"><?= number_format($item['price'] - $item['discount_price']) ?> VNĐ</h4>
+                                                        <h4 class="secondary-font text-primary"><?= number_format($item['price_default'] - $item['discount_price']) ?> VNĐ</h4>
                                                     <?php endif; ?>
 
                                                     <div class="d-flex flex-wrap mt-3">
@@ -635,7 +635,7 @@ class Home extends BaseView
                             <?php foreach ($data['featuredProducts'] as $item): ?>
                                 <div class="swiper-slide">
                                     <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                                    <?= number_format((($item['discount_price']) / $item['price']) * 100) ?>%
+                                    <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
 
                                     </div>
                                     <div class="card position-relative">
@@ -643,7 +643,7 @@ class Home extends BaseView
                                                 class="img-fluid rounded-4" alt="image"></a>
                                         <div class="card-body p-0">
                                             <a href="single-product.html">
-                                                <h4 class="card-title pt-4 m-0"><?= $item['name'] ?></h4>
+                                                <h4 class="card-title pt-4 m-0"><?= $item['product_name'] ?></h4>
                                             </a>
 
                                             <div class="card-text">
@@ -657,11 +657,11 @@ class Home extends BaseView
                                                 </span>
                                                 <?php if ($item['discount_price'] > 0): ?>
                                                     <h4 class="secondary-font text-primary">
-                                                        <?= number_format($item['price'] - $item['discount_price']) ?> VNĐ
-                                                        <strike style="font-size: medium; color: #333"><?= number_format($item['price']) ?> VNĐ</strike>
+                                                        <?= number_format($item['price_default'] - $item['discount_price']) ?> VNĐ
+                                                        <strike style="font-size: medium; color: #333"><?= number_format($item['price_default']) ?> VNĐ</strike>
                                                     </h4>
                                                 <?php else: ?>
-                                                    <h4 class="secondary-font text-primary"><?= number_format($item['price']) ?> VNĐ</h4>
+                                                    <h4 class="secondary-font text-primary"><?= number_format($item['price_default']) ?> VNĐ</h4>
                                                 <?php endif; ?>
 
                                                 <div class="d-flex flex-wrap mt-3">

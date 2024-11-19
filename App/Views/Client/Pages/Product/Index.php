@@ -49,7 +49,7 @@ class Index extends BaseView
 
                   <div class="swiper-slide">
                     <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                      <?= number_format((($item['discount_price']) / $item['price']) * 100) ?>%
+                      <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
                     </div>
                     <div class="card position-relative">
                       <a href="/products/<?= $item['id'] ?>">
@@ -68,7 +68,7 @@ class Index extends BaseView
                             <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                             5.0
                           </span>
-                          <h4 class="secondary-font text-primary"><?= $item['price'] ?></h4>
+                          <h4 class="secondary-font text-primary"><?= $item['price_default'] ?></h4>
 
                           <div class="d-flex flex-wrap mt-3">
                             <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">

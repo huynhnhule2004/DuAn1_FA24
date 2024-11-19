@@ -73,7 +73,7 @@ class Index extends BaseView
                                                             <img src="<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>" alt="" width="100px">
                                                         </td>
                                                         <td style="white-space: nowrap;"><?= $item['product_name'] ?></td>
-                                                        <td style="white-space: nowrap;"><?= number_format($item['price']) ?></td>
+                                                        <td style="white-space: nowrap;"><?= number_format($item['price_default']) ?></td>
                                                         <td style="white-space: nowrap;"><?= number_format($item['discount_price']) ?></td>
                                                         <td style="white-space: nowrap;"><?= $item['category_name'] ?></td>
                                                         <td style="white-space: nowrap;">

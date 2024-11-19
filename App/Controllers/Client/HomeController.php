@@ -88,7 +88,8 @@ class HomeController
             'categories' => $categories,
             'latestBlogs' => $latestBlogs,
         ];
-
+// echo "<pre>";
+//         var_dump($data);
         Header::render($data);
         Notification::render();
         NotificationHelper::unset();
