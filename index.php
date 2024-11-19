@@ -117,13 +117,35 @@ Route::get('/admin/products/attributes', 'App\Controllers\Admin\ProductVariation
 Route::post('/admin/products/attributes', 'App\Controllers\Admin\ProductVariationController@store');
 
 // GET /products/{id} (lấy chi tiết sản phẩm với id cụ thể)
-Route::get('/admin/products/{id}', 'App\Controllers\Admin\ProductController@edit');
+Route::get('/admin/products/attributes/{id}', 'App\Controllers\Admin\ProductVariationController@edit');
 
 // PUT /products/{id} (update sản phẩm với id cụ thể)
-Route::put('/admin/products/{id}', 'App\Controllers\Admin\ProductController@update');
+Route::put('/admin/products/attributes/{id}', 'App\Controllers\Admin\ProductVariationController@update');
 
 // DELETE /products/{id} (delete sản phẩm với id cụ thể)
-Route::delete('/admin/products/{id}', 'App\Controllers\Admin\ProductController@delete');
+Route::delete('/admin/products/attributes/{id}', 'App\Controllers\Admin\ProductVariationController@delete');
+
+
+//  *** ProductVariantOptions
+// GET /product_variant_options (lấy danh sách sản phẩm)
+Route::get('/admin/products/product_variant_options', 'App\Controllers\Admin\ProductVariantOptionController@create');
+
+// GET /products/create (hiển thị form thêm sản phẩm)
+// Route::get('/admin/products/create', 'App\Controllers\Admin\ProductController@create');
+
+// POST /products (tạo mới một sản phẩm)
+Route::post('/admin/products/product_variant_options', 'App\Controllers\Admin\ProductVariantOptionController@store');
+
+// GET /products/{id} (lấy chi tiết sản phẩm với id cụ thể)
+Route::get('/admin/products/product_variant_options/{id}', 'App\Controllers\Admin\ProductVariantOptionController@edit');
+
+// PUT /products/{id} (update sản phẩm với id cụ thể)
+Route::put('/admin/products/product_variant_options/{id}', 'App\Controllers\Admin\ProductVariantOptionController@update');
+
+// DELETE /products/{id} (delete sản phẩm với id cụ thể)
+Route::delete('/admin/products/product_variant_options/{id}', 'App\Controllers\Admin\ProductVariantOptionController@delete');
+
+
 
 //  *** BlogCategory
 // GET /blog_categories (lấy danh sách loại bài viết)

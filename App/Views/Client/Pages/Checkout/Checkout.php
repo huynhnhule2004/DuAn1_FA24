@@ -8,38 +8,46 @@ class Checkout extends BaseView
 {
     public static function render($data = null)
     {
-        ?>
+?>
         <style>
-            @media (max-width: 576px) {
+            .css_select_div {
+                text-align: center;
+                display: flex;
+                justify-content: space-between;
+            }
 
-                .summary-table th,
-                .summary-table td {
-                    font-size: 14px;
-                    padding: 8px;
-                }
+            .css_select {
+                width: 30%;
+                /* Đặt độ rộng cho mỗi select */
+                padding: 5px;
+                margin: 5px;
+                border: solid 1px #686868;
+                border-radius: 5px;
+            }
 
-                .summary-table .product-info {
-                    display: block;
-                    text-align: left;
-                }
+            /* Form Styling */
+            .form-label {
+                color: #333;
+            }
 
-                .summary-table .quantity-price {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-top: 5px;
-                }
+            .form-control,
+            .form-select {
+                border-radius: 5px;
+                border: 1px solid #d1d1d1;
+                padding: 10px;
+            }
 
-                .left-panel,
-                .right-panel {
-                    padding: 0 15px;
-                }
+            .form-control:focus, .form-select:focus {
+                border-color: #41403E;
+                box-shadow: none !important;
             }
         </style>
 
-        <!-- Code HTML hiển thị giao diện  -->
+        <!-- Giao diện Thanh Toán -->
         <h1 class="text-center my-3" style="color: var(--bs-primary)">Thanh toán</h1>
         <div class="container p-5 rounded" style="background-color: #F9F3EC;">
             <div class="row">
+                <!-- Thông tin người mua -->
                 <div class="col-md-6 left-panel">
                     <h3>Thông Tin Người Mua</h3>
                     <form>
@@ -61,26 +69,36 @@ class Checkout extends BaseView
                             <label for="address" class="form-label">Địa Chỉ</label>
                             <input type="text" class="form-control" id="address" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="city" class="form-label">Thành Phố</label>
-                            <input type="text" class="form-control" id="city" required>
+
+                        <!-- Chọn Tỉnh Thành, Quận Huyện và Phường Xã -->
+                        <div class="css_select_div mb-3">
+                            <select class="css_select" id="tinh" name="tinh" title="Chọn Tỉnh Thành">
+                                <option value="0">Tỉnh Thành</option>
+                            </select>
+
+                            <select class="css_select" id="quan" name="quan" title="Chọn Quận Huyện">
+                                <option value="0">Quận Huyện</option>
+                            </select>
+
+                            <select class="css_select" id="phuong" name="phuong" title="Chọn Phường Xã">
+                                <option value="0">Phường Xã</option>
+                            </select>
                         </div>
+
                         <h3>Phương Thức Thanh Toán</h3>
                         <div class="mb-3">
                             <label class="form-label">Chọn Phương Thức Thanh Toán</label>
                             <select class="form-select" id="paymentMethod" required>
                                 <option value="">Chọn phương thức</option>
-                                <option value="creditCard">Thẻ Tín Dụng</option>
-                                <option value="paypal">PayPal</option>
-                                <option value="bankTransfer">Chuyển Khoản Ngân Hàng</option>
+                                <option value="COD">Thanh toán khi nhận hàng</option>
+                                <option value="online_payment">Thanh toán trực tuyến</option>
                             </select>
                         </div>
                     </form>
                 </div>
 
+                <!-- Tóm Tắt Đơn Hàng -->
                 <div class="col-md-6 right-panel">
-
-
                     <h3>Tóm Tắt Đơn Hàng</h3>
                     <table class="table summary-table">
                         <thead>
@@ -116,8 +134,47 @@ class Checkout extends BaseView
             </div>
         </div>
 
+        <script src="https://esgoo.net/scripts/jquery.js"></script>
+        <script>
+            $(document).ready(function() {
+                // Lấy tỉnh thành
+                $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function(data_tinh) {
+                    if (data_tinh.error == 0) {
+                        $.each(data_tinh.data, function(key_tinh, val_tinh) {
+                            $("#tinh").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name + '</option>');
+                        });
 
-        <?php
+                        $("#tinh").change(function(e) {
+                            var idtinh = $(this).val();
+                            // Lấy quận huyện
+                            $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function(data_quan) {
+                                if (data_quan.error == 0) {
+                                    $("#quan").html('<option value="0">Quận Huyện</option>');
+                                    $("#phuong").html('<option value="0">Phường Xã</option>');
+                                    $.each(data_quan.data, function(key_quan, val_quan) {
+                                        $("#quan").append('<option value="' + val_quan.id + '">' + val_quan.full_name + '</option>');
+                                    });
 
+                                    // Lấy phường xã
+                                    $("#quan").change(function(e) {
+                                        var idquan = $(this).val();
+                                        $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function(data_phuong) {
+                                            if (data_phuong.error == 0) {
+                                                $("#phuong").html('<option value="0">Phường Xã</option>');
+                                                $.each(data_phuong.data, function(key_phuong, val_phuong) {
+                                                    $("#phuong").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name + '</option>');
+                                                });
+                                            }
+                                        });
+                                    });
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        </script>
+<?php
     }
 }
+?>
