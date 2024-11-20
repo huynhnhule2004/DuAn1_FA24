@@ -19,10 +19,10 @@ class ProductValidation
         }
 
         // Giá tiền
-        if (!isset($_POST['price']) || $_POST['price'] === '') {
-            NotificationHelper::error('price', 'Không để trống giá tiền');
+        if (!isset($_POST['price_default']) || $_POST['price'] === '') {
+            NotificationHelper::error('price_default', 'Không để trống giá tiền');
             $is_valid = false;
-        } elseif ((int) $_POST['price'] <= 0) {
+        } elseif ((int) $_POST['price_default'] <= 0) {
             NotificationHelper::error('price', 'Giá tiền phải lớn hơn 0');
             $is_valid = false;
         }
@@ -34,7 +34,7 @@ class ProductValidation
         } elseif ((int) $_POST['discount_price'] < 0) {
             NotificationHelper::error('discount_price', 'Giá giảm phải lớn hơn hoặc bằng 0');
             $is_valid = false;
-        } elseif ((int) $_POST['discount_price'] > (int) $_POST['price']) {
+        } elseif ((int) $_POST['discount_price'] > (int) $_POST['price_default']) {
             NotificationHelper::error('discount_price', 'Giá giảm phải nhỏ hơn giá tiền');
             $is_valid = false;
         }

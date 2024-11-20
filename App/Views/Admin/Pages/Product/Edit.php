@@ -54,37 +54,11 @@ class Edit extends BaseView
                                     </div>
                                     <div class="form-group">
                                         <label for="image">Hình ảnh</label>
-                                        <input type="file" class="form-control" id="image" placeholder="Chọn hình ảnh..." name="image" value="<?=APP_URL ?>/public/uploads/products/<?= $data['product']['image']?>">
+                                        <input type="file" class="form-control" id="image" placeholder="Chọn hình ảnh..." name="image" value="<?= APP_URL ?>/public/uploads/products/<?= $data['product']['image'] ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="product_name">Tên*</label>
                                         <input type="text" class="form-control" id="product_name" placeholder="Nhập tên sản phẩm..." name="product_name" value="<?= $data['product']['product_name'] ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="price">Giá tiền*</label>
-                                        <input type="number" class="form-control" id="price" placeholder="Nhập giá tiền..." name="price" value="<?= $data['product']['price'] ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="discount_price">Giá giảm*</label>
-                                        <input type="number" class="form-control" id="discount_price" placeholder="Nhập giá giảm..." name="discount_price" value="<?= $data['product']['discount_price'] ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="short_description">Mô tả ngắn</label>
-                                        <textarea class="form-control" name="short_description" id="short_description_editor" placeholder="Nhập mô tả ngắn..."><?= htmlspecialchars($data['product']['short_description']) ?></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="long_description">Mô tả</label>
-                                        <textarea class="form-control" name="long_description" id="long_description_editor" placeholder="Nhập mô tả..."><?= htmlspecialchars($data['product']['long_description']) ?></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="how_to_use">Cách sử dụng</label>
-                                        <textarea class="form-control" name="how_to_use" id="how_to_use_editor" placeholder="Nhập cách sử dụng..."><?= htmlspecialchars($data['product']['how_to_use']) ?></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="format">Định dạng</label>
-                                        <input type="text" class="form-control" id="format" placeholder="Nhập định dạng sản phẩm.." name="format" value="<?= $data['product']['format'] ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="category_id">Loại sản phẩm*</label>
@@ -100,6 +74,29 @@ class Edit extends BaseView
                                             ?>
 
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="long_description">Mô tả</label>
+                                        <textarea class="form-control" name="long_description" id="long_description_editor" placeholder="Nhập mô tả..."><?= htmlspecialchars($data['product']['long_description']) ?></textarea>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="form-group col-md-6">
+                                            <label for="price_default col-md-6">Giá tiền*</label>
+                                            <input type="number" class="form-control" id="price_default" placeholder="Nhập giá tiền..." name="price_default" value="<?= $data['product']['price_default'] ?>" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="discount_price ">Giá giảm*</label>
+                                            <input type="number" class="form-control" id="discount_price" placeholder="Nhập giá giảm..." name="discount_price" value="<?= $data['product']['discount_price'] ?>" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="short_description">Mô tả ngắn</label>
+                                        <textarea class="form-control" name="short_description" id="short_description_editor" placeholder="Nhập mô tả ngắn..."><?= htmlspecialchars($data['product']['short_description']) ?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="how_to_use">Cách sử dụng</label>
+                                        <textarea class="form-control" name="how_to_use" id="how_to_use_editor" placeholder="Nhập cách sử dụng..."><?= htmlspecialchars($data['product']['how_to_use']) ?></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="is_feature">Nổi bật*</label>

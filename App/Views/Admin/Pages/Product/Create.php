@@ -108,7 +108,7 @@ class Create extends BaseView
                                             <option value="" selected disabled>Vui lòng chọn...</option>
 
                                             <?php
-                                            foreach ($data as $item) :
+                                            foreach ($data['categories'] as $item) :
                                             ?>
                                                 <option value="<?= $item['id'] ?>"><?= $item['category_name'] ?></option>
                                             <?php
@@ -124,7 +124,7 @@ class Create extends BaseView
                                     <div class="form-group row">
                                         <div class="form-group col-md-6">
                                             <label for="price">Giá tiền*</label>
-                                            <input type="number" class="form-control" id="price" placeholder="Nhập giá tiền..." name="price" required>
+                                            <input type="number" class="form-control" id="price" placeholder="Nhập giá tiền..." name="price_default" required>
                                         </div>
                                         <div class="form-group col-6">
                                             <label for="discount_price">Giá giảm*</label>
@@ -192,6 +192,8 @@ class Create extends BaseView
                                             ?>
                                         </div>
                                     </div>
+
+                                    
                                 </div>
                         </div>
                         <div class="border-top">

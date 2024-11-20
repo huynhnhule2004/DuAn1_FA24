@@ -87,7 +87,7 @@ class ProductController
         // Thực hiện thêm
         $data = [
             'product_name' => $_POST['product_name'],
-            'price' => $_POST['price'],
+            'price_default' => $_POST['price_default'],
             'discount_price' => $_POST['discount_price'],
             'is_feature' => $_POST['is_feature'],
             'status' => $_POST['status'],
@@ -95,7 +95,6 @@ class ProductController
             'short_description' => $_POST['short_description'],
             'long_description' => $_POST['long_description'],
             'how_to_use' => $_POST['how_to_use'],
-            'format' => $_POST['format'],
         ];
 
         // var_dump($data);
@@ -185,15 +184,14 @@ class ProductController
         //Thực hiện cập nhật
         $data = [
             'product_name' => $name,
-            'price' => $_POST['price'],
+            'price_default' => $_POST['price_default'],
             'discount_price' => $_POST['discount_price'],
             'is_feature' => $_POST['is_feature'],
             'status' => $_POST['status'],
             'category_id' => $_POST['category_id'],
             'short_description' => $_POST['short_description'],
             'long_description' => $_POST['long_description'],
-            'how_to_use' => $_POST['how_to_use'],
-            'format' => $_POST['format'],
+            'how_to_use' => $_POST['how_to_use']
 
         ];
 
