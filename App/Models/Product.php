@@ -16,10 +16,56 @@ class Product extends BaseModel
         return $this->getOne($id);
     }
 
-    public function createProduct($data)
-    {
-        return $this->create($data);
+    // public function createProduct($data)
+    // {
+    //     return $this->create($data);
+    // }
+
+
+    public function createProduct(array $data)
+{
+    try {
+        // Tạo câu truy vấn INSERT
+        $sql = "INSERT INTO $this->table (";
+        
+        // Tạo chuỗi các cột
+        foreach ($data as $key => $value) {
+            $sql .= "$key, ";
+        }
+        
+        $sql = rtrim($sql, ", "); // Loại bỏ dấu phẩy thừa sau cùng
+        $sql .= ") VALUES (";
+        
+        // Tạo chuỗi các giá trị tương ứng với cột
+        foreach ($data as $key => $value) {
+            $sql .= "'$value', ";
+        }
+        
+        $sql = rtrim($sql, ", "); // Loại bỏ dấu phẩy thừa sau cùng
+        $sql .= ")"; // Đóng câu truy vấn
+
+        // Kết nối và chuẩn bị câu lệnh
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+
+        // Thực thi câu lệnh
+        $result = $stmt->execute();
+
+        // Kiểm tra kết quả
+        if ($result) {
+            // Trả về ID của bản ghi vừa tạo
+            return $conn->insert_id;
+        } else {
+            return false;
+        }
+
+    } catch (\Throwable $th) {
+        // Log lỗi
+        error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
+        return false;
     }
+}
+
     public function updateProduct($id, $data)
     {
         return $this->update($id, $data);
@@ -190,22 +236,6 @@ class Product extends BaseModel
         } catch (\Throwable $th) {
             error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
             return $result;
-        }
-    }
-
-    public function getProductsByCategoryId($categoryId)
-    {
-        try {
-            $sql = "SELECT * FROM products WHERE category_id = ?";
-            $conn = $this->_conn->MySQLi();
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('i', $categoryId);
-            $stmt->execute();
-            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-            return $result;
-        } catch (\Throwable $th) {
-            error_log('Lỗi khi lấy sản phẩm theo danh mục: ' . $th->getMessage());
-            return [];
         }
     }
 }
