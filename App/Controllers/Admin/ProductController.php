@@ -65,10 +65,8 @@ class ProductController
     // xử lý chức năng thêm
     public static function store()
     {
-        // validation các trường dữ liệu
-        $is_valid = ProductValidation::create();
-
-        if (!$is_valid) {
+        // Validation các trường dữ liệu
+        if (!ProductValidation::create()) {
             NotificationHelper::error('store', 'Thêm sản phẩm thất bại');
             header('location: /admin/products/create');
             exit;
@@ -76,11 +74,11 @@ class ProductController
 
         // Kiểm tra tên sản phẩm đã tồn tại
         $name = $_POST['product_name'];
-
-        //kiểm tra tên sản phẩm có tồn tại chưa => không được trùng tên
-
         $product = new Product();
-        if ($product->getOneProductByName($name)) {
+        $is_exist = $product->getOneProductByName($name);
+
+
+        if ($is_exist) {
             NotificationHelper::error('store', 'Tên sản phẩm này đã tồn tại');
             header('location: /admin/products/create');
             exit;
@@ -116,9 +114,12 @@ class ProductController
             // Hiển thị thông báo thành công và chuyển hướng về trang quản trị
             NotificationHelper::success('store', 'Thêm sản phẩm thành công');
             header('location: /admin/products');
+            exit;
         } else {
+            // Nếu không thêm sản phẩm thành công
             NotificationHelper::error('store', 'Thêm sản phẩm thất bại');
             header('location: /admin/products/create');
+            exit;
         }
     }
 
