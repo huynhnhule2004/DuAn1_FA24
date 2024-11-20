@@ -13,6 +13,7 @@ use App\Views\Admin\Pages\Product\Create;
 use App\Views\Admin\Pages\Product\Edit;
 use App\Views\Admin\Pages\Product\Index;
 use App\Models\ProductVariantOption;
+use App\Validations\SkuValidation;
 
 class ProductController
 {
