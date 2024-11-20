@@ -45,6 +45,22 @@ class Product extends BaseModel
         }
     }
 
+    public function getAllVariantOptionByProduct($id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT DISTINCT pvo.id, pvo.name
+                FROM Product_variant_options AS pvo
+                JOIN Product_variant_option_combinations AS pvoc ON pvo.id = pvoc.product_variant_option_id
+                JOIN Skus AS s ON pvoc.sku_id = s.id
+                WHERE s.product_id = $id";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
     public function getOneProductByName($name)
     {
         return $this->getOneByName($name);

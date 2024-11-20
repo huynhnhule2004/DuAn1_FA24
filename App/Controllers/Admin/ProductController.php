@@ -71,6 +71,7 @@ class ProductController
             exit;
         }
 
+        // Kiểm tra tên sản phẩm đã tồn tại
         $name = $_POST['product_name'];
 
         //kiểm tra tên sản phẩm có tồn tại chưa => không được trùng tên
@@ -83,8 +84,7 @@ class ProductController
             header('location: /admin/products/create');
             exit;
         }
-
-        // Thực hiện thêm
+        // Tạo dữ liệu sản phẩm
         $data = [
             'product_name' => $_POST['product_name'],
             'price_default' => $_POST['price_default'],
@@ -97,17 +97,22 @@ class ProductController
             'how_to_use' => $_POST['how_to_use'],
         ];
 
-        // var_dump($data);
-        $is_upload = ProductValidation::uploadImage();
-
-        if ($is_upload) {
-            $data['image'] = $is_upload;
+        // Upload hình ảnh sản phẩm
+        if ($imagePath = ProductValidation::uploadImage()) {
+            $data['image'] = $imagePath;
         }
-        // var_dump($data);
 
-        $result = $product->createProduct($data);
+        // Thêm sản phẩm vào cơ sở dữ liệu
+        $productId = $product->createProduct($data);
 
-        if ($result) {
+        // Kiểm tra nếu thêm sản phẩm thành công
+        if ($productId) {
+            // Thêm SKU nếu có
+            if (isset($_POST['sku_code'], $_POST['price'], $_POST['stock_quantity'])) {
+                self::processSku($productId);
+            }
+
+            // Hiển thị thông báo thành công và chuyển hướng về trang quản trị
             NotificationHelper::success('store', 'Thêm sản phẩm thành công');
             header('location: /admin/products');
         } else {
@@ -115,6 +120,67 @@ class ProductController
             header('location: /admin/products/create');
         }
     }
+
+    // Tách phần xử lý SKU ra một hàm riêng
+    private static function processSku($productId)
+    {
+        $skuCodes = $_POST['sku_code'];
+        $skuPrices = $_POST['price'];
+        $skuStockQuantities = $_POST['stock_quantity'];
+
+        if (count($skuCodes) == count($skuPrices) && count($skuPrices) == count($skuStockQuantities)) {
+            foreach ($skuCodes as $index => $skuCode) {
+                if (empty($skuCode) || empty($skuPrices[$index]) || empty($skuStockQuantities[$index])) {
+                    echo "Dữ liệu không hợp lệ cho SKU: $skuCode<br>";
+                    continue;
+                }
+
+                // Tạo dữ liệu SKU
+                $skuData = [
+                    'product_id' => $productId, // ID của sản phẩm đã thêm
+                    'sku' => $skuCode,
+                    'price' => $skuPrices[$index],
+                    'stock_quantity' => $skuStockQuantities[$index]
+                ];
+
+                // Xử lý upload hình ảnh cho SKU
+                if ($imagePath = SkuValidation::uploadImage($_FILES['sku_image'], $index)) {
+                    $skuData['image'] = $imagePath;
+                }
+
+                // Thêm SKU vào cơ sở dữ liệu
+                $skuModel = new Sku();
+                $skuId = $skuModel->createSku($skuData);
+
+                // Thêm các kết hợp variant options nếu có
+                self::processVariantOptions($skuId);
+
+                if ($skuId) {
+                    echo "SKU đã thêm thành công! SKU ID: $skuId<br>";
+                } else {
+                    echo "Có lỗi khi thêm SKU với mã: $skuCode<br>";
+                }
+            }
+        } else {
+            echo "Dữ liệu không hợp lệ. Các mảng SKU, giá và số lượng không khớp số lượng.<br>";
+        }
+    }
+
+    // Tách phần xử lý variant options ra một hàm riêng
+    private static function processVariantOptions($skuId)
+    {
+        if (isset($_POST['variant_options'])) {
+            foreach ($_POST['variant_options'] as $variantOptionId) {
+                $combinationData = [
+                    'sku_id' => $skuId,
+                    'product_variant_option_id' => $variantOptionId
+                ];
+                $productVariantOptionCombination = new ProductVariantOptionCombination();
+                $productVariantOptionCombination->create($combinationData);
+            }
+        }
+    }
+
 
 
     // // hiển thị chi tiết
@@ -133,6 +199,15 @@ class ProductController
         $category = new Category();
         $data_category = $category->getAllCategory();
 
+        $sku = new Sku();
+        $skus = $sku->getAllSkuByProduct($id);
+
+        $variant_option = new Product();
+        $variant_options = $variant_option->getAllVariantOptionByProduct($id);
+
+        $product_variant_option = new ProductVariantOption();
+        $product_variant_options = $product_variant_option->getAllVariationJoinOption();
+
         if (!$data_product) {
             NotificationHelper::error('edit', 'Không thể xem sản phẩm này');
             header('location: /admin/products/');
@@ -141,7 +216,10 @@ class ProductController
 
         $data = [
             'product' => $data_product,
-            'category' => $data_category
+            'category' => $data_category,
+            'skus' => $skus,
+            'variant_option' => $variant_options,
+            'product_variant_options' => $product_variant_options,
         ];
 
         // echo "<pre>";

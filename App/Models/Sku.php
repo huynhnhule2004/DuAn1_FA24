@@ -2,50 +2,105 @@
 
 namespace App\Models;
 
-class ProductVariantOption extends BaseModel
+class Sku extends BaseModel
 {
-    protected $table = 'product_variant_options';
+    protected $table = 'skus';
     protected $id = 'id';
 
-    public function getAllProductVariantOption()
+    public function getAllProduct()
     {
         return $this->getAll();
     }
-    public function getOneProductVariantOption($id)
+    public function getOneProduct($id)
     {
         return $this->getOne($id);
     }
 
-    public function createProduct($data)
+    // public function createSku($data)
+    // {
+    //     return $this->create($data); // Gọi hàm `create` từ BaseModel
+    // }
+
+    public function createSku(array $data)
     {
-        return $this->create($data);
+        try {
+            // Tạo câu truy vấn INSERT
+            $sql = "INSERT INTO $this->table (";
+            
+            // Tạo chuỗi các cột
+            foreach ($data as $key => $value) {
+                $sql .= "$key, ";
+            }
+            
+            $sql = rtrim($sql, ", "); // Loại bỏ dấu phẩy thừa sau cùng
+            $sql .= ") VALUES (";
+            
+            // Tạo chuỗi các giá trị tương ứng với cột
+            foreach ($data as $key => $value) {
+                $sql .= "'$value', ";
+            }
+            
+            $sql = rtrim($sql, ", "); // Loại bỏ dấu phẩy thừa sau cùng
+            $sql .= ")"; // Đóng câu truy vấn
+    
+            // Kết nối và chuẩn bị câu lệnh
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+    
+            // Thực thi câu lệnh
+            $result = $stmt->execute();
+    
+            // Kiểm tra kết quả
+            if ($result) {
+                // Trả về ID của bản ghi vừa tạo
+                return $conn->insert_id;
+            } else {
+                return false;
+            }
+    
+        } catch (\Throwable $th) {
+            // Log lỗi
+            error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
+            return false;
+        }
     }
-    public function updateProductVariantOption($id, $data)
+    public function updateProduct($id, $data)
     {
         return $this->update($id, $data);
     }
 
-    public function deleteProductVariantOption($id)
+    public function deleteProduct($id)
     {
         return $this->delete($id);
     }
+    public function getAllSkuByProduct($id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT skus.* FROM skus JOIN products ON skus.product_id = products.id WHERE products.id = $id;";
 
-
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
 
     public function getOneProductByName($name)
     {
         return $this->getOneByName($name);
     }
 
-    public function getAllVariationJoinOption()
+    public function getAllProductJoinCategory()
     {
         $result = [];
         try {
             // $sql = "SELECT * FROM $this->table";
-            $sql = "SELECT product_variant_options.*, product_variations.name as product_variation_name
-            FROM product_variant_options 
-            INNER JOIN product_variations 
-            on product_variant_options.product_variant_id =product_variations.id ORDER BY product_variation_name ASC;";
+            $sql = "SELECT products.*, categories.category_name
+            FROM products 
+            INNER JOIN categories 
+            on products.category_id=categories.id;";
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {
