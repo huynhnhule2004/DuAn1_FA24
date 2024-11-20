@@ -56,8 +56,10 @@ class Create extends BaseView
             }
 
             #variant_fields {
+                display: none;
+                /* Mặc định ẩn khối biến thể */
                 margin-top: 20px;
-                /* Khoảng cách giữa khối biến thể và các phần tử khác */
+                /* Khoảng cách trên nếu hiển thị */
             }
         </style>
         <!-- Page wrapper  -->
@@ -100,15 +102,17 @@ class Create extends BaseView
                                     <input type="hidden" name="method" id="" value="POST">
                                     <div class="form-group">
                                         <label for="product_name">Tên*</label>
-                                        <input type="text" class="form-control" id="product_name" placeholder="Nhập tên sản phẩm..." name="product_name" required>
+                                        <input type="text" class="form-control" id="product_name"
+                                            placeholder="Nhập tên sản phẩm..." name="product_name" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="category_id">Loại sản phẩm*</label>
-                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="category_id" name="category_id" required>
+                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;"
+                                            id="category_id" name="category_id" required>
                                             <option value="" selected disabled>Vui lòng chọn...</option>
 
                                             <?php
-                                            foreach ($data['categories'] as $item) :
+                                            foreach ($data['categories'] as $item):
                                             ?>
                                                 <option value="<?= $item['id'] ?>"><?= $item['category_name'] ?></option>
                                             <?php
@@ -119,33 +123,40 @@ class Create extends BaseView
                                     </div>
                                     <div class="form-group">
                                         <label for="long_description">Mô tả</label>
-                                        <textarea class="form-control" name="long_description" id="long_description_editor" placeholder="Nhập mô tả..."></textarea>
+                                        <textarea class="form-control" name="long_description" id="long_description_editor"
+                                            placeholder="Nhập mô tả..."></textarea>
                                     </div>
                                     <div class="form-group row">
                                         <div class="form-group col-md-6">
                                             <label for="price">Giá tiền*</label>
-                                            <input type="number" class="form-control" id="price" placeholder="Nhập giá tiền..." name="price_default" required>
+                                            <input type="number" class="form-control" id="price" placeholder="Nhập giá tiền..."
+                                                name="price_default" required>
                                         </div>
                                         <div class="form-group col-6">
                                             <label for="discount_price">Giá giảm*</label>
-                                            <input type="number" class="form-control" id="discount_price" placeholder="Nhập giá giảm..." name="discount_price" required>
+                                            <input type="number" class="form-control" id="discount_price"
+                                                placeholder="Nhập giá giảm..." name="discount_price" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="image">Hình ảnh</label>
-                                        <input type="file" class="form-control" id="image" placeholder="Chọn hình ảnh..." name="image">
+                                        <input type="file" class="form-control" id="image" placeholder="Chọn hình ảnh..."
+                                            name="image">
                                     </div>
                                     <div class="form-group">
                                         <label for="short_description">Mô tả ngắn</label>
-                                        <textarea class="form-control" name="short_description" id="short_description_editor" placeholder="Nhập mô tả ngắn..."></textarea>
+                                        <textarea class="form-control" name="short_description" id="short_description_editor"
+                                            placeholder="Nhập mô tả ngắn..."></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="how_to_use">Cách sử dụng</label>
-                                        <textarea class="form-control" name="how_to_use" id="how_to_use_editor" placeholder="Nhập cách sử dụng..."></textarea>
+                                        <textarea class="form-control" name="how_to_use" id="how_to_use_editor"
+                                            placeholder="Nhập cách sử dụng..."></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="is_feature">Nổi bật*</label>
-                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="is_feature" name="is_feature" required>
+                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;"
+                                            id="is_feature" name="is_feature" required>
                                             <option value="" selected disabled>Vui lòng chọn...</option>
                                             <option value="1">Nổi bật</option>
                                             <option value="0">Không</option>
@@ -153,7 +164,8 @@ class Create extends BaseView
                                     </div>
                                     <div class="form-group">
                                         <label for="status">Trạng thái*</label>
-                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="status" name="status" required>
+                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;"
+                                            id="status" name="status" required>
                                             <option value="" selected disabled>Vui lòng chọn...</option>
                                             <option value="available">Còn hàng</option>
                                             <option value="out_of_stock">Hết hàng</option>
@@ -166,24 +178,22 @@ class Create extends BaseView
                                     </div>
 
                                     <!-- Các trường input cho biến thể (ban đầu ẩn) -->
-                                    <div id="variant_fields" style="display: none;">
+                                    <div id="variant_fields">
                                         <div class="form-group">
                                             <label for="variant_name">Tên biến thể</label>
                                             <?php
-                                            // Kiểm tra xem mảng 'product_variant_options' có tồn tại và không phải là null
                                             if (isset($data['product_variant_options']) && is_array($data['product_variant_options']) && !empty($data['product_variant_options'])) {
-                                                $current_variation_name = '';  // Biến dùng để kiểm tra tên thuộc tính (Kích thước, Màu sắc)
+                                                $current_variation_name = '';
                                                 foreach ($data['product_variant_options'] as $option) {
-                                                    // Kiểm tra và hiển thị tên thuộc tính nếu có sự thay đổi
                                                     if ($option['product_variation_name'] !== $current_variation_name) {
                                                         echo "<h5>" . $option['product_variation_name'] . ":</h5>";
                                                         $current_variation_name = $option['product_variation_name'];
                                                     }
-
-                                                    // Hiển thị lựa chọn biến thể (ví dụ: S, M, L, XL, Màu sắc)
                                                     echo "<label class='variant-option'>";
-                                                    echo "<input type='checkbox' name='variant_options[]' value='" . $option['id'] . "'>";
+                                                    echo "<input type='checkbox' name='variant_options[" . $option['id'] . "]' class='variant-checkbox' data-group='" . $option['product_variation_name'] . "' data-value='" . $option['name'] . "' value='" . $option['id'] . "'>";
+                                                    // echo "<input type='checkbox' class='variant-checkbox' data-group='" . $option['product_variation_name'] . "' data-value='" . $option['name'] . "'>";
                                                     echo $option['name'];
+
                                                     echo "</label>";
                                                 }
                                             } else {
@@ -193,7 +203,26 @@ class Create extends BaseView
                                         </div>
                                     </div>
 
-                                    
+                                    <!-- Hiển thị bảng tổ hợp SKU -->
+                                    <div id="sku_table" style="display: none; margin-top: 20px;">
+                                        <h4>Quản lý SKU:</h4>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Biến thể</th>
+                                                    <th>Mã SKU</th>
+                                                    <th>Giá</th>
+                                                    <th>Số lượng tồn kho</th>
+                                                    <th>Hình ảnh</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="sku_body">
+                                                <!-- Dòng SKU sẽ được thêm ở đây -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
                                 </div>
                         </div>
                         <div class="border-top">
@@ -255,6 +284,66 @@ class Create extends BaseView
                 } else {
                     variantFields.style.display = 'none';
                 }
+            });
+
+            document.addEventListener("DOMContentLoaded", function() {
+                const checkboxes = document.querySelectorAll(".variant-checkbox");
+                const skuTable = document.getElementById("sku_table");
+                const skuBody = document.getElementById("sku_body");
+
+                // Hàm lấy tổ hợp Cartesian Product
+                function generateCombinations(arrays) {
+                    return arrays.reduce((acc, curr) => acc.flatMap(a => curr.map(b => [...a, b])), [
+                        []
+                    ]);
+                }
+
+                // Hàm cập nhật tổ hợp SKU
+                function updateSKUs() {
+                    const selectedOptions = {};
+
+                    // Lấy tất cả các tùy chọn đã chọn, nhóm theo nhóm thuộc tính
+                    checkboxes.forEach(checkbox => {
+                        if (checkbox.checked) {
+                            const group = checkbox.dataset.group;
+                            const value = checkbox.dataset.value;
+                            if (!selectedOptions[group]) selectedOptions[group] = [];
+                            selectedOptions[group].push(value);
+                        }
+                    });
+
+                    // Kiểm tra nếu không có biến thể nào được chọn
+                    if (Object.keys(selectedOptions).length === 0) {
+                        skuTable.style.display = "none";
+                        skuBody.innerHTML = "";
+                        return;
+                    }
+
+                    // Tạo tổ hợp biến thể
+                    const combinations = generateCombinations(Object.values(selectedOptions));
+
+                    // Hiển thị các tổ hợp trong bảng SKU
+                    skuBody.innerHTML = ""; // Xóa dữ liệu cũ
+                    combinations.forEach(combination => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                                        <td>${combination.join(' - ')}</td>
+                                        <td><input type="text" name="sku_code[]" placeholder="Mã SKU" class="form-control"></td>
+                                        <td><input type="number" name="price[]" placeholder="Giá" class="form-control"></td>
+                                        <td><input type="number" name="stock_quantity[]" placeholder="Tồn kho" class="form-control"></td>
+                                        <td><input type="file" name="sku_image[]" class="form-control"></td>
+                                        `;
+                        skuBody.appendChild(row);
+                    });
+
+                    // Hiển thị bảng SKU
+                    skuTable.style.display = "block";
+                }
+
+                // Lắng nghe sự kiện khi checkbox được chọn hoặc bỏ chọn
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener("change", updateSKUs);
+                });
             });
         </script>
 <?php
