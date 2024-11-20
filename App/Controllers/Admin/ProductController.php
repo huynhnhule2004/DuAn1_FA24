@@ -77,9 +77,7 @@ class ProductController
         //kiểm tra tên sản phẩm có tồn tại chưa => không được trùng tên
 
         $product = new Product();
-        $is_exist = $product->getOneProductByName($name);
-
-        if ($is_exist) {
+        if ($product->getOneProductByName($name)) {
             NotificationHelper::error('store', 'Tên sản phẩm này đã tồn tại');
             header('location: /admin/products/create');
             exit;
