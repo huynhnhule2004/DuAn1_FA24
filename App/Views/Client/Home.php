@@ -14,7 +14,6 @@ class Home extends BaseView
             <div class="container">
                 <div class="swiper main-swiper">
                     <div class="swiper-wrapper">
-
                         <div class="swiper-slide py-5">
                             <div class="row banner-content align-items-center">
                                 <div class="img-wrapper col-md-5">

@@ -163,7 +163,7 @@ class About extends BaseView
 
   </style>
 
-<section id="banner" style="background: #F9F3EC;">
+<section id="banner" style="background: #F9F3EC; padding-top: 5rem;">
     <div class="container">
         <div class="swiper main-swiper">
             <div class="swiper-wrapper">

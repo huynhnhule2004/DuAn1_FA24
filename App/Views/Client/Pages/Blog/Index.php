@@ -8,32 +8,31 @@ class Index extends BaseView
 {
   public static function render($data = null)
   {
-    ?>
-    <div class="container">
+?>
+    <div class="container pt-5">
       <?php if (!empty($data['blogs'])): ?>
-        <div class="row entry-container">
+        <div class="row g-4">
           <?php foreach ($data['blogs'] as $item): ?>
-            <div class="entry-item col-md-4 my-4">
-              <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
-                <h3 class="secondary-font text-primary m-0">20</h3>
-                <p class="secondary-font fs-6 m-0">Feb</p>
-              </div>
-              <div class="card position-relative">
-                <a href="/blogs/<?= $item['id'] ?>">
-                  <img src="<?= APP_URL ?>/public/uploads/blogs/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
-                </a>
-                <div class="card-body p-0">
-                  <!-- Cập nhật href tại đây -->
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="position-relative">
                   <a href="/blogs/<?= $item['id'] ?>">
-                    <h4 class="card-title pt-4 pb-3 m-0"><?= $item['title'] ?></h4>
+                    <!-- Đặt kích thước ảnh cố định -->
+                    <img src="<?= APP_URL ?>/public/uploads/blogs/<?= $item['image'] ?>" class="card-img-top img-fluid rounded-3" alt="image" style="height: 400px; object-fit: cover;">
                   </a>
-                  <div class="card-text">
-                    <p class="blog-paragraph fs-6">
-                      <?= strlen($item['content']) > 100 ? substr($item['content'], 0, 100) . '...' : $item['content'] ?>
-                    </p>
-                    <!-- Cập nhật href tại đây -->
-                    <a href="/blogs/<?= $item['id'] ?>" class="blog-read">Đọc thêm</a>
+                  <div class="position-absolute top-0 start-0 bg-light rounded m-2 px-3 py-1">
+                    <h5 class="text-primary mb-0">20</h5>
+                    <small class="text-muted">Feb</small>
                   </div>
+                </div>
+                <div class="card-body d-flex flex-column">
+                  <a href="/blogs/<?= $item['id'] ?>" class="text-decoration-none">
+                    <h5 class="card-title text-dark"><?= $item['title'] ?></h5>
+                  </a>
+                  <p class="card-text text-muted">
+                    <?= strlen($item['content']) > 100 ? substr($item['content'], 0, 100) . '...' : $item['content'] ?>
+                  </p>
+                  <a href="/blogs/<?= $item['id'] ?>" class="mt-auto text-primary">Đọc thêm</a>
                 </div>
               </div>
             </div>
@@ -100,11 +99,13 @@ class Index extends BaseView
             </a>
           </div>
         </div>
-      </div>
+    </div>
+  <?php else: ?>
+    <p class="text-center">Không có blog</p>
+  <?php endif; ?>
+  </div>
 
-    <?php else: ?>
-      <p class="text-center">Không có blog</p>
-    <?php endif; ?>
-  <?php
+<?php
   }
 }
+?>

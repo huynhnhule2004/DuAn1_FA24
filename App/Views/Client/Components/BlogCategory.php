@@ -9,22 +9,22 @@ class BlogCategory extends BaseView
     public static function render($data = null)
     {
 ?>
-        
         <div class="col-md-3">
-            <h3>Chuyên mục bài viết</h3>
+            <h4 class="mb-4 text-primary">Chuyên mục bài viết</h4>
 
             <?php if (!empty($data)): ?>
                 <?php foreach ($data as $item): ?>
-                    <a href="/blogs/categories/<?= $item['id'] ?>" class="nav-link mt-3">
-                        <strong><?= htmlspecialchars($item['category_name'] ) ?></strong>
+                    <a href="/blogs/categories/<?= $item['id'] ?>" class="d-block text-dark fw-semibold mb-2">
+                        <?= htmlspecialchars($item['category_name']) ?>
                     </a>
-                    <hr>
+                    <hr class="mt-1 mb-2 text-muted">
                 <?php endforeach; ?>
             <?php else: ?>
-                <p>Không có chuyên mục nào.</p>
+                <p class="text-muted">Không có chuyên mục nào.</p>
             <?php endif; ?>
         </div>
 
 <?php
     }
 }
+?>
