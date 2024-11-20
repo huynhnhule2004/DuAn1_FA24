@@ -116,89 +116,79 @@ class Home extends BaseView
             </div>
         </section>
 
-        <section id="clothing" class="my-5 overflow-hidden">
+        <section id="categories" class="my-5 overflow-hidden">
             <div class="container pb-5">
-
-                <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
-                    <h2 class="display-6 fw-normal">Quần áo</h2>
-                    <div>
-                        <a href="/products" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-                            Mua ngay
-                            <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
-                                <use xlink:href="#arrow-right"></use>
-                            </svg></a>
-                    </div>
-                </div>
-
-                <div class="products-carousel swiper">
-                    <?php
-                    if (count($data) && count($data['products'])) :
-                    ?>
-                        <div class="swiper-wrapper">
-                            <?php
-                                foreach ($data['products'] as $item) :
-                            ?>
-                                    <div class="swiper-slide">
-                                    <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
+                <?php foreach ($data['categories'] as $category): ?>
+                    <?php if (!empty($data['categorizedProducts'][$category['category_name']])): ?>
+                        <div class="category-section mb-5">
+                            <!-- Hiển thị tên danh mục -->
+                            <h2 class="display-6 fw-normal"><?= htmlspecialchars($category['category_name']) ?></h2>
+                                
+                            <div class="products-carousel swiper pt-5">
+                                <div class="swiper-wrapper">
+                                    <?php foreach ($data['categorizedProducts'][$category['category_name']] as $item): ?>
+                                        <div class="swiper-slide">
+                                        <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
                                         <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
+
                                     </div>
-                                        <div class="card position-relative">
-                                            
-                                            <a href="single-product.html"><img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image"></a>
-                                            <div class="card-body p-0">
-                                                <a href="single-product.html">
-                                                    <h4 class="card-title pt-4 m-0"><?= $item['product_name'] ?></h4>
-                                                </a>
+                                            <div class="card position-relative">
+                                                <a href="/product/<?= $item['id'] ?>"><img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image" style="height: 300px; object-fit: cover;"></a>
+                                                <div class="card-body p-0">
+                                                    <a href="/product/<?= $item['id'] ?>">
+                                                        <h4 class="card-title pt-4 m-0"><?= htmlspecialchars($item['product_name']) ?></h4>
+                                                    </a>
+                                                    <div class="card-text">
+                                                        <span class="rating secondary-font">
+                                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                                            5.0
+                                                        </span>
 
-                                                <div class="card-text">
-                                                    <span class="rating secondary-font">
-                                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                                        5.0</span>
-                                                    <?php
-                                                    if ($item['discount_price'] > 0) :
-                                                    ?>
-                                                        <h4 class="secondary-font text-primary"><?= number_format($item['price_default'] - $item['discount_price']) ?> VNĐ <strike style="font-size: medium; color: #333"><?= number_format($item['price_default']) ?> VNĐ</strike></h4>
-                                                    <?php
-                                                    else :
-                                                    ?>
-                                                        <h4 class="secondary-font text-primary"><?= number_format($item['price_default'] - $item['discount_price']) ?> VNĐ</h4>
-                                                    <?php endif; ?>
+                                                        <?php if ($item['discount_price'] > 0): ?>
+                                                            <h4 class="secondary-font text-primary"><?= number_format($item['price_default'] - $item['discount_price']) ?> VNĐ
+                                                                <strike style="font-size: medium; color: #333"><?= number_format($item['price_default']) ?> VNĐ</strike>
+                                                            </h4>
+                                                        <?php else: ?>
+                                                            <h4 class="secondary-font text-primary"><?= number_format($item['price_default']) ?> VNĐ</h4>
+                                                        <?php endif; ?>
 
-                                                    <div class="d-flex flex-wrap mt-3">
-                                                        <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                            <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                                        </a>
-                                                        <a href="/wishlist" class="btn-wishlist px-4 pt-3 ">
-                                                            <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                                        </a>
+                                                        <div class="d-flex flex-wrap mt-3">
+                                                            <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                                            </a>
+                                                            <a href="/wishlist" class="btn-wishlist px-4 pt-3">
+                                                                <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                <?php
-                                endforeach;
-                            else :
-                                ?>
-                                <h3 class="text-center text-danger">Không có sản phẩm</h3>
-                            <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </div>
+
+                                <!-- Hiển thị phần trăm giảm giá cho danh mục -->
+                                <?php foreach ($data['categorizedProducts'][$category['category_name']] as $item): ?>
+                                    <?php if ($item['discount_price'] > 0): ?>
+                                        <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
+                                            <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
+                                        </div>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+
+                            </div>
                         </div>
-                       
-
-                    <?php
-                    ?>
-
-                </div>
-            </div>
-            <!-- / products-carousel -->
-
-
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </div>
         </section>
+
+
+
 
         <section id="foodies" class="my-5">
             <div class="container my-5 py-5">
@@ -634,11 +624,11 @@ class Home extends BaseView
                             <?php foreach ($data['featuredProducts'] as $item): ?>
                                 <div class="swiper-slide">
                                     <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                                    <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
+                                        <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
 
                                     </div>
                                     <div class="card position-relative">
-                                        <a href="single-product.html"><img src="<?= APP_URL ?>public/assets/client/images/<?= $item['image'] ?>"
+                                        <a href="single-product.html"><img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>"
                                                 class="img-fluid rounded-4" alt="image"></a>
                                         <div class="card-body p-0">
                                             <a href="single-product.html">
@@ -735,8 +725,8 @@ class Home extends BaseView
                     </div>
                 </div>
                 <div class="row">
-                <?php if (!empty($data['latestBlogs'])): ?>
-                    <?php foreach ($data['latestBlogs'] as $item): ?>
+                    <?php if (!empty($data['latestBlogs'])): ?>
+                        <?php foreach ($data['latestBlogs'] as $item): ?>
                             <?php
                             $create_at = $item['created_at'];
                             $date = date_create($create_at);

@@ -58,7 +58,7 @@ Route::post('/forgot-password', 'App\Controllers\Client\AuthController@forgotPas
 Route::get('/reset-password', 'App\Controllers\Client\AuthController@resetPassword');
 Route::post('/reset-password', 'App\Controllers\Client\AuthController@resetPasswordAction');
 
-
+Route::get('/categories', 'App\Controllers\Client\CategoryController@index');
 
 
 

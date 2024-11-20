@@ -264,37 +264,41 @@ class AuthHelper
         }
     }
 
-    public static function sendEmail($to, $name)
+    public static function sendEmail($to, $name, $message)
     {
         header('Content-Type: text/html; charset=utf-8');
         $mail = new PHPMailer(true);
         try {
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'phamlyvibes2000@gmail.com';                     //SMTP username
-            $mail->Password   = 'gvvy mbgp ggle kizj';                               //SMTP password
-            $mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
-            $mail->Port       = '587';                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'phamlyvibes2000@gmail.com';
+            $mail->Password   = 'gvvy mbgp ggle kizj';
+            $mail->SMTPSecure = 'tls';
+            $mail->Port       = '587';
 
-            //Recipients
             $mail->setFrom('phamlyvibes2000@gmail.com', 'Waggy');
             $mail->addAddress($to, $name);
             $mail->addReplyTo('phamlyvibes2000@gmail.com', 'Waggy');
 
             //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->isHTML(true);
             $mail->Subject = 'Contact of Waggy';
-            $mail->Body    = 'Cảm ơn bạn đã liên hệ tới Waggy chúng tôi sẽ phản hồi sớm nhất ^^.';
-            $mail->AltBody = 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất.';
-
+            $mail->Body = "<p>Cảm ơn bạn đã liên hệ tới Waggy. Chúng tôi sẽ phản hồi sớm nhất ^^.</p><p><strong>Lời nhắn của bạn:</strong><br>{$message}</p>";
+            $mail->AltBody = "Cảm ơn bạn đã liên hệ! Lời nhắn của bạn: {$message}";
             $mail->send();
+
+            $mail->clearAddresses();
+            $mail->addAddress('phamlyvibes2000@gmail.com', 'Waggy Admin');
+            $mail->Subject = 'Customer contact information - Waggy';
+            $mail->Body = "<p><strong>Lời nhắn từ khách hàng:</strong></p><p><strong>Tên: </strong>{$name}</p><p><strong>Email: </strong>{$to}</p><p><strong>Điện thoại: </strong>{$_POST['phone']}</p><p><strong>Lời nhắn:</strong><br>{$message}</p>";
+            $mail->AltBody = "Lời nhắn từ khách hàng: {$name} - {$message}";
+            $mail->send();
+
             return true;
-            echo 'Message has been sent';
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             return false;
         }
     }

@@ -50,8 +50,12 @@ class ContactController
             'phone' => $_POST['phone'],
             'message' => $_POST['message'],
         ];
-        $phpEmail= AuthHelper::sendEmail($data['email'], $data['name']);  
-        NotificationHelper::success('contact_success', 'Gửi liên hệ thành công');
+        $phpEmail = AuthHelper::sendEmail($data['email'], $data['name'], $data['message']); 
+        if ($phpEmail) {
+            NotificationHelper::success('contact_success', 'Gửi liên hệ thành công');
+        } else {
+            NotificationHelper::error('contact_failed', 'Gửi email không thành công');
+        }
         header('Location: /');
         ob_end_flush();
         

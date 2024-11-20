@@ -49,4 +49,28 @@ class Category extends BaseModel
             return $result;
         }
     }
+    public function getAllCategoriesByStatus()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM categories WHERE status = 1";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả danh mục: ' . $th->getMessage());
+            return $result;
+        }
+    }
+    public function getAllActiveCategories()
+    {
+        try {
+            $sql = "SELECT id, category_name FROM {$this->table} WHERE status = 'active'";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy danh mục: ' . $th->getMessage());
+            return [];
+        }
+    }
+    
 }

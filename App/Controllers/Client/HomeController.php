@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Client;
 
 use App\Helpers\NotificationHelper;
@@ -8,6 +9,7 @@ use App\Views\Client\Home;
 use App\Views\Client\Layouts\Header;
 use App\Models\Product;
 use App\Models\Blog;
+use App\Models\Category;
 
 class HomeController
 {
@@ -20,24 +22,30 @@ class HomeController
         // Lấy dữ liệu các danh mục
         $product = new Product();
         $blog = new Blog();
+        $categoryModel = new Category();
+        $categories = $categoryModel->getAllCategoriesByStatus();
         // giả sử data là mảng dữ liệu lấy được từ database
-        $categories = [
-            [
-                'id' => 1,
-                'name' => 'Cat',
-                'status' => 1
-            ],
-            [
-                'id' => 2,
-                'name' => 'Dog',
-                'status' => 1
-            ],
-            [
-                'id' => 3,
-                'name' => 'Bird',
-                'status' => 0
-            ],
-        ];
+        $categorizedProducts = [];
+        foreach ($categories as $category) {
+            $categorizedProducts[$category['category_name']] = $productModel->getProductsByCategoryId($category['id']);
+        }
+        // $categories = [
+        //     [
+        //         'id' => 1,
+        //         'name' => 'Cat',
+        //         'status' => 1
+        //     ],
+        //     [
+        //         'id' => 2,
+        //         'name' => 'Dog',
+        //         'status' => 1
+        //     ],
+        //     [
+        //         'id' => 3,
+        //         'name' => 'Bird',
+        //         'status' => 0
+        //     ],
+        // ];
 
         // Dữ liệu cho các bài viết blog (có thể cập nhật phương thức lấy dữ liệu tương tự như với sản phẩm)
         $blogs = [
@@ -73,7 +81,7 @@ class HomeController
             //     'category_id' => 3,
             //     'create_at' => '2022-01-01'
             // ],
-            
+
 
         ];
         $latestBlogs = $blog->getLatestBlogs();
@@ -81,15 +89,16 @@ class HomeController
 
         $featuredProducts = $product->getFeaturedProducts();
 
-        
+
         $data = [
             'featuredProducts' => $featuredProducts,
             'products' => $products,
             'categories' => $categories,
             'latestBlogs' => $latestBlogs,
+            'categorizedProducts' => $categorizedProducts, 
         ];
-// echo "<pre>";
-//         var_dump($data);
+        // echo "<pre>";
+        //         var_dump($data);
         Header::render($data);
         Notification::render();
         NotificationHelper::unset();
