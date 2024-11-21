@@ -126,17 +126,26 @@ class ProductController
     // Tách phần xử lý SKU ra một hàm riêng
     private static function processSku($productId)
     {
+        $sku = new Sku();
         $skuCodes = $_POST['sku_code'];
         $skuPrices = $_POST['price'];
         $skuStockQuantities = $_POST['stock_quantity'];
-
+    
         if (count($skuCodes) == count($skuPrices) && count($skuPrices) == count($skuStockQuantities)) {
             foreach ($skuCodes as $index => $skuCode) {
                 if (empty($skuCode) || empty($skuPrices[$index]) || empty($skuStockQuantities[$index])) {
                     echo "Dữ liệu không hợp lệ cho SKU: $skuCode<br>";
                     continue;
                 }
-
+    
+                // Kiểm tra SKU có bị trùng hay không
+                $is_exist = $sku->getOneByName($skuCode); // Kiểm tra từng SKU
+                if ($is_exist) {
+                    NotificationHelper::error('store', "Tên SKU '$skuCode' đã tồn tại");
+                    header('location: /admin/products/create');
+                    exit;
+                }
+    
                 // Tạo dữ liệu SKU
                 $skuData = [
                     'product_id' => $productId, // ID của sản phẩm đã thêm
@@ -144,7 +153,7 @@ class ProductController
                     'price' => $skuPrices[$index],
                     'stock_quantity' => $skuStockQuantities[$index]
                 ];
-
+    
                 // Xử lý upload hình ảnh cho SKU
                 // Kiểm tra và xử lý upload hình ảnh cho mỗi SKU
                 if (isset($_FILES['sku_image']) && isset($_FILES['sku_image']['name'][$index])) {
@@ -154,14 +163,14 @@ class ProductController
                         $skuData['image'] = $imagePath;
                     }
                 }
-
+    
                 // Thêm SKU vào cơ sở dữ liệu
                 $skuModel = new Sku();
                 $skuId = $skuModel->createSku($skuData);
-
+    
                 // Thêm các kết hợp variant options nếu có
                 self::processVariantOptions($skuId);
-
+    
                 if ($skuId) {
                     echo "SKU đã thêm thành công! SKU ID: $skuId<br>";
                 } else {
@@ -172,6 +181,7 @@ class ProductController
             echo "Dữ liệu không hợp lệ. Các mảng SKU, giá và số lượng không khớp số lượng.<br>";
         }
     }
+    
 
     // Tách phần xử lý variant options ra một hàm riêng
     private static function processVariantOptions($skuId)
