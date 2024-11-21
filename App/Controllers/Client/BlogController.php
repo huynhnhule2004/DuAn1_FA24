@@ -127,34 +127,34 @@ class BlogController
         exit;
     }
     private function generateBlogItemHtml($item)
-{
-    return '<div class="entry-item col-md-4 my-4">
-        <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
-            <h3 class="secondary-font text-primary m-0">20</h3>
-            <p class="secondary-font fs-6 m-0">Feb</p>
-        </div>
-        <div class="card position-relative">
-            <a href="/moreblog?blog_id=' . htmlspecialchars($item['id']) . '">
-                <img src="' . APP_URL . '/public/uploads/blogs/' . htmlspecialchars($item['image']) . '" 
-                     class="img-fluid rounded-4" alt="Blog Image">
-            </a>
-            <div class="card-body p-0">
-                <a href="/moreblogs">
-                    <h4 class="card-title pt-4 pb-3 m-0">' . htmlspecialchars($item['title']) . '</h4>
+    {
+        return '<div class="col-md-4">
+            <div class="card h-100">
+              <div class="position-relative">
+                <a href="/blogs/' . htmlspecialchars($item['id']) . '">
+                  <img src="' . APP_URL . '/public/uploads/blogs/' . htmlspecialchars($item['image']) . '" class="card-img-top img-fluid rounded-3" alt="image" style="height: 400px; object-fit: cover;">
                 </a>
-                <div class="card-text">
-                    <p class="blog-paragraph fs-6">' . 
-                        (mb_strlen($item['content']) > 100 
-                            ? htmlspecialchars(mb_substr($item['content'], 0, 100)) . '...' 
-                            : htmlspecialchars($item['content'])
-                        ) . 
-                    '</p>
-                    <a href="/blog/detail?id=' . htmlspecialchars($item['id']) . '" class="blog-read">Đọc thêm</a>
+                <div class="position-absolute top-0 start-0 bg-light rounded m-2 px-3 py-1">
+                  <h5 class="text-primary mb-0">20</h5>
+                  <small class="text-muted">Feb</small>
                 </div>
+              </div>
+              <div class="card-body d-flex flex-column">
+                <a href="/blogs/' . htmlspecialchars($item['id']) . '" class="text-decoration-none">
+                  <h5 class="card-title text-dark">' . htmlspecialchars($item['title']) . '</h5>
+                </a>
+                <p class="card-text text-muted">' . 
+                (mb_strlen($item['content']) > 100 
+                ? htmlspecialchars(mb_substr(strip_tags($item['content']), 0, 100)) . '...' 
+                : htmlspecialchars(strip_tags($item['content'])))
+             . 
+                '</p>
+                <a href="/blogs/' . htmlspecialchars($item['id']) . '" class="mt-auto text-primary">Đọc thêm</a>
+              </div>
             </div>
-        </div>
-    </div>';
-}
+          </div>';
+    }
+    
 private function generatePaginationLinks($currentPage, $totalPages)
 {
     $links = '<div class="pagination loop-pagination d-flex justify-content-center align-items-center">';

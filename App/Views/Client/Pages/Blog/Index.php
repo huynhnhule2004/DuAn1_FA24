@@ -14,7 +14,7 @@ class Index extends BaseView
 ?>
     <div class="container pt-5">
     <?php if (!empty($blogs)): ?>
-        <div class="row g-4">
+        <div class="row g-4 ">
         <?php foreach ($blogs as $item): ?>
             <div class="col-md-4">
               <div class="card h-100">
@@ -32,9 +32,10 @@ class Index extends BaseView
                   <a href="/blogs/<?= $item['id'] ?>" class="text-decoration-none">
                     <h5 class="card-title text-dark"><?= $item['title'] ?></h5>
                   </a>
-                  <p class="card-text text-muted">
-                    <?= strlen($item['content']) > 100 ? substr($item['content'], 0, 100) . '...' : $item['content'] ?>
-                  </p>
+                  <?= strlen(strip_tags($item['content'])) > 100 
+    ? htmlspecialchars(substr(strip_tags($item['content']), 0, 100)) . '...' 
+    : htmlspecialchars(strip_tags($item['content'])) ?>
+
                   <a href="/blogs/<?= $item['id'] ?>" class="mt-auto text-primary">Đọc thêm</a>
                 </div>
               </div>
