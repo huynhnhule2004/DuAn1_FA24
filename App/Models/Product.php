@@ -238,4 +238,21 @@ class Product extends BaseModel
             return $result;
         }
     }
+
+    public function getProductsByCategoryId(int $categoryId)
+{
+    $result = [];
+    try {
+        $sql = "SELECT * FROM products WHERE category_id = ? AND status = " . self::STATUS_ENABLE;
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param('i', $categoryId);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } catch (\Throwable $th) {
+        error_log('Lỗi khi lấy sản phẩm theo danh mục: ' . $th->getMessage());
+        return $result;
+    }
+}
 }
