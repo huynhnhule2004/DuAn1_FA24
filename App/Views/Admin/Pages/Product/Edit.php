@@ -281,67 +281,66 @@ class Edit extends BaseView
 
 
 
-                document.getElementById('variant_button').addEventListener('click', function() {
+            document.getElementById('variant_button').addEventListener('click', function() {
                 var variantFields = document.getElementById('variant_fields');
                 variantFields.style.display = (variantFields.style.display === 'none' || variantFields.style.display === '') ? 'block' : 'none';
             });
 
             document.addEventListener("DOMContentLoaded", function() {
-    var skus = <?php echo json_encode($data['skus']); ?>;
-    const skuTable = document.getElementById("sku_table");
-    const skuBody = document.getElementById("sku_body");
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                var skus = <?php echo json_encode($data['skus']); ?>;
+                const skuTable = document.getElementById("sku_table");
+                const skuBody = document.getElementById("sku_body");
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
-    // Chức năng tạo tổ hợp SKU
-    function generateCombinations(arrays) {
-        return arrays.reduce((a, b) => a.flatMap(d => b.map(e => [...d, e])), [[]]);
-    }
+                // Chức năng tạo tổ hợp SKU
+                function generateCombinations(arrays) {
+                    return arrays.reduce((a, b) => a.flatMap(d => b.map(e => [...d, e])), [
+                        []
+                    ]);
+                }
 
-    // Cập nhật SKUs
-    function updateSKUs() {
-        const selectedOptions = {};
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                const group = checkbox.dataset.group;
-                const value = checkbox.dataset.value;
-                if (!selectedOptions[group]) selectedOptions[group] = [];
-                selectedOptions[group].push(value);
-            }
-        });
+                // Cập nhật SKUs
+                function updateSKUs() {
+                    const selectedOptions = {};
+                    checkboxes.forEach(checkbox => {
+                        if (checkbox.checked) {
+                            const group = checkbox.dataset.group;
+                            const value = checkbox.dataset.value;
+                            if (!selectedOptions[group]) selectedOptions[group] = [];
+                            selectedOptions[group].push(value);
+                        }
+                    });
 
-        if (Object.keys(selectedOptions).length === 0) {
-            skuBody.innerHTML = "";
-            return;
-        }
+                    if (Object.keys(selectedOptions).length === 0) {
+                        skuBody.innerHTML = "";
+                        return;
+                    }
 
-        const combinations = generateCombinations(Object.values(selectedOptions));
-        skuBody.innerHTML = "";
+                    const combinations = generateCombinations(Object.values(selectedOptions));
+                    skuBody.innerHTML = "";
 
-        combinations.forEach((combination, index) => {
-            const sku = skus[index] || {}; // Lấy SKU nếu có hoặc tạo một object trống
-            const row = document.createElement("tr");
+                    combinations.forEach((combination, index) => {
+                        const sku = skus[index] || {}; // Lấy SKU nếu có hoặc tạo một object trống
+                        const row = document.createElement("tr");
 
-            // Kiểm tra xem có dữ liệu SKU không và hiển thị tương ứng
-            row.innerHTML = `
+                        // Kiểm tra xem có dữ liệu SKU không và hiển thị tương ứng
+                        row.innerHTML = `
                 <td>${combination.join(' - ')}</td>
                 <td><input type="text" name="sku_code[]" value="${sku.sku || ''}" placeholder="Mã SKU" class="form-control"></td>
                 <td><input type="number" name="price[]" value="${sku.price || ''}" placeholder="Giá" class="form-control"></td>
-                <td><input type="number" name="stock_quantity[]" value="${sku.stock || ''}" placeholder="Tồn kho" class="form-control"></td>
+                <td><input type="number" name="stock_quantity[]" value="${sku.stock_quantity || ''}" placeholder="Tồn kho" class="form-control"></td>
                 <td><input type="file" name="sku_image[]" class="form-control"></td>
             `;
-            skuBody.appendChild(row);
-        });
-    }
+                        skuBody.appendChild(row);
+                    });
+                }
 
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', updateSKUs);
-    });
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', updateSKUs);
+                });
 
-    updateSKUs();
-});
-
-
-
+                updateSKUs();
+            });
         </script>
         <!-- ============================================================== -->
         <!-- End Container fluid  -->

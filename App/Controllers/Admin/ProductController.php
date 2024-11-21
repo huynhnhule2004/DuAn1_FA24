@@ -290,6 +290,7 @@ class ProductController
             NotificationHelper::error('update', 'Cập nhật sản phẩm thất bại');
             header("location: /admin/products/$id");
         }
+
     }
 
 
