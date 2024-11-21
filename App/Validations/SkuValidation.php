@@ -71,30 +71,70 @@ class SkuValidation
         if (!file_exists($files['tmp_name'][$index]) || !is_uploaded_file($files['tmp_name'][$index])) {
             return false;
         }
-    
+
         // Nơi lưu trữ hình ảnh trong sourcecode
         $target_dir = 'public/uploads/products/';
-    
+
         // Kiểm tra loại file upload có hợp lệ không
         $imageFileType = strtolower(pathinfo(basename($files['name'][$index]), PATHINFO_EXTENSION));
-    
+
         if (!in_array($imageFileType, ['jpg', 'png', 'jpeg', 'gif', 'webp'])) {
             NotificationHelper::error('type_upload', 'Chỉ nhận file ảnh JPG, PNG, JPEG, GIF, WEBP');
             return false;
         }
-    
+
         // Thay đổi tên file thành dạng năm tháng ngày giờ phút giây
         $nameImage = date('YmdHmi') . '.' . $imageFileType;
-    
+
         // Đường dẫn đầy đủ để di chuyển file
         $target_file = $target_dir . $nameImage;
-    
+
         if (!move_uploaded_file($files['tmp_name'][$index], $target_file)) {
             NotificationHelper::error('move_upload', 'Không thể tải ảnh vào thư mục để lưu trữ');
             return false;
         }
-    
+
         return $nameImage;
     }
-    
+
+    public static function uploadImage1($files, $index)
+    {
+        // Kiểm tra nếu file tồn tại và đã được upload
+        if (!file_exists($files['tmp_name'][$index]) || !is_uploaded_file($files['tmp_name'][$index])) {
+            return false;
+        }
+
+        // Nơi lưu trữ hình ảnh trong sourcecode
+        $target_dir = 'public/uploads/products/';
+
+        // Kiểm tra loại file upload có hợp lệ không
+        $imageFileType = strtolower(pathinfo(basename($files['name'][$index]), PATHINFO_EXTENSION));
+
+        if (!in_array($imageFileType, ['jpg', 'png', 'jpeg', 'gif', 'webp'])) {
+            NotificationHelper::error('type_upload', 'Chỉ nhận file ảnh JPG, PNG, JPEG, GIF, WEBP');
+            return false;
+        }
+
+        // Lấy tên gốc của file và làm sạch tên file (xóa khoảng trắng và ký tự đặc biệt)
+        $originalName = basename($files['name'][$index]);
+        $cleanedFileName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $originalName); // Thay ký tự đặc biệt bằng '_'
+
+        // Đường dẫn đầy đủ để di chuyển file
+        $target_file = $target_dir . $cleanedFileName;
+
+        // Kiểm tra xem file đã tồn tại chưa, nếu có thì thêm số đếm vào tên file để tránh trùng
+        $i = 1;
+        while (file_exists($target_file)) {
+            $target_file = $target_dir . pathinfo($cleanedFileName, PATHINFO_FILENAME) . "_$i." . $imageFileType;
+            $i++;
+        }
+
+        // Di chuyển file đến thư mục mục tiêu
+        if (!move_uploaded_file($files['tmp_name'][$index], $target_file)) {
+            NotificationHelper::error('move_upload', 'Không thể tải ảnh vào thư mục để lưu trữ');
+            return false;
+        }
+
+        return $cleanedFileName;  // Trả về tên gốc của file đã được làm sạch
+    }
 }

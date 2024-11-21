@@ -322,7 +322,7 @@ class Edit extends BaseView
                     combinations.forEach((combination, index) => {
                         const sku = skus[index] || {}; // Lấy SKU nếu có hoặc tạo một object trống
                         const row = document.createElement("tr");
-
+                        const APP_URL = "<?= APP_URL ?>";
                         // Kiểm tra xem có dữ liệu SKU không và hiển thị tương ứng
                         row.innerHTML = `
                 <td>${combination.join(' - ')}</td>
@@ -330,7 +330,7 @@ class Edit extends BaseView
                 <td><input type="text" name="sku_code[]" value="${sku.sku || ''}" placeholder="Mã SKU" class="form-control"></td>
                 <td><input type="number" name="price[]" value="${sku.price || ''}" placeholder="Giá" class="form-control"></td>
                 <td><input type="number" name="stock_quantity[]" value="${sku.stock_quantity || ''}" placeholder="Tồn kho" class="form-control"></td>
-                <td><input type="file" name="sku_image[]" class="form-control"></td>
+                <td><input type="file" name="sku_image[]" value="${APP_URL}/public/uploads/products/${sku.image || ''}" class="form-control"></td>
             `;
                         skuBody.appendChild(row);
                     });
