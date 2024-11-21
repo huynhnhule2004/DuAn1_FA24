@@ -25,6 +25,8 @@ class Header extends BaseView
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta name="format-detection" content="telephone=no">
             <meta name="apple-mobile-web-app-capable" content="yes">
+            <meta name="mobile-web-app-capable" content="yes">
+
             <meta name="author" content="">
             <meta name="keywords" content="">
             <meta name="description" content="">
@@ -58,6 +60,8 @@ class Header extends BaseView
 
         <!-- SweetAlert2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.6/dist/sweetalert2.all.min.js"></script>
+        <!-- Thêm jQuery từ CDN -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
         </head>

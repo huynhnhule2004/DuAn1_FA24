@@ -281,5 +281,128 @@ class Blog extends BaseModel
         }
     }
     
+    public function getBlogsWithLimit($limit, $offset)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT blogs.*, blog_categories.category_name, users.username 
+                    FROM blogs
+                    INNER JOIN blog_categories ON blogs.category_id = blog_categories.id
+                    INNER JOIN users ON blogs.user_id = users.id
+                    ORDER BY blogs.created_at DESC 
+                    LIMIT ? OFFSET ?";
 
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ii', $limit, $offset);
+            $stmt->execute();
+
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            return $result;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy danh sách bài viết có giới hạn: ' . $th->getMessage());
+            return $result;
+        }
+    }
+
+    public function countTotalBlogs()
+    {
+        try {
+            $sql = "SELECT COUNT(*) as total FROM blogs";
+            $result = $this->_conn->MySQLi()->query($sql);
+            $row = $result->fetch_assoc();
+            return $row['total'] ?? 0; // Đảm bảo luôn trả về 0 nếu không có dữ liệu
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi đếm tổng số bài viết: ' . $th->getMessage());
+            return 0;
+        }
+    }
+    
+    public function getBlogsWithLimitByCategory($categoryId, $limit, $offset)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT blogs.*, blog_categories.category_name, users.username 
+                    FROM blogs
+                    INNER JOIN blog_categories ON blogs.category_id = blog_categories.id
+                    INNER JOIN users ON blogs.user_id = users.id
+                    WHERE blogs.category_id = ?
+                    ORDER BY blogs.created_at DESC 
+                    LIMIT ? OFFSET ?";
+
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('iii', $categoryId, $limit, $offset);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy danh sách bài viết theo danh mục có giới hạn: ' . $th->getMessage());
+            return $result;
+        }
+    }
+
+    /**
+     * Đếm tổng số bài viết theo danh mục
+     */
+    public function countTotalBlogsByCategory($categoryId)
+    {
+        try {
+            $sql = "SELECT COUNT(*) as total FROM blogs WHERE category_id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $categoryId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            return $row['total'];
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi đếm tổng số bài viết theo danh mục: ' . $th->getMessage());
+            return 0;
+        }
+    }
+    public function select($sql = null)
+    {
+        $result = [];
+        try {
+            $conn = $this->_conn->MySQLi();
+
+            if ($sql === null) {
+          
+                $sql = "SELECT * FROM $this->table";
+            }
+
+            $query = $conn->query($sql);
+            $result = $query->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi thực thi truy vấn: ' . $th->getMessage());
+        }
+
+        return $result;
+    }
+     /**
+     * Đếm số lượng bản ghi từ kết quả truy vấn.
+     */
+    public function selectCount($sql = null)
+    {
+        try {
+            $result = $this->select($sql);
+            return count($result);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi đếm số lượng bản ghi: ' . $th->getMessage());
+            return 0;
+        }
+    }
+ /**
+     * Lấy một dòng dữ liệu từ kết quả truy vấn.
+     */
+    public function fetchArrayTable($sql = null)
+    {
+        try {
+            $result = $this->select($sql);
+            return $result[0] ?? null;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy một dòng dữ liệu: ' . $th->getMessage());
+            return null;
+        }
+    }
 }

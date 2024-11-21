@@ -37,6 +37,7 @@ Route::get('/profile', 'App\Controllers\Client\ProfileController@index');
 Route::get('/cart', 'App\Controllers\Client\CartController@index');
 Route::get('/wishlist', 'App\Controllers\Client\WishlistController@index');
 
+Route::get('/blog/pagination', 'App\Controllers\Client\BlogController@paginate');
 
 Route::get('/contact', 'App\Controllers\Client\ContactController@index');
 Route::post('/contact', 'App\Controllers\Client\ContactController@PostContact');
