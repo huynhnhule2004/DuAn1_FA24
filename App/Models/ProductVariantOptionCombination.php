@@ -176,4 +176,25 @@ class ProductVariantOptionCombination extends BaseModel
             return $result;
         }
     }
+
+    public function deleteBySkuId(int $skuId)
+{
+    try {
+        $sql = "DELETE FROM product_variant_option_combinations WHERE sku_id = ?";
+
+        // Kết nối cơ sở dữ liệu
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+
+        // Gắn giá trị cho placeholder
+        $stmt->bind_param('i', $skuId);
+
+        // Thực thi câu lệnh
+        return $stmt->execute();
+    } catch (\Throwable $th) {
+        error_log('Lỗi khi xóa variant options theo SKU ID: ' . $th->getMessage());
+        return false;
+    }
+}
+
 }

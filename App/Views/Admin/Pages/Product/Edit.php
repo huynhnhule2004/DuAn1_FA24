@@ -326,6 +326,7 @@ class Edit extends BaseView
                         // Kiểm tra xem có dữ liệu SKU không và hiển thị tương ứng
                         row.innerHTML = `
                 <td>${combination.join(' - ')}</td>
+                <input type="hidden" name="sku_id[]" value="${sku.id}" >
                 <td><input type="text" name="sku_code[]" value="${sku.sku || ''}" placeholder="Mã SKU" class="form-control"></td>
                 <td><input type="number" name="price[]" value="${sku.price || ''}" placeholder="Giá" class="form-control"></td>
                 <td><input type="number" name="stock_quantity[]" value="${sku.stock_quantity || ''}" placeholder="Tồn kho" class="form-control"></td>

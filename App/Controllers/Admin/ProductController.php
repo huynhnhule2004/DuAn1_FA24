@@ -238,30 +238,25 @@ class ProductController
     // xử lý chức năng sửa (cập nhật)
     public static function update(int $id)
     {
-        // validation các trường dữ liệu
+        // Validation dữ liệu
         $is_valid = ProductValidation::edit();
-        // var_dump($is_valid);
         if (!$is_valid) {
             NotificationHelper::error('update', 'Cập nhật sản phẩm thất bại');
             header("location: /admin/products/$id");
             exit;
         }
-
+    
         $name = $_POST['product_name'];
-        //kiểm tra tên loại có tồn tại chưa => không được trùng tên
-
         $product = new Product();
         $is_exist = $product->getOneProductByName($name);
-
-        if ($is_exist) {
-            if ($is_exist['id'] != $id) {
-                NotificationHelper::error('update', 'Tên sản phẩm này đã tồn tại');
-                header("location: /admin/products/$id");
-                exit;
-            }
+    
+        if ($is_exist && $is_exist['id'] != $id) {
+            NotificationHelper::error('update', 'Tên sản phẩm này đã tồn tại');
+            header("location: /admin/products/$id");
+            exit;
         }
-
-        //Thực hiện cập nhật
+    
+        // Thực hiện cập nhật
         $data = [
             'product_name' => $name,
             'price_default' => $_POST['price_default'],
@@ -271,27 +266,130 @@ class ProductController
             'category_id' => $_POST['category_id'],
             'short_description' => $_POST['short_description'],
             'long_description' => $_POST['long_description'],
-            'how_to_use' => $_POST['how_to_use']
-
+            'how_to_use' => $_POST['how_to_use'],
         ];
-
+    
+        // Kiểm tra và upload ảnh
         $is_upload = ProductValidation::uploadImage();
-
         if ($is_upload) {
             $data['image'] = $is_upload;
         }
-
+    
         $result = $product->updateProduct($id, $data);
-
+    
         if ($result) {
+            // Cập nhật SKU
+            if (isset($_POST['sku_code'], $_POST['price'], $_POST['stock_quantity'])) {
+                self::processSkuUpdate($id);  // Chạy xử lý SKU
+            }
+    
             NotificationHelper::success('update', 'Cập nhật sản phẩm thành công');
             header('location: /admin/products');
+            exit;
         } else {
             NotificationHelper::error('update', 'Cập nhật sản phẩm thất bại');
             header("location: /admin/products/$id");
+            exit;
         }
-
     }
+    
+    // Phương thức xử lý cập nhật SKU
+    private static function processSkuUpdate($productId)
+    {
+        // Kiểm tra dữ liệu SKU từ form
+        if (!isset($_POST['sku_code'], $_POST['price'], $_POST['stock_quantity'])) {
+            return; // Nếu không có dữ liệu SKU thì dừng lại
+        }
+    
+        $skuCodes = $_POST['sku_code'];
+        $skuPrices = $_POST['price'];
+        $skuStockQuantities = $_POST['stock_quantity'];
+        $skuIds = $_POST['sku_id'] ?? []; // Các SKU ID hiện tại (nếu có)
+    
+        $skuModel = new Sku();
+        $productVariantOptionCombinationModel = new ProductVariantOptionCombination();
+    
+        // Lấy tất cả SKU hiện tại của sản phẩm
+        $existingSkus = $skuModel->getAllSkuByProduct($productId); // Giả sử phương thức này lấy tất cả SKU của sản phẩm
+    
+        // Duyệt qua tất cả SKU cũ của sản phẩm
+        foreach ($existingSkus as $existingSku) {
+            $skuId = $existingSku['id'];
+    
+            // Kiểm tra xem SKU hiện tại có trong mảng SKU gửi đến hay không
+            if (!in_array($skuId, $skuIds)) {
+                // Nếu SKU không có trong mảng, xóa SKU đó
+                $skuModel->deleteSku($skuId);
+    
+                // Xóa các variant options liên quan đến SKU đã xóa
+                $skuModel->deleteBySkuId($skuId);
+            }
+        }
+    
+        // Cập nhật hoặc tạo mới SKU
+        if (count($skuCodes) === count($skuPrices) && count($skuPrices) === count($skuStockQuantities)) {
+            foreach ($skuCodes as $index => $skuCode) {
+                if (empty($skuCode) || empty($skuPrices[$index]) || empty($skuStockQuantities[$index])) {
+                    continue; // Bỏ qua dòng dữ liệu không hợp lệ
+                }
+    
+                // Kiểm tra ảnh nếu có
+                $imagePath = null;
+                if (isset($_FILES['sku_image']) && !empty($_FILES['sku_image']['name'][$index])) {
+                    $imagePath = SkuValidation::uploadImage($_FILES['sku_image'], $index);
+                }
+    
+                // Tạo mảng dữ liệu SKU
+                $skuData = [
+                    'sku' => $skuCode,
+                    'price' => $skuPrices[$index],
+                    'stock_quantity' => $skuStockQuantities[$index],
+                    'image' => $imagePath,  // Đảm bảo ảnh SKU được thêm vào
+                ];
+    
+                // Nếu SKU có ID cũ thì cập nhật, nếu không thì tạo mới
+                if (isset($skuIds[$index]) && $skuIds[$index] !== 'undefined') {
+                    // Cập nhật SKU cũ
+                    $skuData['id'] = $skuIds[$index];
+                    $skuModel->updateSku((int)$skuIds[$index], $skuData);
+    
+                    // Xóa các variant options cũ và thêm mới (nếu có)
+                    $productVariantOptionCombinationModel->deleteBySkuId($skuIds[$index]);
+                    if (isset($_POST['variant_options'])) {
+                        $variantOptions = $_POST['variant_options'];
+                        foreach ($variantOptions as $variantOptionId) {
+                            $combinationData = [
+                                'sku_id' => $skuIds[$index],  // SKU cũ
+                                'product_variant_option_id' => $variantOptionId
+                            ];
+                            $productVariantOptionCombinationModel->create($combinationData);
+                        }
+                    }
+                } else {
+                    // Tạo SKU mới
+                    $skuData['product_id'] = $productId; // Gán product_id cho SKU mới
+                    $newSkuId = $skuModel->createSku($skuData);
+    
+                    // Thêm variant options vào bảng product_variant_option_combinations nếu có
+                    if (isset($_POST['variant_options'])) {
+                        $variantOptions = $_POST['variant_options'];
+                        foreach ($variantOptions as $variantOptionId) {
+                            $combinationData = [
+                                'sku_id' => $newSkuId,  // SKU mới vừa tạo
+                                'product_variant_option_id' => $variantOptionId
+                            ];
+    
+                            // Thêm vào bảng product_variant_option_combinations
+                            $productVariantOptionCombinationModel->create($combinationData);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
 
 
     // // thực hiện xoá
