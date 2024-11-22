@@ -11,7 +11,6 @@ class Comment extends BaseModel
     public function getAllComment()
     {
         return $this->getAll();
-
     }
     public function getOneComment($id)
     {
@@ -78,7 +77,7 @@ class Comment extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT comments.*, users.username, users.name, users.avatar 
+            $sql = "SELECT comments.*, users.username, users.first_name, users.avatar 
                 FROM comments 
                 INNER JOIN users ON comments.user_id = users.id 
                 WHERE comments.product_id = ? AND comments.status = " . self::STATUS_ENABLE . " 

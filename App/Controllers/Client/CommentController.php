@@ -5,30 +5,20 @@ namespace App\Controllers\Client;
 use App\Helpers\NotificationHelper;
 use App\Models\Comment;
 use App\Validations\CommentValidation;
-use App\Views\Client\Pages\Product\Index;
+use App\Views\Client\Components\Notification;
 
 
 class CommentController
 {
 
-
     // xử lý chức năng thêm
     public static function store()
     {
         // validation các trường dữ liệu
-        $is_valid = CommentValidation::createClient();
+       
 
-        if (!$is_valid) {
-            NotificationHelper::error('store', 'Thêm bình luận thất bại');
-            if (isset($_POST['product_id']) && $_POST['product_id']) {
-                $product_id = $_POST['product_id'];
-                header("location: /products/$product_id");
-            } else {
-                header("location: /products");
-            }
-            exit;
-        }
-
+      
+        
         $product_id = $_POST['product_id'];
         $data = [
             'content' => $_POST['content'],
@@ -38,13 +28,11 @@ class CommentController
         ];
 
         $comment = new Comment();
+        Notification::render();
+        NotificationHelper::unset();
         $result = $comment->createComment($data);
 
-        if ($result) {
-            NotificationHelper::success('store', 'Thêm bình luận thành công');
-        } else {
-            NotificationHelper::error('store', 'Thêm bình luận thất bại');
-        }
+        
 
         header("location: /products/$product_id");
     }

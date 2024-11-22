@@ -12,7 +12,6 @@ class CategoryController
         $categoryModel = new Category();
         $categories = $categoryModel->getAllActiveCategories();
 
-
         CategoryView::render($categories);
     }
 }

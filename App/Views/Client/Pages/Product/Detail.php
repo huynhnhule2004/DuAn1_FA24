@@ -2,13 +2,19 @@
 
 namespace App\Views\Client\Pages\Product;
 
+use App\Helpers\AuthHelper;
 use App\Views\BaseView;
+
 
 class Detail extends BaseView
 {
     public static function render($data = null)
     {
+
+
+        $is_login = AuthHelper::checkLogin();
 ?>
+
         <section id="selling-product">
             <div class="container my-md-5 py-5">
                 <div class="row g-md-5">
@@ -166,156 +172,139 @@ class Detail extends BaseView
                                 <p><?= $data['product']['how_to'] ?></p>
                             </div>
                             <div class="tab-pane fade" id="v-pills-reviews" role="tabpanel" aria-labelledby="v-pills-reviews-tab" tabindex="0">
-                                <div class="review-box d-flex flex-wrap">
-
-                                    <?php if (isset($data['comments']) && is_array($data['comments'])): ?>
-                                        <?php foreach ($data['comments'] as $comment): ?>
-
-                                            <div class="col-lg-6 d-flex flex-wrap gap-3">
-                                                <div class="col-md-2">
-                                                    <div class="image-holder">
-                                                        <img src="<?= APP_URL ?>/public/uploads/users/<?= htmlspecialchars($comment['image_rate']) ?>" alt="review" class="img-fluid rounded-circle">
-                                                    </div>
+                                <div class="review-box">
+                                    <?php
+                                    if (isset($data) && isset($data['comments']) && $data && $data['comments']) :
+                                        foreach ($data['comments'] as $item) :
+                                    ?>
+                                            <!-- Comment Row -->
+                                            <div class="row mb-3" id="comment-<?= $item['id'] ?>">
+                                                <div class="col-1 p-2">
+                                                    <?php if ($item['avatar']) : ?>
+                                                        <img src="<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>" alt="user" width="50" class="rounded">
+                                                    <?php else : ?>
+                                                        <img src="<?= APP_URL ?>/public/uploads/users/default-user.jpg" alt="user" width="50" class="rounded">
+                                                    <?php endif; ?>
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <div class="review-content">
-                                                        <div class="rating-container d-flex align-items-center">
-                                                            <div class="rating" data-rating="1">
-                                                                <svg width="24" height="24" class="text-primary">
-                                                                    <use xlink:href="#star-solid"></use>
-                                                                </svg>
-                                                            </div>
-                                                            <div class="rating" data-rating="2">
-                                                                <svg width="24" height="24" class="text-primary">
-                                                                    <use xlink:href="#star-solid"></use>
-                                                                </svg>
-                                                            </div>
-                                                            <div class="rating" data-rating="3">
-                                                                <svg width="24" height="24" class="text-primary">
-                                                                    <use xlink:href="#star-solid"></use>
-                                                                </svg>
-                                                            </div>
-                                                            <div class="rating" data-rating="4">
-                                                                <svg width="24" height="24" class="text-secondary">
-                                                                    <use xlink:href="#star-solid"></use>
-                                                                </svg>
-                                                            </div>
-                                                            <div class="rating" data-rating="5">
-                                                                <svg width="24" height="24" class="text-secondary">
-                                                                    <use xlink:href="#star-solid"></use>
-                                                                </svg>
-                                                            </div>
-                                                            <span class="rating-count"><?= htmlspecialchars($comment['rating_count']) ?></span>
+                                                <div class="col-10 mt-3">
+                                                    <div class="comment-text w-100">
+                                                        <h6 class="font-medium"><?= $item['first_name'] ?> - <?= $item['username'] ?></h6>
+                                                        <span class="m-b-15 d-block" id="content-<?= $item['id'] ?>"><?= $item['content'] ?></span>
+                                                        <div class="comment-footer">
+                                                            <span class="text-muted float-end"><?= $item['created_at'] ?></span>
+
+                                                            <?php if ($is_login && ($_SESSION['user']['id'] == $item['user_id'])) : ?>
+                                                                <button type="button" class="btn btn-secondary btn-sm edit-comment-btn" data-id="<?= $item['id'] ?>">Sửa</button>
+
+                                                                <!-- Form chỉnh sửa sẽ được ẩn ban đầu -->
+                                                                <form action="/comments/" method="post" class="edit-comment-form" id="edit-form-<?= $item['id'] ?>" style="display: none;">
+                                                                    <textarea class="form-control" name="content" rows="3" id="edit-content-<?= $item['id'] ?>"><?= $item['content'] ?></textarea>
+                                                                    <button type="button" class="btn btn-cyan btn-sm save-comment-btn" data-id="<?= $item['id'] ?>">Cập nhật</button>
+                                                                </form>
+
+                                                                <script>
+                                                                    // Hiện form chỉnh sửa khi bấm vào nút "Sửa"
+                                                                    document.querySelector('.edit-comment-btn').addEventListener('click', function() {
+                                                                        var commentId = this.getAttribute('data-id');
+                                                                        document.getElementById('edit-form-' + commentId).style.display = 'block';
+                                                                        document.getElementById('content-' + commentId).style.display = 'none';
+                                                                    });
+
+                                                                    // Gửi yêu cầu cập nhật bình luận
+                                                                    document.querySelector('.save-comment-btn').addEventListener('click', function() {
+                                                                        var commentId = this.getAttribute('data-id');
+                                                                        var newContent = document.getElementById('edit-content-' + commentId).value;
+
+                                                                        // Gửi yêu cầu cập nhật bình luận
+                                                                        fetch('/comments/' + commentId, {
+                                                                            method: 'POST',
+                                                                            body: JSON.stringify({
+                                                                                content: newContent
+                                                                            }),
+                                                                            headers: {
+                                                                                'Content-Type': 'application/json'
+                                                                            }
+                                                                        }).then(response => {
+                                                                            if (response.ok) {
+                                                                                // Cập nhật nội dung bình luận ngay trên trang
+                                                                                document.getElementById('content-' + commentId).textContent = newContent;
+                                                                                document.getElementById('edit-form-' + commentId).style.display = 'none';
+                                                                            } else {
+                                                                                alert('Cập nhật bình luận thất bại');
+                                                                            }
+                                                                        });
+                                                                    });
+                                                                </script>
+
+                                                                <form action="/comments/<?= $item['id'] ?>" method="post" onsubmit="return confirm('Chắc chắn muốn xóa?')" style="display: inline-block">
+                                                                    <input type="hidden" name="method" value="DELETE">
+                                                                    <input type="hidden" name="product_id" value="<?= $data['product']['id'] ?>">
+                                                                    <button type="submit" class="btn btn-secondary btn-sm">Xoá</button>
+                                                                </form>
+                                                            <?php endif; ?>
                                                         </div>
-                                                        <div class="review-header">
-                                                            <span class="author-name"><?= htmlspecialchars($comment['name_rate']) ?></span>
-                                                            <span class="review-date">– <?= htmlspecialchars($comment['date_rate']) ?></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php
+                                        endforeach;
+                                    else :
+                                        ?>
+                                        <h6 class="text-center text-danger">Chưa có bình luận</h6>
+                                    <?php
+                                    endif;
+                                    ?>
+
+                                    <?php
+                                    if (isset($data) && $is_login) :
+                                    ?>
+                                        <div class="row mb-3">
+                                            <div class="col-1 p-2">
+                                                <?php
+                                                if ($_SESSION['user']['avatar']) :
+                                                ?>
+                                                    <img src="<?= APP_URL ?>/public/uploads/users/<?= $_SESSION['user']['avatar'] ?>" alt="user" width="50" class="rounded">
+                                                <?php
+                                                else :
+                                                ?>
+                                                    <img src="<?= APP_URL ?>/public/uploads/users/default-user.jpg" alt="user" width="50" class="rounded">
+                                                <?php
+                                                endif;
+                                                ?>
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="comment-text w-100">
+                                                    <h6 class="font-medium"><?= $_SESSION['user']['first_name'] ?> - <?= $_SESSION['user']['username'] ?></h6>
+                                                    <form action="/comments" method="post">
+                                                        <input type="hidden" name="method" value="POST" required>
+                                                        <input type="hidden" name="product_id" id="product_id" value="<?= $data['product']['id'] ?>">
+                                                        <input type="hidden" name="user_id" id="user_id" value="<?= $_SESSION['user']['id'] ?>">
+                                                        <div class="form-group">
+                                                            <label for="content">Bình luận</label>
+                                                            <textarea class="form-control rounded-0" name="content" id="content" rows="3" placeholder="Nhập bình luận..."></textarea>
                                                         </div>
-                                                        <p><?= htmlspecialchars($comment['comment']) ?></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <p>Chưa có bình luận nào.</p>
-                                    <?php endif; ?>
-
-
-
-                                    <!-- <div class="col-lg-6 d-flex flex-wrap gap-3">
-                                        <div class="col-md-2">
-                                            <div class="image-holder">
-                                                <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image_rate2'] ?>" alt="review" class="img-fluid rounded-circle">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="review-content">
-                                                <div class="rating-container d-flex align-items-center">
-                                                    <div class="rating" data-rating="1">
-                                                        <svg width="24" height="24" class="text-primary">
-                                                            <use xlink:href="#star-solid"></use>
-                                                        </svg>
-                                                    </div>
-                                                    <div class="rating" data-rating="2">
-                                                        <svg width="24" height="24" class="text-primary">
-                                                            <use xlink:href="#star-solid"></use>
-                                                        </svg>
-                                                    </div>
-                                                    <div class="rating" data-rating="3">
-                                                        <svg width="24" height="24" class="text-primary">
-                                                            <use xlink:href="#star-solid"></use>
-                                                        </svg>
-                                                    </div>
-                                                    <div class="rating" data-rating="4">
-                                                        <svg width="24" height="24" class="text-secondary">
-                                                            <use xlink:href="#star-solid"></use>
-                                                        </svg>
-                                                    </div>
-                                                    <div class="rating" data-rating="5">
-                                                        <svg width="24" height="24" class="text-secondary">
-                                                            <use xlink:href="#star-solid"></use>
-                                                        </svg>
-                                                    </div>
-                                                    <span class="rating-count"><?= $data['product']['rating_count2'] ?></span>
-                                                </div>
-                                                <div class="review-header">
-                                                    <span class="author-name"><?= $data['product']['name_rate2'] ?></span></span>
-                                                    <span class="review-date">– <?= $data['product']['date_rate'] ?></span>
-                                                </div>
-                                                <p><?= $data['product']['comment2'] ?></p>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                </div>
-
-                                <div class="add-review mt-5">
-                                    <h3>Thêm đánh giá</h3>
-                                    <p>Địa chỉ email của bạn sẽ không được công bố. Các trường bắt buộc được đánh dấu*</p>
-                                    <form id="form" class="form-group">
-
-                                        <div class="pb-3">
-                                            <div class="review-rating">
-                                                <span>Đánh giá của bạn*</span>
-                                                <div class="rating-container d-flex align-items-center">
-                                                    <span class="rating secondary-font">
-                                                        <iconify-icon icon="clarity:star-solid" class="text-primary me-2"></iconify-icon>
-                                                        <iconify-icon icon="clarity:star-solid" class="text-primary me-2"></iconify-icon>
-                                                        <iconify-icon icon="clarity:star-solid" class="text-primary me-2"></iconify-icon>
-                                                        <iconify-icon icon="clarity:star-solid" class="text-primary me-2"></iconify-icon>
-                                                        <iconify-icon icon="clarity:star-solid" class="text-primary me-2"></iconify-icon>
-                                                        (5.0)</span>
+                                                        <div class="comment-footer">
+                                                            <button type="submit" class="btn btn-cyan btn-sm">Gửi</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="pb-3">
-                                            <input type="file" class="form-control" data-text="Choose your file">
-                                        </div>
-                                        <div class="pb-3">
-                                            <label>Tên:</label>
-                                            <input type="text" name="name" placeholder="Nhập tên của bạn tại đây*" class="form-control">
-                                        </div>
-                                        <div class="pb-3">
-                                            <label>Email:</label>
-                                            <input type="text" name="email" placeholder="Nhập email của bạn tại đây*" class="form-control">
-                                        </div>
-                                        <div class="pb-3">
-                                            <label>Đánh giá:</label>
-                                            <textarea class="form-control" placeholder="Viết đánh giá của bạn tại đây*"></textarea>
-                                        </div>
-                                        <div class="pb-3">
-                                            <label>
-                                                <input type="checkbox" required="">
-                                                <span class="label-body">Ghi nhớ đăng nhập</span>
-                                            </label>
-                                        </div>
-                                        <button type="submit" name="submit" class="btn btn-dark btn-large text-uppercase w-100">Gửi</button>
-                                    </form>
+                                    <?php
+                                    else :
+                                    ?>
+                                        <h6 class="text-center text-danger">Vui lòng đăng nhập để bình luận</h6>
+                                    <?php
+                                    endif;
+                                    ?>
                                 </div>
                             </div>
+
+
+
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
         <section id="register" style="background: url('/public/assets/client/images/background-img.png') no-repeat;" class="my-5">
             <div class="container my-5 ">
@@ -350,9 +339,9 @@ class Detail extends BaseView
                             <div>
                                 <iconify-icon class="service-icon text-primary" icon="la:shopping-cart"></iconify-icon>
                             </div>
-                            <h3 class="card-title py-2 m-0">Miễn phí vận chuyển</h3>
+                            <h3 class="card-title py-2 m-0">Giao Hàng Miễn Phí</h3>
                             <div class="card-text">
-                                <p class="blog-paragraph fs-6">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                                <p class="blog-paragraph fs-6">Chúng tôi hỗ trợ giao hàng miễn phí cho đơn hàng >200</p>
                             </div>
                         </div>
                     </div>
@@ -361,9 +350,9 @@ class Detail extends BaseView
                             <div>
                                 <iconify-icon class="service-icon text-primary" icon="la:user-check"></iconify-icon>
                             </div>
-                            <h3 class="card-title py-2 m-0">Thanh toán an toàn 100%</h3>
+                            <h3 class="card-title py-2 m-0">Thanh Toán Nhanh</h3>
                             <div class="card-text">
-                                <p class="blog-paragraph fs-6">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                                <p class="blog-paragraph fs-6">Đảm bảo thanh toán an toàn, bảo mật tuyệt đối cho khách hàng.</p>
                             </div>
                         </div>
                     </div>
@@ -372,9 +361,9 @@ class Detail extends BaseView
                             <div>
                                 <iconify-icon class="service-icon text-primary" icon="la:tag"></iconify-icon>
                             </div>
-                            <h3 class="card-title py-2 m-0">Ưu đãi hàng ngày</h3>
+                            <h3 class="card-title py-2 m-0">Ưu Đãi Hàng Ngày</h3>
                             <div class="card-text">
-                                <p class="blog-paragraph fs-6">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                                <p class="blog-paragraph fs-6">Nhận ngay các ưu đãi hấp dẫn mỗi ngày khi mua sắm tại cửa hàng.</p>
                             </div>
                         </div>
                     </div>
@@ -383,9 +372,9 @@ class Detail extends BaseView
                             <div>
                                 <iconify-icon class="service-icon text-primary" icon="la:award"></iconify-icon>
                             </div>
-                            <h3 class="card-title py-2 m-0">Đảm bảo chất lượng</h3>
+                            <h3 class="card-title py-2 m-0">Đảm Bảo Yêu Cầu</h3>
                             <div class="card-text">
-                                <p class="blog-paragraph fs-6">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                                <p class="blog-paragraph fs-6">Cam kết mang đến sản phẩm chất lượng tốt nhất cho thú cưng của bạn.</p>
                             </div>
                         </div>
                     </div>

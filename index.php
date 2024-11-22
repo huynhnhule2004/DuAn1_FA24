@@ -61,6 +61,9 @@ Route::post('/reset-password', 'App\Controllers\Client\AuthController@resetPassw
 
 Route::get('/categories', 'App\Controllers\Client\CategoryController@index');
 
+Route::post('/comments', 'App\Controllers\Client\CommentController@store');
+Route::put('/comments/{id}', 'App\Controllers\Client\CommentController@update');
+Route::delete('/comments/{id}', 'App\Controllers\Client\CommentController@delete');
 
 
 Route::get('/register', 'App\Controllers\Client\AuthController@register');
