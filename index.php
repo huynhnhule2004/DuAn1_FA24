@@ -28,6 +28,8 @@ Route::get('/products', 'App\Controllers\Client\ProductController@index');
 Route::get('/blogs', 'App\Controllers\Client\BlogController@index');
 Route::get('/blogs/{id}', 'App\Controllers\Client\BlogController@detail');
 Route::get('/blogs/categories/{id}', 'App\Controllers\Client\BlogController@getBlogByCategory');
+Route::get('/search', 'App\Controllers\Client\HomeController@search');
+
 
 
 Route::get('/orders', 'App\Controllers\Client\OrderController@index');

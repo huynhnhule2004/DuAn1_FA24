@@ -10,6 +10,7 @@ use App\Views\Client\Layouts\Header;
 use App\Models\Product;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Views\Client\Pages\Product\Search;
 
 class HomeController
 {
@@ -103,6 +104,41 @@ class HomeController
         Notification::render();
         NotificationHelper::unset();
         Home::render($data);
+        Footer::render();
+    }
+
+    public static function search()
+    {
+
+        $category = new Category();
+        $categories = $category->getAllByStatus();
+
+        $product = new Product();
+        $products = $product->getAllProductByStatus();
+
+        if (!isset($_GET['keyword']) || $_GET['keyword'] == '') {
+            header('location: /');
+            exit();
+        }
+
+        $keyword = $_GET['keyword'];
+        $product = new Product();
+
+        $result = $product->searchByName($keyword);
+
+        $data = [
+            'products' => $products,
+            'categories' => $categories,
+            'result' => $result,
+        ];
+
+        // echo "<pre>";
+        // var_dump($data);
+
+        Header::render($data);
+        Notification::render();
+        NotificationHelper::unset();
+        Search::render($data);
         Footer::render();
     }
 }

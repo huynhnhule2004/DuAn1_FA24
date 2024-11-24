@@ -202,7 +202,7 @@ class Product extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT * FROM `products` WHERE `name` LIKE '%$name%';";
+            $sql = "SELECT * FROM `products` WHERE `product_name` LIKE '%$name%';";
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {

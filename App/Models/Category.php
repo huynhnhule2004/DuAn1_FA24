@@ -31,7 +31,9 @@ class Category extends BaseModel
     }
     public function getAllCategoryByStatus()
     {
-        return $this->getAllByStatus();
+        $sql = "SELECT * FROM $this->table WHERE status= active";
+        $result = $this->_conn->MySQLi()->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
     public function getOneCategoryByName($category_name)
     {
