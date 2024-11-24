@@ -23,10 +23,12 @@ class ProductController
     // hiển thị danh sách
     public static function index()
     {
-        $productModel = new Product();
-        $products = $productModel->getAllProductByStatus();
-        $categoryModel = new Category();
-        $categories = $categoryModel->getAllActiveCategories();
+        $category = new Category();
+        $categories = $category->getAllByStatus();
+
+        $product = new Product();
+        $products = $product->getAllProductByStatus();
+
         $data = [
             'products' => $products,
             'categories' => $categories,

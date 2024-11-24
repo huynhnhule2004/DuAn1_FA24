@@ -200,13 +200,13 @@ class AuthController
 
         $_SESSION['otp'] = rand(100000, 999999);
 
-        if (AuthHelper::sendEmail($email, $_SESSION['otp'])) {
-            NotificationHelper::success('send_otp', 'Mã OTP đã được gửi tới email của bạn');
-            header('location: /reset-password');
-        } else {
-            NotificationHelper::error('send_otp', 'Không thể gửi email. Vui lòng thử lại');
-            header('location: /forgot-password');
-        }
+        // if (AuthHelper::sendEmail($email, $_SESSION['otp'])) {
+        //     NotificationHelper::success('send_otp', 'Mã OTP đã được gửi tới email của bạn');
+        //     header('location: /reset-password');
+        // } else {
+        //     NotificationHelper::error('send_otp', 'Không thể gửi email. Vui lòng thử lại');
+        //     header('location: /forgot-password');
+        // }
     }
 
     // Hiển thị form reset mật khẩu

@@ -22,15 +22,15 @@ class Index extends BaseView
         <div class="col-md-3">
           <div class="category-section mb-4 mt-3">
             <?php
-            Search::render();
+            // Search::render();
             ?>
-            <div class="mt-5">
+            <!-- <div class="mt-5"> -->
               <?php
-              Category::render($data);
+               Category::render($data['categories']);
 
               Filter::render();
               ?>
-            </div>
+            <!-- </div> -->
           </div>
 
         </div>
