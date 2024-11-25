@@ -85,7 +85,7 @@ class Show extends BaseView
                                             <?= number_format($data['cart_info']['total'] ?? 0) ?> đ
                                             </span>
                                         </p>
-                                        <a href="/cart/checkout" class="btn btn-primary w-30 mt-1">
+                                        <a href="/checkout" class="btn btn-primary w-30 mt-1">
                                             <i class="fa-solid fa-credit-card me-2"></i> Thanh toán
                                         </a>
                                     </div>

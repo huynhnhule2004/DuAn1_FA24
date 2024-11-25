@@ -28,6 +28,7 @@ class CommentController
         ];
 
         $comment = new Comment();
+        // var_dump($data);
         Notification::render();
         NotificationHelper::unset();
         $result = $comment->createComment($data);

@@ -13,36 +13,38 @@ class OrderController
     // hiển thị danh sách
     public static function index()
     {
-        $orders = [
-            [
-                'id' => 1,
-                'name' => 'Áo Hoodie Xám',
-                'price' => 400000,
-                'image' => 'item1.jpg',
-                'status' => 1,
-                'size' => 'M',
-                'quantity'=> 1
+        echo "<pre/>";
+        var_dump($_POST);
+        // $orders = [
+        //     [
+        //         'id' => 1,
+        //         'name' => 'Áo Hoodie Xám',
+        //         'price' => 400000,
+        //         'image' => 'item1.jpg',
+        //         'status' => 1,
+        //         'size' => 'M',
+        //         'quantity'=> 1
 
-            ],
-            [
-                'id' => 2,
-                'name' => 'Áo Hoodie Xám',
-                'price' => 400000,
-                'image' => 'item1.jpg',
-                'status' => 1,
-                'size' => 'M',
-                'quantity'=> 1
+        //     ],
+        //     [
+        //         'id' => 2,
+        //         'name' => 'Áo Hoodie Xám',
+        //         'price' => 400000,
+        //         'image' => 'item1.jpg',
+        //         'status' => 1,
+        //         'size' => 'M',
+        //         'quantity'=> 1
 
-            ],
+        //     ],
 
 
-        ];
-        $data = [
-            'orders' => $orders,
+        // ];
+        // $data = [
+        //     'orders' => $orders,
             
-        ];
-        Header::render();
-        Index::render($data);
-        Footer::render();
+        // ];
+        // Header::render();
+        // Index::render($data);
+        // Footer::render();
     }
 }

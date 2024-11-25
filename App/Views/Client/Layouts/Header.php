@@ -377,7 +377,7 @@ class Header extends BaseView
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/cart/" class="mx-3 fs-5 position-relative">
+                                            <a href="/cart/show" class="mx-3 fs-5 position-relative">
                                                 <i class="fa-solid fa-cart-shopping"></i>
                                                 <?php
                                                 $cart = isset($_COOKIE['cart']) ? json_decode($_COOKIE['cart'], true) : ['info' => ['number_order' => 0]];

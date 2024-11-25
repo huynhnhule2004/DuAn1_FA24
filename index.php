@@ -40,7 +40,7 @@ Route::get('/wishlist', 'App\Controllers\Client\WishlistController@index');
 
 Route::post('/cart/add', 'App\Controllers\Client\CartController@add');
 Route::get('/cart/show', 'App\Controllers\Client\CartController@show');
-Route::get('/cart', 'App\Controllers\Client\CartController@show');
+// Route::get('/cart', 'App\Controllers\Client\CartController@show');
 Route::delete('/cart/{id}', 'App\Controllers\Client\CartController@delete');
 Route::get('/cart/deleteAll', 'App\Controllers\Client\CartController@deleteAll');
 
