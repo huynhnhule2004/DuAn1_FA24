@@ -20,24 +20,28 @@ class Detail extends BaseView
                 display: flex;
                 justify-content: center;
             }
+
             .comment-widgets {
                 max-width: 1000px;
                 width: 300%;
                 max-height: 800px;
                 overflow-y: auto;
                 padding: 10px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                 background-color: #fff;
             }
+
             .comment-row {
                 margin-top: 5px;
             }
+
             .comment-row:first-child {
                 margin-top: 0;
             }
+
             .comment-row .p-2 img {
                 margin-right: 5px;
             }
+
             .comment-text {
                 margin-left: 10px;
             }
@@ -185,56 +189,50 @@ class Detail extends BaseView
             <div class="container">
                 <div class="row">
                     <div class="d-flex flex-column flex-md-row align-items-start gap-5">
+                        <!-- Tabs -->
                         <div class="nav flex-row flex-wrap flex-md-column nav-pills me-3 col-lg-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <button class="nav-link fs-5 mb-2 text-start active" id="v-pills-description-tab" data-bs-toggle="pill" data-bs-target="#v-pills-description" type="button" role="tab" aria-controls="v-pills-description" aria-selected="true" tabindex="-1">Mô tả</button>
-                            <button class="nav-link fs-5 mb-2 text-start" id="v-pills-additional-tab" data-bs-toggle="pill" data-bs-target="#v-pills-additional" type="button" role="tab" aria-controls="v-pills-additional" aria-selected="false" tabindex="-1">Thông tin bổ sung</button>
-                            <button class="nav-link fs-5 mb-2 text-start" id="v-pills-reviews-tab" data-bs-toggle="pill" data-bs-target="#v-pills-reviews" type="button" role="tab" aria-controls="v-pills-reviews" aria-selected="false" tabindex="-1">Đánh giá của khách hàng</button>
+                            <button class="nav-link fs-5 mb-2 text-start active" id="v-pills-description-tab" data-bs-toggle="pill" data-bs-target="#v-pills-description" type="button" role="tab" aria-controls="v-pills-description" aria-selected="true">Mô tả</button>
+                            <button class="nav-link fs-5 mb-2 text-start" id="v-pills-additional-tab" data-bs-toggle="pill" data-bs-target="#v-pills-additional" type="button" role="tab" aria-controls="v-pills-additional" aria-selected="false">Thông tin bổ sung</button>
+                            <button class="nav-link fs-5 mb-2 text-start" id="v-pills-reviews-tab" data-bs-toggle="pill" data-bs-target="#v-pills-reviews" type="button" role="tab" aria-controls="v-pills-reviews" aria-selected="false">Đánh giá của khách hàng</button>
                         </div>
+                        <!-- Tab Content -->
                         <div class="tab-content" id="v-pills-tabContent">
-                            <div class="tab-pane fade active show" id="v-pills-description" role="tabpanel" aria-labelledby="v-pills-description-tab" tabindex="0">
-                                <h2>Mô tả sản phẩm</h2>
-                                <p><?= $data['product']['long_description'] ?>
+                            <!-- Tab: Mô tả -->
+                            <div class="tab-pane fade active show" id="v-pills-description" role="tabpanel" aria-labelledby="v-pills-description-tab">
+                                <h2 class="mb-4">Mô tả sản phẩm</h2>
+                                <p><?= $data['product']['long_description'] ?></p>
                             </div>
-                            <div class="tab-pane fade" id="v-pills-additional" role="tabpanel" aria-labelledby="v-pills-additional-tab" tabindex="0">
-                                <h2>Cách sử dụng sản phẩm</h2>
+                            <!-- Tab: Thông tin bổ sung -->
+                            <div class="tab-pane fade" id="v-pills-additional" role="tabpanel" aria-labelledby="v-pills-additional-tab">
+                                <h2 class="mb-4">Cách sử dụng sản phẩm</h2>
                                 <p><?= $data['product']['how_to'] ?></p>
                             </div>
-                            <div class="tab-pane fade" id="v-pills-reviews" role="tabpanel" aria-labelledby="v-pills-reviews-tab" tabindex="0">
+                            <!-- Tab: Đánh giá -->
+                            <div class="tab-pane fade" id="v-pills-reviews" role="tabpanel" aria-labelledby="v-pills-reviews-tab">
+                                <h2 class="mb-4">Đánh giá của khách hàng</h2>
                                 <div class="review-box">
                                     <div class="comment-widgets">
-                                        <?php
-                                        if (isset($data) && isset($data['comments']) && $data && $data['comments']) :
-                                            foreach ($data['comments'] as $item) :
-                                        ?>
-                                                <!-- Comment Row -->
-                                                <div class="d-flex flex-row comment-row m-t-0">
-                                                    <div class="p-2">
-                                                        <?php if ($item['avatar']) : ?>
-                                                            <img src="<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>" alt="user" width="50" class="rounded">
-                                                        <?php else : ?>
-                                                            <img src="<?= APP_URL ?>/public/uploads/users/default-user.jpg" alt="user" width="50" class="rounded">
-                                                        <?php endif; ?>
+                                        <?php if (isset($data['comments']) && $data['comments']) : ?>
+                                            <?php foreach ($data['comments'] as $item) : ?>
+                                                <div class="d-flex align-items-start border-bottom py-3">
+                                                    <div class="me-3">
+                                                        <img src="<?= $item['avatar'] ? APP_URL . "/public/uploads/users/" . $item['avatar'] : APP_URL . "/public/uploads/users/default-user.jpg" ?>" alt="user" class="rounded" width="50">
                                                     </div>
-                                                    <div class="comment-text w-100">
-                                                        <h6 class="font-medium"><?= $item['first_name'] ?> - <?= $item['username'] ?></h6>
-                                                        <span class="m-b-15 d-block"><?= $item['content'] ?></span>
-                                                        <div class="comment-footer">
-                                                            <span class="text-muted float-end"><?= $item['created_at'] ?></span>
-                                                            <?php if (isset($data) && $is_login && ($_SESSION['user']['id'] == $item['user_id'])) : ?>
-                                                                <!-- Nút Sửa -->
-                                                                <button type="button" class="btn btn-cyan btn-sm"
-                                                                    data-bs-toggle="collapse"
-                                                                    data-bs-target="#editComment<?= $item['id'] ?>"
-                                                                    aria-expanded="false"
-                                                                    aria-controls="editComment<?= $item['id'] ?>">Sửa</button>
-
-                                                                <!-- Nút Xoá -->
-                                                                <form action="/comments/<?= $item['id'] ?>" method="post" onsubmit="return confirm('Chắc chưa?')" style="display: inline-block">
-                                                                    <input type="hidden" name="method" value="DELETE">
-                                                                    <input type="hidden" name="product_id" value="<?= $data['product']['id'] ?>">
-                                                                    <button type="submit" class="btn btn-danger btn-sm">Xoá</button>
-                                                                </form>
-
+                                                    <div class="flex-grow-1">
+                                                        <h6 class="fw-bold mb-1"><?= $item['first_name'] ?> - <?= $item['username'] ?></h6>
+                                                        <p class="text-muted mb-2"><?= $item['content'] ?></p>
+                                                        <div class="text-muted small">
+                                                            <span><?= $item['created_at'] ?></span>
+                                                            <?php if ($is_login && $_SESSION['user']['id'] == $item['user_id']) : ?>
+                                                                <div class="mt-2">
+                                                                    <!-- Nút Sửa -->
+                                                                    <button type="button" class="btn btn-outline-secondary btn-sm me-2" data-bs-toggle="collapse" data-bs-target="#editComment<?= $item['id'] ?>">Sửa</button>
+                                                                    <!-- Nút Xoá -->
+                                                                    <form action="/comments/<?= $item['id'] ?>" method="post" class="d-inline-block" onsubmit="return confirm('Chắc chưa?')">
+                                                                        <input type="hidden" name="method" value="DELETE">
+                                                                        <button type="submit" class="btn btn-outline-danger btn-sm">Xoá</button>
+                                                                    </form>
+                                                                </div>
                                                                 <!-- Form Sửa Bình Luận -->
                                                                 <div class="collapse mt-3" id="editComment<?= $item['id'] ?>">
                                                                     <div class="card card-body">
@@ -263,49 +261,33 @@ class Detail extends BaseView
                                                 </div>
                                             <?php endforeach; ?>
                                         <?php else : ?>
-                                            <h6 class="text-center text-danger">Chưa có bình luận</h6>
+                                            <p class="text-center text-danger">Chưa có bình luận.</p>
                                         <?php endif; ?>
 
                                         <!-- Form Thêm Bình Luận -->
-                                        <?php if (isset($data) && $is_login) : ?>
-                                            <div class="d-flex flex-row comment-row mt-4">
-                                                <div class="p-2">
-                                                    <?php if ($_SESSION['user']['avatar']) : ?>
-                                                        <img src="<?= APP_URL ?>/public/uploads/users/<?= $_SESSION['user']['avatar'] ?>" alt="user" width="50" class="rounded">
-                                                    <?php else : ?>
-                                                        <img src="<?= APP_URL ?>/public/uploads/users/default-user.jpg" alt="user" width="50" class="rounded">
-                                                    <?php endif; ?>
-                                                </div>
-                                                <div class="comment-text w-100">
-                                                    <h6 class="font-medium"><?= $_SESSION['user']['first_name'] ?> - <?= $_SESSION['user']['username'] ?></h6>
-                                                    <form action="/comments" method="post">
-                                                        <input type="hidden" name="method" value="POST">
-                                                        <input type="hidden" name="product_id" value="<?= $data['product']['id'] ?>">
-                                                        <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id'] ?>">
-                                                        <div class="form-group">
-                                                            <label for="content">Bình luận</label>
-                                                            <textarea class="form-control rounded-0" name="content" id="content" rows="3" placeholder="Nhập bình luận..."></textarea>
-                                                        </div>
-                                                        <div class="comment-footer">
-                                                            <button type="submit" class="btn btn-cyan btn-sm">Gửi</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                        <?php if ($is_login) : ?>
+                                            <div class=" border-2 p-4 mt-4 rounded">
+                                                <h6 class="fw-bold mb-3">Viết bình luận của bạn</h6>
+                                                <form action="/comments" method="post">
+                                                    <input type="hidden" name="method" value="POST">
+                                                    <input type="hidden" name="product_id" value="<?= $data['product']['id'] ?>">
+                                                    <textarea class="form-control mb-3" name="content" rows="4" placeholder="Nhập bình luận của bạn..."></textarea>
+                                                    <button type="submit" class="btn btn-primary w-30">Gửi</button>
+                                                </form>
                                             </div>
                                         <?php else : ?>
-                                            <h6 class="text-center text-danger">Vui lòng đăng nhập để bình luận</h6>
+                                            <p class="text-center text-warning mt-4">Vui lòng <a href="/login">đăng nhập</a> để bình luận.</p>
                                         <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                         </div>
                     </div>
                 </div>
         </section>
+
+
+
         <section id="register" style="background: url('/public/assets/client/images/background-img.png') no-repeat;" class="my-5">
             <div class="container my-5 ">
                 <div class="row my-5 py-5">
