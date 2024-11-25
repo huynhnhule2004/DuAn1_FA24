@@ -14,6 +14,34 @@ class Detail extends BaseView
 
         $is_login = AuthHelper::checkLogin();
 ?>
+        <style>
+            .comment-container {
+                width: 200%;
+                display: flex;
+                justify-content: center;
+            }
+            .comment-widgets {
+                max-width: 1000px;
+                width: 300%;
+                max-height: 800px;
+                overflow-y: auto;
+                padding: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                background-color: #fff;
+            }
+            .comment-row {
+                margin-top: 5px;
+            }
+            .comment-row:first-child {
+                margin-top: 0;
+            }
+            .comment-row .p-2 img {
+                margin-right: 5px;
+            }
+            .comment-text {
+                margin-left: 10px;
+            }
+        </style>
 
         <section id="selling-product">
             <div class="container my-md-5 py-5">
@@ -173,112 +201,87 @@ class Detail extends BaseView
                             </div>
                             <div class="tab-pane fade" id="v-pills-reviews" role="tabpanel" aria-labelledby="v-pills-reviews-tab" tabindex="0">
                                 <div class="review-box">
-                                    <?php
-                                    if (isset($data) && isset($data['comments']) && $data && $data['comments']) :
-                                        foreach ($data['comments'] as $item) :
-                                    ?>
-                                            <!-- Comment Row -->
-                                            <div class="row mb-3" id="comment-<?= $item['id'] ?>">
-                                                <div class="col-1 p-2">
-                                                    <?php if ($item['avatar']) : ?>
-                                                        <img src="<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>" alt="user" width="50" class="rounded">
-                                                    <?php else : ?>
-                                                        <img src="<?= APP_URL ?>/public/uploads/users/default-user.jpg" alt="user" width="50" class="rounded">
-                                                    <?php endif; ?>
-                                                </div>
-                                                <div class="col-10 mt-3">
+                                    <div class="comment-widgets">
+                                        <?php
+                                        if (isset($data) && isset($data['comments']) && $data && $data['comments']) :
+                                            foreach ($data['comments'] as $item) :
+                                        ?>
+                                                <!-- Comment Row -->
+                                                <div class="d-flex flex-row comment-row m-t-0">
+                                                    <div class="p-2">
+                                                        <?php if ($item['avatar']) : ?>
+                                                            <img src="<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>" alt="user" width="50" class="rounded">
+                                                        <?php else : ?>
+                                                            <img src="<?= APP_URL ?>/public/uploads/users/default-user.jpg" alt="user" width="50" class="rounded">
+                                                        <?php endif; ?>
+                                                    </div>
                                                     <div class="comment-text w-100">
                                                         <h6 class="font-medium"><?= $item['first_name'] ?> - <?= $item['username'] ?></h6>
-                                                        <span class="m-b-15 d-block" id="content-<?= $item['id'] ?>"><?= $item['content'] ?></span>
+                                                        <span class="m-b-15 d-block"><?= $item['content'] ?></span>
                                                         <div class="comment-footer">
                                                             <span class="text-muted float-end"><?= $item['created_at'] ?></span>
+                                                            <?php if (isset($data) && $is_login && ($_SESSION['user']['id'] == $item['user_id'])) : ?>
+                                                                <!-- Nút Sửa -->
+                                                                <button type="button" class="btn btn-cyan btn-sm"
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#editComment<?= $item['id'] ?>"
+                                                                    aria-expanded="false"
+                                                                    aria-controls="editComment<?= $item['id'] ?>">Sửa</button>
 
-                                                            <?php if ($is_login && ($_SESSION['user']['id'] == $item['user_id'])) : ?>
-                                                                <button type="button" class="btn btn-secondary btn-sm edit-comment-btn" data-id="<?= $item['id'] ?>">Sửa</button>
-
-                                                                <!-- Form chỉnh sửa sẽ được ẩn ban đầu -->
-                                                                <form action="/comments/" method="post" class="edit-comment-form" id="edit-form-<?= $item['id'] ?>" style="display: none;">
-                                                                    <textarea class="form-control" name="content" rows="3" id="edit-content-<?= $item['id'] ?>"><?= $item['content'] ?></textarea>
-                                                                    <button type="button" class="btn btn-cyan btn-sm save-comment-btn" data-id="<?= $item['id'] ?>">Cập nhật</button>
-                                                                </form>
-
-                                                                <script>
-                                                                    // Hiện form chỉnh sửa khi bấm vào nút "Sửa"
-                                                                    document.querySelector('.edit-comment-btn').addEventListener('click', function() {
-                                                                        var commentId = this.getAttribute('data-id');
-                                                                        document.getElementById('edit-form-' + commentId).style.display = 'block';
-                                                                        document.getElementById('content-' + commentId).style.display = 'none';
-                                                                    });
-
-                                                                    // Gửi yêu cầu cập nhật bình luận
-                                                                    document.querySelector('.save-comment-btn').addEventListener('click', function() {
-                                                                        var commentId = this.getAttribute('data-id');
-                                                                        var newContent = document.getElementById('edit-content-' + commentId).value;
-
-                                                                        // Gửi yêu cầu cập nhật bình luận
-                                                                        fetch('/comments/' + commentId, {
-                                                                            method: 'POST',
-                                                                            body: JSON.stringify({
-                                                                                content: newContent
-                                                                            }),
-                                                                            headers: {
-                                                                                'Content-Type': 'application/json'
-                                                                            }
-                                                                        }).then(response => {
-                                                                            if (response.ok) {
-                                                                                // Cập nhật nội dung bình luận ngay trên trang
-                                                                                document.getElementById('content-' + commentId).textContent = newContent;
-                                                                                document.getElementById('edit-form-' + commentId).style.display = 'none';
-                                                                            } else {
-                                                                                alert('Cập nhật bình luận thất bại');
-                                                                            }
-                                                                        });
-                                                                    });
-                                                                </script>
-
-                                                                <form action="/comments/<?= $item['id'] ?>" method="post" onsubmit="return confirm('Chắc chắn muốn xóa?')" style="display: inline-block">
+                                                                <!-- Nút Xoá -->
+                                                                <form action="/comments/<?= $item['id'] ?>" method="post" onsubmit="return confirm('Chắc chưa?')" style="display: inline-block">
                                                                     <input type="hidden" name="method" value="DELETE">
                                                                     <input type="hidden" name="product_id" value="<?= $data['product']['id'] ?>">
-                                                                    <button type="submit" class="btn btn-secondary btn-sm">Xoá</button>
+                                                                    <button type="submit" class="btn btn-danger btn-sm">Xoá</button>
                                                                 </form>
+
+                                                                <!-- Form Sửa Bình Luận -->
+                                                                <div class="collapse mt-3" id="editComment<?= $item['id'] ?>">
+                                                                    <div class="card card-body">
+                                                                        <form action="/comments/<?= $item['id'] ?>" method="post">
+                                                                            <input type="hidden" name="method" value="PUT">
+                                                                            <input type="hidden" name="product_id" value="<?= $data['product']['id'] ?>">
+                                                                            <div class="form-group">
+                                                                                <label for="commentContent<?= $item['id'] ?>">Bình luận</label>
+                                                                                <textarea class="form-control rounded-0" name="content" id="commentContent<?= $item['id'] ?>" rows="3" placeholder="Nhập bình luận..."><?= $item['content'] ?></textarea>
+                                                                            </div>
+                                                                            <div class="comment-footer mt-3">
+                                                                                <button type="submit" class="btn btn-cyan btn-sm">Gửi</button>
+                                                                                <!-- Nút Đóng -->
+                                                                                <button type="button" class="btn btn-secondary btn-sm"
+                                                                                    data-bs-toggle="collapse"
+                                                                                    data-bs-target="#editComment<?= $item['id'] ?>">
+                                                                                    Đóng
+                                                                                </button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
                                                             <?php endif; ?>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        <?php
-                                        endforeach;
-                                    else :
-                                        ?>
-                                        <h6 class="text-center text-danger">Chưa có bình luận</h6>
-                                    <?php
-                                    endif;
-                                    ?>
+                                            <?php endforeach; ?>
+                                        <?php else : ?>
+                                            <h6 class="text-center text-danger">Chưa có bình luận</h6>
+                                        <?php endif; ?>
 
-                                    <?php
-                                    if (isset($data) && $is_login) :
-                                    ?>
-                                        <div class="row mb-3">
-                                            <div class="col-1 p-2">
-                                                <?php
-                                                if ($_SESSION['user']['avatar']) :
-                                                ?>
-                                                    <img src="<?= APP_URL ?>/public/uploads/users/<?= $_SESSION['user']['avatar'] ?>" alt="user" width="50" class="rounded">
-                                                <?php
-                                                else :
-                                                ?>
-                                                    <img src="<?= APP_URL ?>/public/uploads/users/default-user.jpg" alt="user" width="50" class="rounded">
-                                                <?php
-                                                endif;
-                                                ?>
-                                            </div>
-                                            <div class="col-10">
+                                        <!-- Form Thêm Bình Luận -->
+                                        <?php if (isset($data) && $is_login) : ?>
+                                            <div class="d-flex flex-row comment-row mt-4">
+                                                <div class="p-2">
+                                                    <?php if ($_SESSION['user']['avatar']) : ?>
+                                                        <img src="<?= APP_URL ?>/public/uploads/users/<?= $_SESSION['user']['avatar'] ?>" alt="user" width="50" class="rounded">
+                                                    <?php else : ?>
+                                                        <img src="<?= APP_URL ?>/public/uploads/users/default-user.jpg" alt="user" width="50" class="rounded">
+                                                    <?php endif; ?>
+                                                </div>
                                                 <div class="comment-text w-100">
                                                     <h6 class="font-medium"><?= $_SESSION['user']['first_name'] ?> - <?= $_SESSION['user']['username'] ?></h6>
                                                     <form action="/comments" method="post">
-                                                        <input type="hidden" name="method" value="POST" required>
-                                                        <input type="hidden" name="product_id" id="product_id" value="<?= $data['product']['id'] ?>">
-                                                        <input type="hidden" name="user_id" id="user_id" value="<?= $_SESSION['user']['id'] ?>">
+                                                        <input type="hidden" name="method" value="POST">
+                                                        <input type="hidden" name="product_id" value="<?= $data['product']['id'] ?>">
+                                                        <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id'] ?>">
                                                         <div class="form-group">
                                                             <label for="content">Bình luận</label>
                                                             <textarea class="form-control rounded-0" name="content" id="content" rows="3" placeholder="Nhập bình luận..."></textarea>
@@ -289,16 +292,13 @@ class Detail extends BaseView
                                                     </form>
                                                 </div>
                                             </div>
-                                        </div>
-                                    <?php
-                                    else :
-                                    ?>
-                                        <h6 class="text-center text-danger">Vui lòng đăng nhập để bình luận</h6>
-                                    <?php
-                                    endif;
-                                    ?>
+                                        <?php else : ?>
+                                            <h6 class="text-center text-danger">Vui lòng đăng nhập để bình luận</h6>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
+
 
 
 

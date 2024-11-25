@@ -280,4 +280,31 @@ class Product extends BaseModel
         }
         return $result;
     }
+    public function getAllVariantOptionByProductInCart($id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT DISTINCT pvo.id, pvo.name
+                FROM Product_variant_options AS pvo
+                JOIN Product_variant_option_combinations AS pvoc ON pvo.id = pvoc.product_variant_option_id
+                JOIN Skus AS s ON pvoc.sku_id = s.id
+                WHERE s.product_id = ?";
+
+            // Chuẩn bị câu truy vấn
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            // Gắn tham số vào câu truy vấn
+            $stmt->bind_param('i', $id);
+
+            // Thực thi truy vấn
+            $stmt->execute();
+
+            // Lấy kết quả và trả về
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy các biến thể sản phẩm: ' . $th->getMessage());
+        }
+        return $result;
+    }
 }

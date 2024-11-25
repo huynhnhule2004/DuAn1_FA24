@@ -65,11 +65,11 @@ class CommentController
         $comment = new Comment();
         $result = $comment->updateComment($id, $data);
 
-        if ($result) {
-            NotificationHelper::success('update', 'Cập nhật bình luận thành công');
-        } else {
-            NotificationHelper::error('update', 'Cập nhật bình luận thất bại');
-        }
+        // if ($result) {
+        //     NotificationHelper::success('update', 'Cập nhật bình luận thành công');
+        // } else {
+        //     NotificationHelper::error('update', 'Cập nhật bình luận thất bại');
+        // }
 
         if (isset($_POST['product_id']) && $_POST['product_id']) {
             $product_id = $_POST['product_id'];

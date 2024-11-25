@@ -36,8 +36,16 @@ Route::get('/orders', 'App\Controllers\Client\OrderController@index');
 Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');
 Route::get('/about', 'App\Controllers\Client\AboutController@index');
 Route::get('/profile', 'App\Controllers\Client\ProfileController@index');
-Route::get('/cart', 'App\Controllers\Client\CartController@index');
 Route::get('/wishlist', 'App\Controllers\Client\WishlistController@index');
+
+Route::post('/cart/add', 'App\Controllers\Client\CartController@add');
+Route::get('/cart/show', 'App\Controllers\Client\CartController@show');
+Route::get('/cart', 'App\Controllers\Client\CartController@show');
+Route::delete('/cart/{id}', 'App\Controllers\Client\CartController@delete');
+Route::get('/cart/deleteAll', 'App\Controllers\Client\CartController@deleteAll');
+
+
+
 
 Route::get('/blog/pagination', 'App\Controllers\Client\BlogController@paginate');
 

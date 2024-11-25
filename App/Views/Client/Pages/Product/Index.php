@@ -16,6 +16,35 @@ class Index extends BaseView
   public static function render($data = null)
   {
 ?>
+    <style>
+      button:focus {
+        outline: none;
+        box-shadow: none;
+      }
+
+      button {
+        border: none;
+        background: none;
+      }
+
+      .btn-cart {
+        border: 1px solid #D3D4D4;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        padding: 10px 15px;
+        box-shadow: none;
+      }
+
+      .btn-cart:hover {
+        background-color: #e2e6ea;
+      }
+
+      .btn-cart h6 {
+        margin: 0;
+        font-size: 14px;
+        color: #333;
+      }
+    </style>
 
     <div class="container mt-5 mb-5">
       <div class="row">
@@ -53,7 +82,7 @@ class Index extends BaseView
                       </div>
                       <div class="card position-relative">
                         <a href="/products/<?= $item['id'] ?>">
-                          <img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
+                          <img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image" style="height: 300px; object-fit: cover;">
                         </a>
                         <div class="card-body p-0">
                           <a href="/products/<?= $item['id'] ?>">
@@ -78,9 +107,13 @@ class Index extends BaseView
 
 
                             <div class="d-flex flex-wrap mt-3">
-                              <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
-                                <h5 class="m-0">Thêm vào giỏ</h5>
-                              </a>
+                              <form action="/cart/add" method="post" class="m-0">
+                                <input type="hidden" name="method" id="" value="POST">
+                                <input type="hidden" name="id" value="<?= $item['id'] ?>" required>
+                                <button type="submit" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                  <h6 class="text-uppercase m-0">Thêm vào giỏ</h6>
+                                </button>
+                              </form>
                               <a href="#" class="btn-wishlist px-4 pt-3 ">
                                 <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
                               </a>

@@ -9,6 +9,36 @@ class Home extends BaseView
     public static function render($data = null)
     {
 ?>
+        <style>
+            button:focus {
+                outline: none;
+                box-shadow: none;
+            }
+
+            button {
+                border: none;
+                background: none;
+            }
+
+            .btn-cart {
+                border: 1px solid #D3D4D4;
+                border-radius: 5px;
+                background-color: #f8f9fa;
+                padding: 10px 15px;
+                box-shadow: none;
+            }
+
+            .btn-cart:hover {
+                background-color: #e2e6ea;
+            }
+
+            .btn-cart h6 {
+                margin: 0;
+                font-size: 14px;
+                color: #333;
+            }
+        </style>
+
 
         <section id="banner" style="background: #F9F3EC;">
             <div class="container">
@@ -123,15 +153,15 @@ class Home extends BaseView
                         <div class="category-section mb-5">
                             <!-- Hiển thị tên danh mục -->
                             <h2 class="display-6 fw-normal"><?= htmlspecialchars($category['category_name']) ?></h2>
-                                
+
                             <div class="products-carousel swiper pt-5">
                                 <div class="swiper-wrapper">
                                     <?php foreach ($data['categorizedProducts'][$category['category_name']] as $item): ?>
                                         <div class="swiper-slide">
-                                        <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
-                                        <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
+                                            <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
+                                                <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
 
-                                    </div>
+                                            </div>
                                             <div class="card position-relative">
                                                 <a href="/product/<?= $item['id'] ?>"><img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image" style="height: 300px; object-fit: cover;"></a>
                                                 <div class="card-body p-0">
@@ -157,13 +187,23 @@ class Home extends BaseView
                                                         <?php endif; ?>
 
                                                         <div class="d-flex flex-wrap mt-3">
-                                                            <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                                <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                                            </a>
+                                                            <!-- Form với nút thêm giỏ hàng-->
+                                                            <form action="/cart/add" method="post" class="m-0">
+                                                                <input type="hidden" name="method" value="POST">
+                                                                <input type="hidden" name="id" value="<?= $item['id'] ?>" required>
+                                                                <button type="submit" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                                                    <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                                                </button>
+                                                            </form>
+
+
+                                                            <!-- Nút Wishlist -->
                                                             <a href="/wishlist" class="btn-wishlist px-4 pt-3">
                                                                 <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
                                                             </a>
                                                         </div>
+
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -629,7 +669,7 @@ class Home extends BaseView
                                     </div>
                                     <div class="card position-relative">
                                         <a href="single-product.html"><img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>"
-                                                class="img-fluid rounded-4" alt="image"></a>
+                                                class="img-fluid rounded-4" alt="image" style="height: 300px; object-fit: cover;"></a>
                                         <div class="card-body p-0">
                                             <a href="single-product.html">
                                                 <h4 class="card-title pt-4 m-0"><?= $item['product_name'] ?></h4>

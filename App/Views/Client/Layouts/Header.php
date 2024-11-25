@@ -64,6 +64,7 @@ class Header extends BaseView
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
+
         </head>
 
         <body>
@@ -376,11 +377,14 @@ class Header extends BaseView
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/cart" class="mx-3 fs-5">
-                                                <i class="fa-solid fa-cart-shopping "></i>
-                                                <span
-                                                    class="position-absolute badge rounded-circle bg-primary pt-2" style="transform: translate(-40%, -30%); font-size: 12px">
-                                                    03
+                                            <a href="/cart/" class="mx-3 fs-5 position-relative">
+                                                <i class="fa-solid fa-cart-shopping"></i>
+                                                <?php
+                                                $cart = isset($_COOKIE['cart']) ? json_decode($_COOKIE['cart'], true) : ['info' => ['number_order' => 0]];
+                                                $number_order = $cart['info']['number_order'] ?? 0;
+                                                ?>
+                                                <span class="position-absolute badge rounded-circle bg-primary pt-2" style="transform: translate(-40%, -30%); font-size: 12px">
+                                                    <?= $number_order > 0 ? $number_order : '' ?>
                                                 </span>
                                             </a>
                                         </li>
