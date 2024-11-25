@@ -56,37 +56,7 @@ class Detail extends BaseView
                                 <div class="swiper product-large-slider swiper-fade swiper-initialized swiper-horizontal swiper-watch-progress swiper-backface-hidden">
                                     <div class="swiper-wrapper" id="swiper-wrapper-bdaebd66f010b04b8" aria-live="polite">
                                         <div class="swiper-slide swiper-slide-visible swiper-slide-active" role="group" aria-label="1 / 4" style="width: 624px; opacity: 1; transform: translate3d(0px, 0px, 0px);">
-                                            <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image'] ?>" class="img-fluid" style="width: 624px; opacity: 1; transform: translate3d(0px, 0px, 0px);">
-                                        </div>
-                                        <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 4" style="width: 624px; opacity: 0; transform: translate3d(-624px, 0px, 0px);">
-                                            <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image1'] ?>" class="img-fluid">
-                                        </div>
-                                        <div class="swiper-slide" role="group" aria-label="3 / 4" style="width: 624px; opacity: 0; transform: translate3d(-1248px, 0px, 0px);">
-                                            <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image2'] ?>" class="img-fluid">
-                                        </div>
-                                        <div class="swiper-slide" role="group" aria-label="4 / 4" style="width: 624px; opacity: 0; transform: translate3d(-1872px, 0px, 0px);">
-                                            <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image3'] ?>" class="img-fluid">
-                                        </div>
-
-                                    </div>
-                                    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mt-2">
-                                <!-- product-thumbnail-slider -->
-                                <div thumbsslider="" class="swiper product-thumbnail-slider swiper-initialized swiper-horizontal swiper-free-mode swiper-watch-progress swiper-backface-hidden swiper-thumbs">
-                                    <div class="swiper-wrapper" id="swiper-wrapper-a85acea6a38a391c" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
-                                        <div class="swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active" role="group" aria-label="1 / 4" style="width: 202.667px; margin-right: 8px;">
-                                            <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image'] ?>" class="img-fluid">
-                                        </div>
-                                        <div class="swiper-slide swiper-slide-visible swiper-slide-next" role="group" aria-label="2 / 4" style="width: 202.667px; margin-right: 8px;">
-                                            <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image1'] ?>" class="img-fluid">
-                                        </div>
-                                        <div class="swiper-slide swiper-slide-visible" role="group" aria-label="3 / 4" style="width: 202.667px; margin-right: 8px;">
-                                            <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image2'] ?>" class="img-fluid">
-                                        </div>
-                                        <div class="swiper-slide" role="group" aria-label="4 / 4" style="width: 202.667px; margin-right: 8px;">
-                                            <img src="<?= APP_URL ?>/public/assets/client/images/<?= $data['product']['image3'] ?>" class="img-fluid">
+                                            <img src="<?= APP_URL ?>/public/uploads/products/<?= $data['product_detail']['image'] ?>" class="img-fluid" style="width: 624px; opacity: 1; transform: translate3d(0px, 0px, 0px);">
                                         </div>
                                     </div>
                                     <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
@@ -95,92 +65,106 @@ class Detail extends BaseView
                         </div>
                     </div>
                     <div class="col-lg-6 mt-5 ">
-                        <div class="product-info">
-                            <div class="element-header">
-                                <h2 itemprop="name" class="display-6"><?= $data['product']['name'] ?></h2>
-                                <div class="rating-container d-flex gap-0 align-items-center">
-                                    <span class="rating secondary-font">
-                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                        <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
-                                        5.0</span>
+                        <?php if (!empty($data['product_detail'])): ?>
+                            <div class="product-info">
+                                <div class="element-header">
+                                    <h1 class="product-title"><?= isset($data['product_detail']['product_name']) ? htmlspecialchars($data['product_detail']['product_name']) : 'Tên sản phẩm không có' ?></h1>
+                                    <div class="rating-container d-flex gap-0 align-items-center">
+                                        <span class="rating secondary-font">
+                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                            <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
+                                            5.0
+                                        </span>
+                                    </div>
                                 </div>
+
+                                <strong class="text-primary display-6 fw-bold" id="product-price">
+                                    <?= isset($data['product_detail']['price_default']) ? number_format($data['product_detail']['price_default']) : '0 VNĐ' ?> VNĐ
+                                </strong>
+                                <del class="ms-2"><?= isset($data['product_detail']['discount_price']) ? number_format($data['product_detail']['discount_price']) : '0 VNĐ' ?> VNĐ</del>
                             </div>
-                            <div class="product-price pt-3 pb-3">
-                                <strong class="text-primary display-6 fw-bold"><?= $data['product']['discount_price'] ?></strong><del class="ms-2"><?= $data['product']['price'] ?></del>
-                            </div>
-                            <p><?= $data['product']['short_description'] ?></p>
+                            <p><?= isset($data['product_detail']['short_description']) ? $data['product_detail']['short_description'] : 'Không có mô tả ngắn' ?></p>
                             <div class="swatch product-select pt-3" data-option-index="1">
-                                <h6 class="item-title fw-bold">Kích thước</h6>
-                                <ul class="select-list list-unstyled d-flex">
-                                    <li data-value="S" class="select-item pe-3">
-                                        <a href="#" class="btn btn-light"><?= $data['product']['Size1'] ?></a>
-                                    </li>
-                                    <li data-value="M" class="select-item pe-3">
-                                        <a href="#" class="btn btn-light active"><?= $data['product']['Size2'] ?></a>
-                                    </li>
-                                    <li data-value="L" class="select-item pe-3">
-                                        <a href="#" class="btn btn-light"><?= $data['product']['Size3'] ?></a>
-                                    </li>
-                                    <li data-value="L" class="select-item">
-                                        <a href="#" class="btn btn-light"><?= $data['product']['Size4'] ?></a>
-                                    </li>
-                                </ul>
+                                <?php
+                                // Tạo danh sách các loại biến thể từ dữ liệu
+                                $variantTypes = [];
+                                foreach ($data['product_variant']['skus'] as $sku) {
+                                    foreach ($sku['variant_options'] as $variant) {
+                                        if (!in_array($variant['variant_name'], $variantTypes)) {
+                                            $variantTypes[] = $variant['variant_name'];
+                                        }
+                                    }
+                                }
+                                // Hiển thị từng loại biến thể
+                                foreach ($variantTypes as $variantType):
+                                ?>
+                                    <div class="swatch product-select pt-3" data-option-index="1">
+                                        <h6 class="item-title fw-bold"><?= htmlspecialchars($variantType) ?></h6>
+                                        <select class="form-select variant-select">
+                                            <option value="" selected>Chọn size</option>
+                                            <?php
+                                            $usedSkus = [];
+                                            $variantNames = [];
+
+                                            foreach ($data['product_variant']['skus'] as $sku) {
+                                                foreach ($sku['variant_options'] as $variantOption) {
+                                                    if (!in_array($sku['sku'], $usedSkus) && !in_array($variantOption['name'], $variantNames)) {
+                                                        $usedSkus[] = $sku['sku'];
+                                                        $variantNames[] = $variantOption['name'];
+
+                                            ?>
+                                                        <option value="<?= htmlspecialchars($sku['sku']) ?>" data-price="<?= htmlspecialchars($sku['price']) ?>">
+                                                            <?= htmlspecialchars($variantOption['name']) ?>
+                                                        </option>
+                                            <?php
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                <?php endforeach; ?>
+
                             </div>
-                            <div class="product-quantity pt-2">
-                                <div class="stock-number text-dark"><em>Số lượng còn trong kho: <?= $data['product']['stock_quantity'] ?></em></div>
-                                <div class="stock-button-wrap">
 
-                                    <div class="input-group product-qty align-items-center w-25">
-                                        <span class="input-group-btn">
-                                            <button type="button" class="quantity-left-minus btn btn-light btn-number" data-type="minus">
-                                                <svg width="16" height="16">
-                                                    <use xlink:href="#minus"></use>
-                                                </svg>
-                                            </button>
-                                        </span>
-                                        <input type="text" id="quantity" name="quantity" class="form-control input-number text-center p-2 mx-1" value="1">
-                                        <span class="input-group-btn">
-                                            <button type="button" class="quantity-right-plus btn btn-light btn-number" data-type="plus" data-field="">
-                                                <svg width="16" height="16">
-                                                    <use xlink:href="#plus"></use>
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </div>
-
-                                    <div class="d-flex flex-wrap pt-4">
-                                        <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
-                                            <h5 class="text-uppercase m-0">Thêm vào giỏ</h5>
-                                        </a>
-                                        <a href="#" class="btn-wishlist px-4 pt-3 ">
-                                            <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
-                                        </a>
-                                    </div>
-
+                            <div class="stock-button-wrap mt-3">
+                                <div class="input-group product-qty align-items-center w-25">
+                                    <span class="input-group-btn">
+                                        <input type="number" value="1" class="form-control input-number text-center p-2 mx-1 w-50" min="1">
+                                    </span>
+                                </div>
+                                <div class="d-flex flex-wrap pt-4">
+                                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
+                                        <h5 class="text-uppercase m-0">Thêm vào giỏ</h5>
+                                    </a>
+                                    <a href="#" class="btn-wishlist px-4 pt-3 ">
+                                        <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
+                                    </a>
+                                </div>
+                                <div class="meta-item d-flex align-items-baseline mt-3">
+                                    <h6 class="item-title fw-bold no-margin pe-2">Danh mục:</h6>
+                                    <ul class="select-list list-unstyled d-flex">
+                                        <li data-value="S" class="select-item">
+                                            <a href="#"><?= isset($data['product_detail']['category_name']) ? htmlspecialchars($data['product_detail']['category_name']) : 'Không có danh mục' ?></a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                        </div>
-                        <div class="meta-product pt-4">
-                            <div class="meta-item d-flex align-items-baseline">
-                                <h6 class="item-title fw-bold no-margin pe-2">SKU:</h6>
-                                <ul class="select-list list-unstyled d-flex">
-                                    <li data-value="S" class="select-item"><?= $data['product']['sku'] ?></li>
-                                </ul>
-                            </div>
-                            <div class="meta-item d-flex align-items-baseline">
-                                <h6 class="item-title fw-bold no-margin pe-2">Danh mục:</h6>
-                                <ul class="select-list list-unstyled d-flex">
-                                    <li data-value="S" class="select-item">
-                                        <a href="#"><?= $data['product']['category'] ?></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+
                     </div>
+
                 </div>
+            <?php else: ?>
+                <p>Không có chi tiết sản phẩm.</p>
+            <?php endif; ?>
+            </div>
+
+
+            </div>
+            </div>
             </div>
             </div>
         </section>
@@ -197,15 +181,13 @@ class Detail extends BaseView
                         </div>
                         <!-- Tab Content -->
                         <div class="tab-content" id="v-pills-tabContent">
-                            <!-- Tab: Mô tả -->
-                            <div class="tab-pane fade active show" id="v-pills-description" role="tabpanel" aria-labelledby="v-pills-description-tab">
-                                <h2 class="mb-4">Mô tả sản phẩm</h2>
-                                <p><?= $data['product']['long_description'] ?></p>
+                            <div class="tab-pane fade active show" id="v-pills-description" role="tabpanel" aria-labelledby="v-pills-description-tab" tabindex="0">
+                                <h2>Mô tả sản phẩm</h2>
+                                <p><?= $data['product_detail']['long_description'] ?>
                             </div>
-                            <!-- Tab: Thông tin bổ sung -->
-                            <div class="tab-pane fade" id="v-pills-additional" role="tabpanel" aria-labelledby="v-pills-additional-tab">
-                                <h2 class="mb-4">Cách sử dụng sản phẩm</h2>
-                                <p><?= $data['product']['how_to'] ?></p>
+                            <div class="tab-pane fade" id="v-pills-additional" role="tabpanel" aria-labelledby="v-pills-additional-tab" tabindex="0">
+                                <h2>Cách sử dụng sản phẩm</h2>
+                                <p><?= $data['product_detail']['how_to_use'] ?></p>
                             </div>
                             <!-- Tab: Đánh giá -->
                             <div class="tab-pane fade" id="v-pills-reviews" role="tabpanel" aria-labelledby="v-pills-reviews-tab">
@@ -271,6 +253,7 @@ class Detail extends BaseView
                                                 <form action="/comments" method="post">
                                                     <input type="hidden" name="method" value="POST">
                                                     <input type="hidden" name="product_id" value="<?= $data['product']['id'] ?>">
+                                                    <input type="hidden" name="user_id" id="user_id" value="<?= $_SESSION['user']['id'] ?>">
                                                     <textarea class="form-control mb-3" name="content" rows="4" placeholder="Nhập bình luận của bạn..."></textarea>
                                                     <button type="submit" class="btn btn-primary w-30">Gửi</button>
                                                 </form>
@@ -416,6 +399,26 @@ class Detail extends BaseView
                 </div>
             </div>
         </section>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const variantSelects = document.querySelectorAll('.variant-select');
+                const priceElement = document.getElementById('product-price');
+
+                variantSelects.forEach(select => {
+                    select.addEventListener('change', function() {
+                        const selectedOption = this.options[this.selectedIndex];
+                        const price = selectedOption.getAttribute('data-price');
+
+                        if (price) {
+                            priceElement.textContent = new Intl.NumberFormat('vi-VN').format(price) + ' VNĐ';
+                        }
+                    });
+                });
+            });
+        </script>
+
+
 <?php
+
     }
 }

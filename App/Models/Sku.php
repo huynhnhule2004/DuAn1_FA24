@@ -120,6 +120,31 @@ class Sku extends BaseModel
         }
     }
 
+    public function getSkuByProductId($id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT products.*, skus.*
+                    FROM skus
+                    INNER JOIN products ON skus.product_id = products.id
+                    WHERE skus.product_id = ?";
+
+            $stmt = $this->_conn->MySQLi()->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+
+            $skus = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            error_log('Dữ liệu trả về từ truy vấn SKU: ' . print_r($skus, true));
+
+            return $result;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị dữ liệu SKU: ' . $th->getMessage());
+            return $result;
+        }
+    }
+
+
+
     public function getAllProductByCategoryAndStatus(int $id)
     {
         $result = [];
@@ -280,5 +305,47 @@ class Sku extends BaseModel
         return false;
     }
 }
+    public function getVariantImages(int $product_id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT image FROM Skus WHERE product_id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('i', $product_id);
+            $stmt->execute();
+            $query_result = $stmt->get_result();
+            $result = $query_result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+        }
+
+        return $result;
+    }
+    // public function getStockQuantityByProductId(int $product_id) {
+    //     $result = null;
+    //     try {
+    //         $sql = "SELECT stock_quantity FROM Skus WHERE product_id = ?";
+    //         $conn = $this->_conn->MySQLi();
+    //         $stmt = $conn->prepare($sql);
+
+    //         $stmt->bind_param('i', $product_id);
+
+    //         // Thực thi câu lệnh SQL
+    //         $stmt->execute();
+
+    //         // Lấy kết quả trả về
+    //         $result = $stmt->get_result()->fetch_assoc();
+
+    //         // Trả về stock_quantity
+    //         return $result ? $result['stock_quantity'] : 0;
+
+    //     } catch (\Throwable $th) {
+    //         // Log lỗi nếu có
+    //         error_log('Lỗi khi lấy stock_quantity: ' . $th->getMessage());
+    //         return 0;
+    //     }
+    // }
 
 }

@@ -16,12 +16,6 @@ class Product extends BaseModel
         return $this->getOne($id);
     }
 
-    // public function createProduct($data)
-    // {
-    //     return $this->create($data);
-    // }
-
-
     public function createProduct(array $data)
     {
         try {
@@ -164,7 +158,7 @@ class Product extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT products.*, categories.name AS category_name FROM products 
+            $sql = "SELECT products.*, categories.category_name FROM products 
             INNER JOIN categories on products.category_id = categories.id 
             WHERE products.status=" . self::STATUS_ENABLE . " 
             AND categories.status = " . self::STATUS_ENABLE . " AND products.id=?";
@@ -179,6 +173,7 @@ class Product extends BaseModel
             return $result;
         }
     }
+
 
     public function countTotalProduct()
     {
@@ -307,4 +302,138 @@ class Product extends BaseModel
         }
         return $result;
     }
+
+    public function getCategoryByProductId(int $product_id)
+    {
+        $category = null;
+        try {
+            $sql = "SELECT category_id FROM products WHERE id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $product_id);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_assoc();
+            if ($result) {
+                $category_id = $result['category_id'];
+
+                $category = $this->getCategoryById($category_id);
+            }
+
+            return $category;
+        } catch (\Throwable $th) {
+
+            error_log('Lỗi khi lấy danh mục sản phẩm: ' . $th->getMessage());
+            return null;
+        }
+    }
+
+    public function getCategoryById(int $category_id)
+    {
+        $category = null;
+        try {
+            $sql = "SELECT category_name FROM Categories WHERE id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('i', $category_id);
+            $stmt->execute();
+
+            $result = $stmt->get_result()->fetch_assoc();
+            if ($result) {
+                $category = $result['category_name']; // Trả về tên danh mục
+            }
+
+            return $category;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy thông tin danh mục: ' . $th->getMessage());
+            return null;
+        }
+    }
+
+
+    public function getProductVariant($id)
+{
+    try {
+        $product = $this->getOneProductByStatus($id);
+        if (!$product) {
+            throw new \Exception("Sản phẩm không tồn tại hoặc đã bị vô hiệu hóa.");
+        }
+        $sql = "
+            SELECT skus.id, skus.sku, skus.price, skus.image, skus.stock_quantity,
+                   pvoc.product_variant_option_id, pvo.name AS variant_option_name, pvo.product_variant_id, pv.name AS variant_name
+            FROM skus
+            JOIN product_variant_option_combinations pvoc ON skus.id = pvoc.sku_id
+            JOIN product_variant_options pvo ON pvoc.product_variant_option_id = pvo.id
+            JOIN product_variations pv ON pv.id = pvo.product_variant_id
+            WHERE skus.product_id = ?
+        ";
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $skuResults = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        // $variantResults = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $groupedSkus = $this->groupSkusById($skuResults);
+        // $groupedVariant = $this->groupVariantsById($variantResults);
+
+        $productDetail = [
+            'product' => $product,
+            'skus' => $groupedSkus,
+            // 'variant' => $groupedVariant,
+
+        ];
+
+        return $productDetail;
+
+    } catch (\Throwable $th) {
+        error_log("Lỗi khi lấy chi tiết sản phẩm: " . $th->getMessage());
+        return null;
+    }
 }
+private function groupSkusById($skus)
+{
+    $groupedData = [];
+
+    foreach ($skus as $sku) {
+        $skuKey = $sku['sku'];
+
+        // Khởi tạo dữ liệu nếu SKU chưa được nhóm
+        if (!isset($groupedData[$skuKey])) {
+            $groupedData[$skuKey] = [
+                'id' => $sku['id'],
+                'sku' => $sku['sku'],
+                'price' => $sku['price'],
+                'image' => $sku['image'],
+                'stock_quantity' => $sku['stock_quantity'],
+                'variant_options' => [],
+            ];
+        }
+
+        // Tạo thông tin variant_option
+        $variantOption = [
+            'id' => $sku['product_variant_option_id'],
+            'name' => $sku['variant_option_name'],
+        ];
+
+        // Thêm variant_name nếu có
+        if (isset($sku['variant_name'])) {
+            $variantOption['variant_name'] = $sku['variant_name'];
+        }
+
+        // Thêm biến thể vào danh sách của SKU
+        $groupedData[$skuKey]['variant_options'][] = $variantOption;
+    }
+
+    // Loại bỏ các biến thể trùng lặp trong danh sách variant_options
+    foreach ($groupedData as &$data) {
+        // Loại bỏ trùng lặp bằng cách sử dụng `array_map` và `array_unique`
+        $data['variant_options'] = array_map("unserialize", array_unique(array_map("serialize", $data['variant_options'])));
+    }
+
+    // Trả về dữ liệu đã nhóm
+    return array_values($groupedData);
+}
+
+
+}
+

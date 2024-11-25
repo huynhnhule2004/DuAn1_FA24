@@ -13,9 +13,9 @@ class Index extends BaseView
     $currentOffset = $data['currentOffset'] ?? 0;
 ?>
     <div class="container pt-5">
-    <?php if (!empty($blogs)): ?>
+      <?php if (!empty($blogs)): ?>
         <div class="row g-4 ">
-        <?php foreach ($blogs as $item): ?>
+          <?php foreach ($blogs as $item): ?>
             <div class="col-md-4">
               <div class="card h-100">
                 <div class="position-relative">
@@ -32,9 +32,9 @@ class Index extends BaseView
                   <a href="/blogs/<?= $item['id'] ?>" class="text-decoration-none">
                     <h5 class="card-title text-dark"><?= $item['title'] ?></h5>
                   </a>
-                  <?= strlen(strip_tags($item['content'])) > 100 
-    ? htmlspecialchars(substr(strip_tags($item['content']), 0, 100)) . '...' 
-    : htmlspecialchars(strip_tags($item['content'])) ?>
+                  <?= strlen(strip_tags($item['content'])) > 100
+                    ? htmlspecialchars(substr(strip_tags($item['content']), 0, 100)) . '...'
+                    : htmlspecialchars(strip_tags($item['content'])) ?>
 
                   <a href="/blogs/<?= $item['id'] ?>" class="mt-auto text-primary">Đọc thêm</a>
                 </div>
@@ -85,59 +85,59 @@ class Index extends BaseView
       <?php else: ?>
         <p class="text-center">Không có blog</p>
       <?php endif; ?>
-        <div class="row g-0 py-5">
-          <div class="col instagram-item  text-center position-relative">
-            <div class="icon-overlay d-flex justify-content-center position-absolute">
-              <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
-            </div>
-            <a href="#">
-              <img src="/public/assets/client/images/insta1.jpg" alt="insta-img" class="img-fluid rounded-3">
-            </a>
+      <div class="row g-0 py-5">
+        <div class="col instagram-item  text-center position-relative">
+          <div class="icon-overlay d-flex justify-content-center position-absolute">
+            <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
           </div>
-          <div class="col instagram-item  text-center position-relative">
-            <div class="icon-overlay d-flex justify-content-center position-absolute">
-              <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
-            </div>
-            <a href="#">
-              <img src="/public/assets/client/images/insta2.jpg" alt="insta-img" class="img-fluid rounded-3">
-            </a>
-          </div>
-          <div class="col instagram-item  text-center position-relative">
-            <div class="icon-overlay d-flex justify-content-center position-absolute">
-              <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
-            </div>
-            <a href="#">
-              <img src="/public/assets/client/images/insta3.jpg" alt="insta-img" class="img-fluid rounded-3">
-            </a>
-          </div>
-          <div class="col instagram-item  text-center position-relative">
-            <div class="icon-overlay d-flex justify-content-center position-absolute">
-              <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
-            </div>
-            <a href="#">
-              <img src="/public/assets/client/images/insta4.jpg" alt="insta-img" class="img-fluid rounded-3">
-            </a>
-          </div>
-          <div class="col instagram-item  text-center position-relative">
-            <div class="icon-overlay d-flex justify-content-center position-absolute">
-              <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
-            </div>
-            <a href="#">
-              <img src="/public/assets/client/images/insta5.jpg" alt="insta-img" class="img-fluid rounded-3">
-            </a>
-          </div>
-          <div class="col instagram-item  text-center position-relative">
-            <div class="icon-overlay d-flex justify-content-center position-absolute">
-              <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
-            </div>
-            <a href="#">
-              <img src="/public/assets/client/images/insta6.jpg" alt="insta-img" class="img-fluid rounded-3">
-            </a>
-          </div>
+          <a href="#">
+            <img src="/public/assets/client/images/insta1.jpg" alt="insta-img" class="img-fluid rounded-3">
+          </a>
         </div>
+        <div class="col instagram-item  text-center position-relative">
+          <div class="icon-overlay d-flex justify-content-center position-absolute">
+            <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
+          </div>
+          <a href="#">
+            <img src="/public/assets/client/images/insta2.jpg" alt="insta-img" class="img-fluid rounded-3">
+          </a>
+        </div>
+        <div class="col instagram-item  text-center position-relative">
+          <div class="icon-overlay d-flex justify-content-center position-absolute">
+            <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
+          </div>
+          <a href="#">
+            <img src="/public/assets/client/images/insta3.jpg" alt="insta-img" class="img-fluid rounded-3">
+          </a>
+        </div>
+        <div class="col instagram-item  text-center position-relative">
+          <div class="icon-overlay d-flex justify-content-center position-absolute">
+            <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
+          </div>
+          <a href="#">
+            <img src="/public/assets/client/images/insta4.jpg" alt="insta-img" class="img-fluid rounded-3">
+          </a>
+        </div>
+        <div class="col instagram-item  text-center position-relative">
+          <div class="icon-overlay d-flex justify-content-center position-absolute">
+            <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
+          </div>
+          <a href="#">
+            <img src="/public/assets/client/images/insta5.jpg" alt="insta-img" class="img-fluid rounded-3">
+          </a>
+        </div>
+        <div class="col instagram-item  text-center position-relative">
+          <div class="icon-overlay d-flex justify-content-center position-absolute">
+            <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>
+          </div>
+          <a href="#">
+            <img src="/public/assets/client/images/insta6.jpg" alt="insta-img" class="img-fluid rounded-3">
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
-  <script>
+    </div>
+    <script>
       $(document).ready(function() {
         function loadPage(page) {
           // Hiển thị loader
