@@ -55,11 +55,12 @@ class Checkout extends BaseView
             <!-- Giao diện Thanh Toán -->
             <h1 class="text-center my-3" style="color: var(--bs-primary)">Thanh toán</h1>
             <div class="container p-5 rounded" style="background-color: #F9F3EC;">
-                <div class="row">
-                    <!-- Thông tin người mua -->
-                    <div class="col-md-6 left-panel">
-                        <h3>Thông Tin Người Mua</h3>
-                        <form action="/order" action="/admin/products" method="POST">
+                <form action="/orders" method="POST">
+                    <div class="row">
+                        <!-- Thông tin người mua -->
+                        <div class="col-md-6 left-panel">
+                            <h3>Thông Tin Người Mua</h3>
+                            <input type="hidden" name="method" id="" value="POST">
                             <div class="mb-3">
                                 <label for="fullName" class="form-label">Họ và Tên</label>
                                 <input type="hidden" class="form-control" name="user_id" value="<?= $user['id'] ?>">
@@ -86,62 +87,64 @@ class Checkout extends BaseView
                             <div class="mb-3">
                                 <label for="address" class="form-label">Địa Chỉ</label>
                                 <input type="text" class="form-control" id="address" required>
+                                <input type="hidden" name="address" id="hiddenAddress">
                             </div>
-                            <input type="hidden" name="address" id="hiddenAddress">
                             <h3>Phương Thức Thanh Toán</h3>
                             <div class="mb-3">
                                 <label class="form-label">Chọn Phương Thức Thanh Toán</label>
-                                <select class="form-select" id="paymentMethod" required>
+                                <select class="form-select" id="paymentMethod" required name="payment_method">
                                     <option value="">Chọn phương thức</option>
                                     <option value="COD">Thanh toán khi nhận hàng</option>
                                     <option value="Online payment">Thanh toán trực tuyến</option>
                                 </select>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                        <input type="hidden" name="status" value="Pending">
+                        <input type="hidden" name="payment_status" value="Unpaid">
 
-                    <!-- Tóm Tắt Đơn Hàng -->
-                    <div class="col-md-6 right-panel">
-                        <h3>Tóm Tắt Đơn Hàng</h3>
-                        <table class="table summary-table">
-                            <thead>
-                                <tr>
-                                    <th>Sản Phẩm</th>
-                                    <th>Số Lượng</th>
-                                    <th>Đơn Giá</th>
-                                    <th>Tổng</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                // Lặp qua các sản phẩm trong mảng 'buy'
-                                foreach ($cart['buy'] as $product) {
-                                    $product_name = $product['product_name'];
-                                    $qty = $product['qty'];
-                                    $price = number_format($product['price_default'] - ($product['discount_price'] ?? 0), 0, ',', '.') . ' VNĐ';
-                                    $total = number_format($product['sub_total'], 0, ',', '.') . ' VNĐ';
-                                    echo "<tr>
+                        <!-- Tóm Tắt Đơn Hàng -->
+                        <div class="col-md-6 right-panel">
+                            <h3>Tóm Tắt Đơn Hàng</h3>
+                            <table class="table summary-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sản Phẩm</th>
+                                        <th>Số Lượng</th>
+                                        <th>Đơn Giá</th>
+                                        <th>Tổng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    // Lặp qua các sản phẩm trong mảng 'buy'
+                                    foreach ($cart['buy'] as $product) {
+                                        $product_name = $product['product_name'];
+                                        $qty = $product['qty'];
+                                        $price = number_format($product['price_default'] - ($product['discount_price'] ?? 0), 0, ',', '.') . ' VNĐ';
+                                        $total = number_format($product['sub_total'], 0, ',', '.') . ' VNĐ';
+                                        echo "<tr>
                                     <td>$product_name</td>
                                     <td>$qty</td>
                                     <td>$price</td>
                                     <td>$total</td>
                                 </tr>";
-                                }
+                                    }
 
-                                // Hiển thị tổng cộng
-                                $total_order = number_format($cart['info']['total'], 0, ',', '.') . ' VNĐ';
-                                echo "<tr>
+                                    // Hiển thị tổng cộng
+                                    $total_order = number_format($cart['info']['total'], 0, ',', '.') . ' VNĐ';
+                                    echo "<tr>
                                 <td class='text-start fw-bold'>Tổng Cộng</td>
                                 <td colspan='3'>$total_order</td>
                             </tr>";
-                                ?>
-                            </tbody>
-                        </table>
+                                    ?>
+                                </tbody>
+                            </table>
 
-                        <a href="/orders" class="btn btn-primary">Xác Nhận Thanh Toán</a>
-                    </div>
+                            <button type="submit" class="btn btn-primary">Xác Nhận Thanh Toán</button>
+                        </div>
+                </form>
 
-                </div>
+            </div>
             </div>
 
             <script src="https://esgoo.net/scripts/jquery.js"></script>
@@ -186,19 +189,19 @@ class Checkout extends BaseView
 
                 function updateHiddenAddress() {
                     // Lấy giá trị từ các trường
+                    const addressDetail = $("#address").val(); // Địa chỉ chi tiết do người dùng nhập
                     const tinh = $("#tinh option:selected").text();
                     const quan = $("#quan option:selected").text();
                     const phuong = $("#phuong option:selected").text();
-                    const addressDetail = $("#address").val();
 
                     // Kiểm tra giá trị và ghép địa chỉ
-                    const fullAddress = `${tinh !== "Tỉnh Thành" ? tinh : ""} ${quan !== "Quận Huyện" ? quan : ""} ${phuong !== "Phường Xã" ? phuong : ""} ${addressDetail}`;
+                    const fullAddress = `${addressDetail} ${tinh !== "Tỉnh Thành" ? tinh : ""} ${quan !== "Quận Huyện" ? quan : ""} ${phuong !== "Phường Xã" ? phuong : ""}`;
 
                     // Cập nhật vào ô input ẩn
                     $("#hiddenAddress").val(fullAddress.trim());
                 }
 
-                // Gọi hàm này khi dropdown hoặc ô nhập liệu thay đổi
+                // Gọi hàm này khi người dùng thay đổi hoặc nhập vào bất kỳ trường nào
                 $("#tinh, #quan, #phuong, #address").on("change keyup", function() {
                     updateHiddenAddress();
                 });

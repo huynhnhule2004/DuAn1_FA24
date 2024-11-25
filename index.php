@@ -32,7 +32,9 @@ Route::get('/search', 'App\Controllers\Client\HomeController@search');
 
 
 
-Route::get('/orders', 'App\Controllers\Client\OrderController@index');
+// Route::get('/orders', 'App\Controllers\Client\OrderController@index');
+Route::post('/orders', 'App\Controllers\Client\OrderController@index');
+
 Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');
 Route::get('/about', 'App\Controllers\Client\AboutController@index');
 Route::get('/profile', 'App\Controllers\Client\ProfileController@index');
