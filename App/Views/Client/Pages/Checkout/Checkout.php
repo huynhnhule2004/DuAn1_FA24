@@ -135,9 +135,10 @@ class Checkout extends BaseView
 
                                     // Hiển thị tổng cộng
                                     $total_order = number_format($cart['info']['total'], 0, ',', '.') . ' VNĐ';
-                                    $total_price_payment = number_format($cart['info']['total'], 0, ',', '.');
+                                    // $total_price_payment = number_format($cart['info']['total'], 0, ',', '.');
+                                    $total_price_payment =$cart['info']['total'];
 
-                        echo "<input type='text' name='total_price_payment' value=' $total_price_payment '>";
+                                    echo "<input type='hidden' name='total_price_payment' value=' $total_price_payment '>";
                                     
                                     echo "<tr>
                                 <td class='text-start fw-bold'>Tổng Cộng</td>
