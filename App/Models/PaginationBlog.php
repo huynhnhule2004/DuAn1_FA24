@@ -2,7 +2,7 @@
 namespace App\Models;
 use App\Models\Blog;
 
-class Pagination extends Blog
+class PaginationBlog extends Blog
 {
     public $start;     // Vị trí bắt đầu
     public $total;     // Tổng số bài viết
@@ -57,7 +57,7 @@ class Pagination extends Blog
     }
 
 // Tạo các nút phân trang
-public function nut_phantrang()
+public function pagination_button_blog()
 {
     $totalPages = $this->totalRow();
     $links = '<div class="pagination loop-pagination d-flex justify-content-center align-items-center">';
@@ -109,10 +109,10 @@ public function nut_phantrang()
         header('Content-Type: application/json');
         
         $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-        $pagination = new Pagination($page);
+        $pagination_blog = new PaginationBlog($page);
         
-        $blogs = $pagination->select_blog();
-        $paginationLinks = $pagination->nut_phantrang();
+        $blogs = $pagination_blog->select_blog();
+        $paginationLinks = $pagination_blog->pagination_button_blog();
 
         // Trả về dữ liệu JSON phong phú hơn
         echo json_encode([

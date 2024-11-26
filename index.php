@@ -49,7 +49,9 @@ Route::get('/cart/deleteAll', 'App\Controllers\Client\CartController@deleteAll')
 
 
 
-Route::get('/blog/pagination', 'App\Controllers\Client\BlogController@paginate');
+Route::get('/blog/paginationblog', 'App\Controllers\Client\BlogController@paginateBlog');
+Route::get('/product/paginationproduct', 'App\Controllers\Client\ProductController@paginateProduct');
+
 
 Route::get('/contact', 'App\Controllers\Client\ContactController@index');
 Route::post('/contact', 'App\Controllers\Client\ContactController@PostContact');

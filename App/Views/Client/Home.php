@@ -798,7 +798,7 @@ class Home extends BaseView
                                 </div>
                                 <div class="card position-relative">
                                     <a href="/blogs/<?= $item['id'] ?>"><img src="<?= APP_URL ?>public/uploads/blogs/<?= $item['image'] ?>"
-                                            class="img-fluid rounded-4" alt="image"></a>
+                                            class="img-fluid rounded-4" alt="image" style="height: 300px; object-fit: cover;"></a>
                                     <div class="card-body p-0">
                                         <a href="/blogs/<?= $item['id'] ?>">
                                             <h4 class="card-title pt-4 pb-3 m-0"><?= $item['title'] ?></h4>
@@ -808,7 +808,7 @@ class Home extends BaseView
                                             <p class="blog-paragraph fs-6">
                                                 <?= strlen($item['content']) > 150 ? substr($item['content'], 0, 150) . '...' : $item['content'] ?>
                                             </p>
-                                            <a href="/blogs/<?= $item['id'] ?>" class="blog-read">Đọc thêm</a>
+                                            <a href="/blogs/<?= $item['id'] ?>" class="blog-read" >Đọc thêm</a>
                                         </div>
 
                                     </div>

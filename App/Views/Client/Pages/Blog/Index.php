@@ -145,7 +145,7 @@ class Index extends BaseView
 
           // Gọi AJAX
           $.ajax({
-            url: '/blog/pagination',
+            url: '/blog/paginationblog',
             method: 'GET',
             data: {
               page: page

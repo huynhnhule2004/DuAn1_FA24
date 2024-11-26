@@ -15,7 +15,7 @@ class Detail extends BaseView
             .row {
                 display: flex;
                 align-items: flex-start;
-                gap: 20px;
+                /* gap: 20px; */
             }
 
             .col-md-3 {

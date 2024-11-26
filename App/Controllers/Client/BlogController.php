@@ -82,7 +82,7 @@ class BlogController
         Footer::render();
     }
     // Phương thức xử lý phân trang AJAX
-    public function paginate()
+    public function paginateBlog()
     {
         // Thiết lập header
         header('Content-Type: application/json');
@@ -155,49 +155,65 @@ class BlogController
           </div>';
     }
     
-private function generatePaginationLinks($currentPage, $totalPages)
-{
-    $links = '<div class="pagination loop-pagination d-flex justify-content-center align-items-center">';
-
-    // Nút mũi tên trái (Previous)
-    if ($currentPage > 1) {
-        $links .= '<a href="javascript:void(0)" 
-                      class="pagination-arrow d-flex align-items-center mx-3" 
-                      data-page="' . ($currentPage - 1) . '">
-                        <iconify-icon icon="ic:baseline-keyboard-arrow-left" class="pagination-arrow fs-1"></iconify-icon>
-                   </a>';
-    } else {
-        $links .= '<span class="pagination-arrow d-flex align-items-center mx-3 disabled">
-                        <iconify-icon icon="ic:baseline-keyboard-arrow-left" class="pagination-arrow fs-1"></iconify-icon>
-                   </span>';
-    }
-
-    // Các số trang
-    for ($i = 1; $i <= $totalPages; $i++) {
-        if ($i == $currentPage) {
-            $links .= '<span aria-current="page" class="page-numbers mt-2 fs-3 mx-3 current">' . $i . '</span>';
-        } else {
+    private function generatePaginationLinks($currentPage, $totalPages)
+    {
+        $links = '<div class="pagination loop-pagination d-flex justify-content-center align-items-center">';
+    
+        // Nút mũi tên trái (Previous)
+        if ($currentPage > 1) {
             $links .= '<a href="javascript:void(0)" 
-                          class="page-numbers mt-2 fs-3 mx-3" 
-                          data-page="' . $i . '">' . $i . '</a>';
+                          class="pagination-arrow d-flex align-items-center mx-3" 
+                          data-page="' . ($currentPage - 1) . '">
+                            <iconify-icon icon="ic:baseline-keyboard-arrow-left" class="pagination-arrow fs-1"></iconify-icon>
+                       </a>';
+        } else {
+            $links .= '<span class="pagination-arrow d-flex align-items-center mx-3 disabled">
+                            <iconify-icon icon="ic:baseline-keyboard-arrow-left" class="pagination-arrow fs-1"></iconify-icon>
+                       </span>';
+        }
+    
+        // Tính toán các trang hiển thị
+        $maxPagesToShow = 4;
+        $startPage = max(1, $currentPage - 2);
+        $endPage = min($totalPages, $currentPage + 1);
+        if ($endPage - $startPage + 1 < $maxPagesToShow) {
+            if ($startPage == 1) {
+                $endPage = min($totalPages, $startPage + $maxPagesToShow - 1);
+            } elseif ($endPage == $totalPages) {
+                $startPage = max(1, $endPage - $maxPagesToShow + 1);
+            }
+        }
+
+        for ($i = $startPage; $i <= $endPage; $i++) {
+            $links .= $this->renderPageLink($i, $currentPage);
+        }
+    
+        if ($currentPage < $totalPages) {
+            $links .= '<a href="javascript:void(0)" 
+                          class="pagination-arrow d-flex align-items-center mx-3" 
+                          data-page="' . ($currentPage + 1) . '">
+                            <iconify-icon icon="ic:baseline-keyboard-arrow-right" class="pagination-arrow fs-1"></iconify-icon>
+                       </a>';
+        } else {
+            $links .= '<span class="pagination-arrow d-flex align-items-center mx-3 disabled">
+                            <iconify-icon icon="ic:baseline-keyboard-arrow-right" class="pagination-arrow fs-1"></iconify-icon>
+                       </span>';
+        }
+    
+        $links .= '</div>';
+        return $links;
+    }
+    
+
+    private function renderPageLink($page, $currentPage)
+    {
+        if ($page == $currentPage) {
+            return '<span aria-current="page" class="page-numbers mt-2 fs-3 mx-3 current">' . $page . '</span>';
+        } else {
+            return '<a href="javascript:void(0)" 
+                      class="page-numbers mt-2 fs-3 mx-3" 
+                      data-page="' . $page . '">' . $page . '</a>';
         }
     }
-
-    // Nút mũi tên phải (Next)
-    if ($currentPage < $totalPages) {
-        $links .= '<a href="javascript:void(0)" 
-                      class="pagination-arrow d-flex align-items-center mx-3" 
-                      data-page="' . ($currentPage + 1) . '">
-                        <iconify-icon icon="ic:baseline-keyboard-arrow-right" class="pagination-arrow fs-1"></iconify-icon>
-                   </a>';
-    } else {
-        $links .= '<span class="pagination-arrow d-flex align-items-center mx-3 disabled">
-                        <iconify-icon icon="ic:baseline-keyboard-arrow-right" class="pagination-arrow fs-1"></iconify-icon>
-                   </span>';
-    }
-
-    $links .= '</div>';
-    return $links;
-}
     
 }

@@ -433,7 +433,115 @@ private function groupSkusById($skus)
     // Trả về dữ liệu đã nhóm
     return array_values($groupedData);
 }
+public function getProductsWithLimit($limit, $offset)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT products.*, categories.category_name
+                    FROM products
+                    INNER JOIN categories ON products.category_id = categories.id
+                    ORDER BY products.created_at DESC 
+                    LIMIT ? OFFSET ?";
 
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ii', $limit, $offset);
+            $stmt->execute();
 
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            return $result;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy danh sách sản phẩm có giới hạn: ' . $th->getMessage());
+            return $result;
+        }
+    }
+    public function countTotalProducts()
+    {
+        try {
+            $sql = "SELECT COUNT(*) as total FROM products";
+            $result = $this->_conn->MySQLi()->query($sql);
+            $row = $result->fetch_assoc();
+            return $row['total'] ?? 0; // Đảm bảo luôn trả về 0 nếu không có dữ liệu
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi đếm tổng số bài viết: ' . $th->getMessage());
+            return 0;
+        }
+    }
+    public function getProductsWithLimitByCategory($categoryId, $limit, $offset)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT products.*, categories.category_name,
+                    FROM products
+                    INNER JOIN categories ON products.category_id = categories.id
+                    WHERE products.category_id = ?
+                    ORDER BY products.created_at DESC 
+                    LIMIT ? OFFSET ?";
+
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('iii', $categoryId, $limit, $offset);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy danh sách sản phẩm theo danh mục có giới hạn: ' . $th->getMessage());
+            return $result;
+        }
+    }
+    public function countTotalProductsByCategory($categoryId)
+    {
+        try {
+            $sql = "SELECT COUNT(*) as total FROM products WHERE category_id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $categoryId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            return $row['total'];
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi đếm tổng số sản phẩm theo danh mục: ' . $th->getMessage());
+            return 0;
+        }
+    }
+    public function select($sql = null)
+    {
+        $result = [];
+        try {
+            $conn = $this->_conn->MySQLi();
+
+            if ($sql === null) {
+          
+                $sql = "SELECT * FROM $this->table";
+            }
+
+            $query = $conn->query($sql);
+            $result = $query->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi thực thi truy vấn: ' . $th->getMessage());
+        }
+
+        return $result;
+    }
+    public function selectCount($sql = null)
+    {
+        try {
+            $result = $this->select($sql);
+            return count($result);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi đếm số lượng bản ghi: ' . $th->getMessage());
+            return 0;
+        }
+    }
+    public function fetchArrayTable($sql = null)
+    {
+        try {
+            $result = $this->select($sql);
+            return $result[0] ?? null;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy một dòng dữ liệu: ' . $th->getMessage());
+            return null;
+        }
+    }
 }
 
