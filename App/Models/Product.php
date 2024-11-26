@@ -203,7 +203,7 @@ class Product extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT COUNT(*) AS count, categories.name FROM products INNER JOIN categories ON products.category_id = categories.id GROUP BY products.category_id;";
+            $sql = "SELECT COUNT(*) AS count, categories.category_name FROM products INNER JOIN categories ON products.category_id = categories.id GROUP BY products.category_id;";
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {

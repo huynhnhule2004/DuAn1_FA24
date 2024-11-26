@@ -106,7 +106,7 @@ class Comment extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT COUNT(*) AS count, products.name 
+            $sql = "SELECT COUNT(*) AS count, products.product_name 
                 FROM comments 
                 INNER JOIN products ON comments.product_id = products.id 
                 GROUP BY comments.product_id 

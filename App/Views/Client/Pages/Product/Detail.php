@@ -13,6 +13,7 @@ class Detail extends BaseView
 
 
         $is_login = AuthHelper::checkLogin();
+        $defaultPrice = isset($data['product_detail']['price_default']) ? $data['product_detail']['price_default'] : 0;
 ?>
         <style>
             .comment-container {
@@ -81,9 +82,9 @@ class Detail extends BaseView
                                     </div>
                                 </div>
 
-                                <strong class="text-primary display-6 fw-bold" id="product-price">
-                                    <?= isset($data['product_detail']['price_default']) ? number_format($data['product_detail']['price_default']) : '0 VNĐ' ?> VNĐ
-                                </strong>
+                                <strong class="text-primary display-6 fw-bold" id="product-price" data-default-price="<?= htmlspecialchars($defaultPrice) ?>">
+                            <?= number_format($defaultPrice) ?> VNĐ
+                        </strong>
                                 <del class="ms-2"><?= isset($data['product_detail']['discount_price']) ? number_format($data['product_detail']['discount_price']) : '0 VNĐ' ?> VNĐ</del>
                             </div>
                             <p><?= isset($data['product_detail']['short_description']) ? $data['product_detail']['short_description'] : 'Không có mô tả ngắn' ?></p>
@@ -268,9 +269,6 @@ class Detail extends BaseView
                     </div>
                 </div>
         </section>
-
-
-
         <section id="register" style="background: url('/public/assets/client/images/background-img.png') no-repeat;" class="my-5">
             <div class="container my-5 ">
                 <div class="row my-5 py-5">
@@ -403,6 +401,8 @@ class Detail extends BaseView
             document.addEventListener('DOMContentLoaded', function() {
                 const variantSelects = document.querySelectorAll('.variant-select');
                 const priceElement = document.getElementById('product-price');
+                const defaultPrice = priceElement.getAttribute('data-default-price');
+
 
                 variantSelects.forEach(select => {
                     select.addEventListener('change', function() {
@@ -411,8 +411,15 @@ class Detail extends BaseView
 
                         if (price) {
                             priceElement.textContent = new Intl.NumberFormat('vi-VN').format(price) + ' VNĐ';
+                        } else {
+                            // Hiển thị giá mặc định
+                            priceElement.textContent = new Intl.NumberFormat('vi-VN').format(defaultPrice) + ' VNĐ';
                         }
                     });
+                });
+                // Xử lý click để quay lại giá mặc định
+                priceElement.addEventListener('click', function() {
+                    priceElement.textContent = new Intl.NumberFormat('vi-VN').format(defaultPrice) + ' VNĐ';
                 });
             });
         </script>

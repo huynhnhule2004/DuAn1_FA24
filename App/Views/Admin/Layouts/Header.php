@@ -30,8 +30,8 @@ class Header extends BaseView
             <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>/public/assets/admin/libs/jquery-minicolors/jquery.minicolors.css">
             <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>/public/assets/admin/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
             <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>/public/assets/admin/libs/quill/dist/quill.snow.css">
-            
 
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
             <!-- Custom CSS -->
             <link href="<?= APP_URL ?>/public/assets/admin/dist/css/style.min.css" rel="stylesheet">
             <!-- SweetAlert2 CSS -->
@@ -41,6 +41,8 @@ class Header extends BaseView
             <!-- Thêm Toast.js CSS và JavaScript từ CDN -->
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
             <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+            <!-- Chart JS -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 

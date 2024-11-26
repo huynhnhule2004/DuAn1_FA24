@@ -10,11 +10,7 @@ class Home extends BaseView
     {
 
 ?>
-
         <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
@@ -30,204 +26,159 @@ class Home extends BaseView
                     </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
             <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Sales Cards  -->
-                <!-- ============================================================== -->
                 <div class="row">
                     <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
+                    <div class="col-md-3">
                         <div class="card card-hover">
                             <div class="box bg-cyan text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-view-dashboard"></i></h1>
-                                <h6 class="text-white">Dashboard</h6>
+                                <h1 class="font-light text-white"><i class="mdi mdi-account-multiple"></i> <?= $data['total_user'] ?></h1>
+                                <h6 class="text-white">Người dùng</h6>
                             </div>
                         </div>
                     </div>
                     <!-- Column -->
-                    <div class="col-md-6 col-lg-4 col-xlg-3">
+                    <div class="col-md-3">
                         <div class="card card-hover">
                             <div class="box bg-success text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-chart-areaspline"></i></h1>
-                                <h6 class="text-white">Charts</h6>
+                                <h1 class="font-light text-white"><i class="mdi mdi-receipt"></i> <?= $data['total_category'] ?></h1>
+                                <h6 class="text-white">Loại sản phẩm</h6>
                             </div>
                         </div>
                     </div>
                     <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
+                    <div class="col-md-3">
                         <div class="card card-hover">
                             <div class="box bg-warning text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-collage"></i></h1>
-                                <h6 class="text-white">Widgets</h6>
+                                <h1 class="font-light text-white"><i class="fa-solid fa-paw"></i><?= $data['total_product'] ?></h1>
+                                <h6 class="text-white">Sản phẩm</h6>
                             </div>
                         </div>
                     </div>
                     <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
+                    <div class="col-md-3">
                         <div class="card card-hover">
                             <div class="box bg-danger text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
-                                <h6 class="text-white">Tables</h6>
+                                <h1 class="font-light text-white"><i class="mdi mdi-comment-processing"></i> <?= $data['total_comment'] ?></h1>
+                                <h6 class="text-white">Bình luận</h6>
                             </div>
                         </div>
                     </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-info text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-arrow-all"></i></h1>
-                                <h6 class="text-white">Full Width</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-4 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-danger text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-receipt"></i></h1>
-                                <h6 class="text-white">Forms</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-info text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-relative-scale"></i></h1>
-                                <h6 class="text-white">Buttons</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-cyan text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-pencil"></i></h1>
-                                <h6 class="text-white">Elements</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-success text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-calendar-check"></i></h1>
-                                <h6 class="text-white">Calnedar</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-warning text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-alert"></i></h1>
-                                <h6 class="text-white">Errors</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
+
                 </div>
                 <!-- ============================================================== -->
                 <!-- Sales chart -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-md-flex align-items-center">
-                                    <div>
-                                        <h4 class="card-title">Site Analysis</h4>
-                                        <h5 class="card-subtitle">Overview of Latest Month</h5>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <!-- column -->
-                                    <div class="col-lg-9">
-                                        <div class="flot-chart">
-                                            <div class="flot-chart-content" id="flot-line-chart"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-user mb-1 font-16"></i>
-                                                    <h5 class="mb-0 mt-1">2540</h5>
-                                                    <small class="font-light">Total Users</small>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-plus mb-1 font-16"></i>
-                                                    <h5 class="mb-0 mt-1">120</h5>
-                                                    <small class="font-light">New Users</small>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-cart-plus mb-1 font-16"></i>
-                                                    <h5 class="mb-0 mt-1">656</h5>
-                                                    <small class="font-light">Total Shop</small>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-tag mb-1 font-16"></i>
-                                                    <h5 class="mb-0 mt-1">9540</h5>
-                                                    <small class="font-light">Total Orders</small>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-table mb-1 font-16"></i>
-                                                    <h5 class="mb-0 mt-1">100</h5>
-                                                    <small class="font-light">Pending Orders</small>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <div class="bg-dark p-10 text-white text-center">
-                                                    <i class="fa fa-globe mb-1 font-16"></i>
-                                                    <h5 class="mb-0 mt-1">8540</h5>
-                                                    <small class="font-light">Online Orders</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- column -->
-                                </div>
+                                <h4 class="card-title">Thống kê sản phẩm theo loại</h4>
                             </div>
+                            <canvas id="product_by_category"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Thống kê 5 sản phẩm được bình luận nhiều nhất</h4>
+                            </div>
+                            <canvas id="comment_by_product"></canvas>
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- Sales chart -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Recent comment and chats -->
-                <!-- ============================================================== -->
-                <div class="row">
-                    <!-- column -->
-                    
-                    <!-- column -->
-
-                    
-                </div>
-                <!-- ============================================================== -->
-                <!-- Recent comment and chats -->
-                <!-- ============================================================== -->
             </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
 
+            <script>
+                function productByCategoryChart() {
+                    var php_data = <?= json_encode($data['product_by_category']) ?>;
+                    console.log(php_data);
+                    var labels = [];
+                    var data = [];
+
+                    for (let i of php_data) {
+                        console.log(i);
+                        labels.push(i.category_name);
+                        data.push(i.count);
+                    }
+
+                    console.log(labels);
+                    console.log(data);
+
+                    const ctx = document.getElementById('product_by_category');
+
+                    new Chart(ctx, {
+                        type: 'polarArea',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Số lượng sản phẩm',
+                                data: data,
+                                borderWidth: 1
+                            }]
+                        },
+                    });
+                }
+
+                function commentByProductChart() {
+                    var php_data = <?= json_encode($data['comment_by_product']) ?>;
+                    console.log(php_data);
+                    var labels = [];
+                    var data = [];
+
+                    for (let i of php_data) {
+                        console.log(i);
+                        labels.push(i.product_name);
+                        data.push(i.count);
+                    }
+
+                    console.log(labels);
+                    console.log(data);
+
+                    const ctx = document.getElementById('comment_by_product');
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Số lượng sản phẩm',
+                                data: data,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)',
+                                    'rgba(255, 205, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(201, 203, 207, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgb(255, 99, 132)',
+                                    'rgb(255, 159, 64)',
+                                    'rgb(255, 205, 86)',
+                                    'rgb(75, 192, 192)',
+                                    'rgb(54, 162, 235)',
+                                    'rgb(153, 102, 255)',
+                                    'rgb(201, 203, 207)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+
+
+                productByCategoryChart();
+                commentByProductChart()
+            </script>
 
     <?php
 

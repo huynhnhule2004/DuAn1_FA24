@@ -74,10 +74,10 @@ class User extends BaseModel
         }
     }
 
-    // public function countTotalUser()
-    // {
-    //     return $this->countTotal();
-    // }
+    public function countTotalUser()
+    {
+        return $this->countTotal();
+    }
 
     
 }
