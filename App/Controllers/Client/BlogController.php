@@ -10,12 +10,17 @@ use App\Views\Client\Pages\Blog\Index;
 use App\Views\Client\Pages\Blog\Detail;
 use App\Views\Client\Layouts\Header;
 use App\Models\Blog;
+use App\Models\Category;
 
 class BlogController
 {
     // hiển thị danh sách
     public static function index()
     {
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
+
+
         $blog = new Blog();
         $postsPerPage = 3; // Số bài viết trên mỗi trang
         $currentPage = 1;  // Trang hiện tại
@@ -35,11 +40,13 @@ class BlogController
             'blogs' => $blogs,
             'remainingPosts' => $totalPosts,
             'currentPage' => $currentPage,
-            'totalPages' => $totalPages
+            'totalPages' => $totalPages,
+            'categories' => $categories
+
         ];
 
         // Render các phần của trang
-        Header::render();
+        Header::render($data);
         Index::render($data);
         Footer::render();
     }

@@ -4,6 +4,7 @@ namespace App\Views\Client\Layouts;
 
 use App\Helpers\AuthHelper;
 use App\Views\BaseView;
+use App\Views\Client\Components\Header as ComponentsHeader;
 
 class Header extends BaseView
 {
@@ -195,7 +196,7 @@ class Header extends BaseView
                         </h4>
                         <div class="search-bar border rounded-2 border-dark-subtle">
                             <form id="search-form" class="text-center d-flex align-items-center" action="/search" method="GET">
-                                <input type="text" class="form-control border-0 bg-transparent" placeholder="Search Here" value="<?= $_GET['keyword'] ?? '' ?>" name="keyword"/>
+                                <input type="text" class="form-control border-0 bg-transparent" placeholder="Search Here" value="<?= $_GET['keyword'] ?? '' ?>" name="keyword" />
                                 <iconify-icon icon="tabler:search" class="fs-4 me-3"></iconify-icon>
                                 <button type="submit">Search</button>
                             </form>
@@ -218,7 +219,7 @@ class Header extends BaseView
                         <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
                             <div class="search-bar border rounded-2 px-3 border-dark-subtle">
                                 <form id="search-form" class="text-center d-flex align-items-center" action="/search" method="GET">
-                                    <input type="text" class="form-control border-0 bg-transparent" placeholder="Tìm kiếm..."value="<?= $_GET['keyword'] ?? '' ?>" name="keyword" />
+                                    <input type="text" class="form-control border-0 bg-transparent" placeholder="Tìm kiếm..." value="<?= $_GET['keyword'] ?? '' ?>" name="keyword" />
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <path fill="currentColor"
                                             d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
@@ -318,9 +319,12 @@ class Header extends BaseView
                                         <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown"
                                             aria-expanded="false">Sản phẩm</a>
                                         <ul class="dropdown-menu" aria-labelledby="pages">
-                                            <li><a href="/products" class="dropdown-item">Thức ăn</a></li>
+                                            <?php
+                                            ComponentsHeader::render($data['categories']);
+                                            ?>
+                                            <!-- <li><a href="/products" class="dropdown-item">Thức ăn</a></li>
                                             <li><a href="/products" class="dropdown-item">Phụ kiện cho chó</a></li>
-                                            <li><a href="/products" class="dropdown-item">Phụ kiện cho mèo</a></li>
+                                            <li><a href="/products" class="dropdown-item">Phụ kiện cho mèo</a></li> -->
                                         </ul>
                                     </li>
                                     <!-- <li class="nav-item">

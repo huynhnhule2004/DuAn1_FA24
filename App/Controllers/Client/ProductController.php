@@ -50,12 +50,15 @@ class ProductController
 
         ];
 
-        Header::render();
+        Header::render($data);
         Index::render($data);
         Footer::render();
     }
     public static function detail($id)
     {
+        $category1 = new Category();
+        $categories = $category1->getAllCategoryByStatus();
+        
         $productModel = new Product();
         $product_detail = $productModel->getAllProductByStatus($id);
         $comment = new Comment();
@@ -87,15 +90,35 @@ class ProductController
             'product_variant' => $product_variant,
             'product_detail' => $product_detail,
             'sku_details' => $sku_details,
+            'categories' => $categories,
            
         ];
         
         
-        Header::render();
+        Header::render($data);
         Detail::render($data);
         Footer::render();
 
-    }        
+    }      
+    
+    public static function getProductByCategory($id)
+    {
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
+
+        $product = new Product();
+        $products = $product->getAllProductByCategory($id);
+
+        $data = [
+            'products' => $products,
+            'categories' => $categories
+        ];
+
+
+        Header::render($data);
+        ProductCategory::render($data);
+        Footer::render();
+    }
     // public static function getProductByCategory($id)
     // {
     // }

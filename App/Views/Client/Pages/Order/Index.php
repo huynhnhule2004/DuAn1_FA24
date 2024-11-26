@@ -8,7 +8,17 @@ class Index extends BaseView
 {
     public static function render($data = null)
     {
+        
 ?>
+<?php if (isset($data['qrImage']) && $data['qrImage']): ?>
+    <div class="qr-code">
+        <img src="<?php echo $data['qrImage']; ?>" alt="QR Code" />
+    </div>
+<?php else: ?>
+    <p>Không thể hiển thị mã QR. Vui lòng thử lại sau.</p>
+<?php endif; ?>
+
+
         <section class="h-100 gradient-custom">
             <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
@@ -84,6 +94,7 @@ class Index extends BaseView
                             </div>
                         </div>
                     </div>
+                    
         </section>
 <?php
     }

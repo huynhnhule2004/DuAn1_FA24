@@ -36,6 +36,7 @@ Route::get('/search', 'App\Controllers\Client\HomeController@search');
 Route::post('/orders', 'App\Controllers\Client\OrderController@index');
 
 Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');
+Route::get('/products/categories/{id}', 'App\Controllers\Client\ProductController@getProductByCategory');
 Route::get('/about', 'App\Controllers\Client\AboutController@index');
 Route::get('/profile', 'App\Controllers\Client\ProfileController@index');
 Route::get('/wishlist', 'App\Controllers\Client\WishlistController@index');

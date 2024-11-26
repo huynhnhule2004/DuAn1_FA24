@@ -58,10 +58,13 @@ class CartController
     {
         $cartModel = new Cart();
         $cart = $cartModel->getCartInfo();
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
 
         $data = [
             'list_buy' => $cart['buy'],
             'cart_info' => $cart['info'],
+            'categories' => $categories
         ];
 
         Header::render($data);
@@ -74,7 +77,6 @@ class CartController
 
         $cart = new Cart();
         $cart->deleteItem($id);
-
 
         header('Location: /cart/show');
         exit();
@@ -101,7 +103,7 @@ class CartController
     public static function checkout()
     {
         $category = new Category();
-        $categories = $category->getAllByStatus();
+        $categories = $category->getAllCategoryByStatus();
 
         $product = new Product();
         $products = $product->getAllProductByStatus();

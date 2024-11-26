@@ -4,6 +4,7 @@ namespace App\Controllers\Client;
 
 
 use App\Helpers\NotificationHelper;
+use App\Models\Category;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Pages\About\About;
 use App\Views\Client\Layouts\Header;
@@ -14,7 +15,14 @@ class AboutController
     // hiển thị danh sách
     public static function index()
     {
-        Header::render();
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
+
+        $data = [
+            'categories' => $categories
+        ];
+
+        Header::render($data);
         About::render();
         Footer::render();
     }

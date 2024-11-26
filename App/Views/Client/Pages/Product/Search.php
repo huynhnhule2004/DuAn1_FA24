@@ -48,7 +48,7 @@ class Search extends BaseView
                                             </div>
                                             <div class="card position-relative">
                                                 <a href="/products/<?= $item['id'] ?>">
-                                                    <img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
+                                                    <img src="<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
                                                 </a>
                                                 <div class="card-body p-0">
                                                     <a href="/products/<?= $item['id'] ?>">

@@ -19,17 +19,14 @@ class ContactController
     // hiển thị danh sách
     public static function index()
     {
-        // $category = new Category();
-        // $categories = $category->getAllByStatus();
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
 
-        // $product = new Product();
-        // $products = $product->getAllProductByStatus();
+        $data = [
+            'categories' => $categories
+        ];
 
-        // $data = [
-        //     'products' => $products,
-        //     'categories' => $categories
-        // ];
-        Header::render();
+        Header::render($data);
         Notification::render();
         // NotificationHelper::unset();
         Contact::render();

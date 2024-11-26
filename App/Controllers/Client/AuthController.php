@@ -16,13 +16,21 @@ use App\Views\Client\Pages\Auth\Login;
 use App\Views\Client\Pages\Auth\Register;
 use App\Views\Client\Pages\Auth\ResetPassword;
 use App\Helpers\Mailer;
+use App\Models\Category;
 
 class AuthController
 {
     // Hiển thị giao diện form đăng ký
     public static function renderView($view, $data = [])
     {
-        Header::render($data);
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
+
+        $data1 = [
+            'categories' => $categories
+        ];
+
+        Header::render($data1);
         Notification::render();
         NotificationHelper::unset();
         $view::render($data);

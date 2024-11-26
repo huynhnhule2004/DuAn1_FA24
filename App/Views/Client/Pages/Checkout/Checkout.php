@@ -101,6 +101,9 @@ class Checkout extends BaseView
                         </div>
                         <input type="hidden" name="status" value="Pending">
                         <input type="hidden" name="payment_status" value="Unpaid">
+                       
+                        
+
 
                         <!-- Tóm Tắt Đơn Hàng -->
                         <div class="col-md-6 right-panel">
@@ -132,6 +135,10 @@ class Checkout extends BaseView
 
                                     // Hiển thị tổng cộng
                                     $total_order = number_format($cart['info']['total'], 0, ',', '.') . ' VNĐ';
+                                    $total_price_payment = number_format($cart['info']['total'], 0, ',', '.');
+
+                        echo "<input type='text' name='total_price_payment' value=' $total_price_payment '>";
+                                    
                                     echo "<tr>
                                 <td class='text-start fw-bold'>Tổng Cộng</td>
                                 <td colspan='3'>$total_order</td>

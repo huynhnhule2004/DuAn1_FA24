@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Client;
 
+use App\Models\Category;
 use App\Views\Client\Pages\Wishlist\Wishlist;
 use App\Views\Client\Layouts\Header;
 use App\Views\Client\Layouts\Footer;
@@ -9,7 +10,9 @@ use App\Views\Client\Layouts\Footer;
 class WishlistController
 {
     public static function index()
-    {
+    {        
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
         // Dữ liệu mẫu cho danh sách yêu thích
         $data = [
             [
@@ -37,8 +40,10 @@ class WishlistController
                 'price' => 13.50
             ]
         ];
-
-        Header::render();
+        $data1 = [
+            'categories' => $categories
+        ];
+        Header::render($data1);
         Wishlist::render($data);  // Truyền dữ liệu vào view
         Footer::render();
     }
