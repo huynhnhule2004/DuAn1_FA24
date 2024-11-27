@@ -7,13 +7,44 @@ class Order extends BaseModel
     protected $table = 'orders';
     protected $id = 'id';
 
-    public function getAllCategory()
+    public function getAllOrderAndNameUser()
     {
-        return $this->getAll();
+        $result = [];
+        try {
+            // $sql = "SELECT * FROM $this->table";
+            $sql = "SELECT o.*, u.first_name
+            FROM orders o 
+            JOIN users u 
+            ON o.user_id = u.id;
+";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
     }
-    public function getOneCategory($id)
+    public function getOneOrder($id)
     {
-        return $this->getOne($id);
+        $result = [];
+        try {
+            // Truy vấn INNER JOIN để lấy thông tin đơn hàng và tên khách hàng
+            $sql = "SELECT o.*, u.first_name, u.last_name 
+                FROM $this->table AS o
+                INNER JOIN users AS u ON o.user_id = u.id
+                WHERE o.$this->id = ?";
+
+            $conn = $this->_conn->MySQLi(); // Kết nối MySQLi
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('i', $id); // Gán tham số ID
+            $stmt->execute();
+
+            return $stmt->get_result()->fetch_assoc(); // Lấy kết quả và trả về
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result; // Trả về mảng rỗng nếu lỗi
+        }
     }
 
     public function createOrder($data)

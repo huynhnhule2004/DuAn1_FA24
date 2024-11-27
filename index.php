@@ -242,4 +242,24 @@ Route::put('/admin/comments/{id}', 'App\Controllers\Admin\CommentController@upda
 Route::delete('/admin/comments/{id}', 'App\Controllers\Admin\CommentController@delete');
 
 
+
+//  *** Order
+// GET /users (lấy danh sách người dùng)
+Route::get('/admin/orders', 'App\Controllers\Admin\OrderController@index');
+
+// GET /users/create (hiển thị form thêm người dùng)
+// Route::get('/admin/users/create', 'App\Controllers\Admin\UserController@create');
+
+// // POST /users (tạo mới một người dùng)
+// Route::post('/admin/users', 'App\Controllers\Admin\UserController@store');
+
+// GET /orders/{id} (lấy chi tiết đơn hàng với id cụ thể)
+Route::get('/admin/orders/{id}', 'App\Controllers\Admin\OrderController@edit');
+
+// PUT /users/{id} (update đơn hàng với id cụ thể)
+Route::put('/admin/orders/{id}', 'App\Controllers\Admin\OrderController@update');
+
+// DELETE /orders/{id} (delete order với id cụ thể)
+Route::delete('/admin/orders/{id}', 'App\Controllers\Admin\OrderController@delete');
+
 Route::dispatch($_SERVER['REQUEST_URI']);

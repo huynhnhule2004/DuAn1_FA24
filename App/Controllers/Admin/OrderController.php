@@ -4,12 +4,13 @@ namespace App\Controllers\Admin;
 
 use App\Helpers\NotificationHelper;
 use App\Models\Category;
+use App\Models\Order;
 use App\Views\Admin\Layouts\Footer;
 use App\Views\Admin\Layouts\Header;
 use App\Views\Admin\Components\Notification;
-use App\Views\Admin\Pages\Category\Create;
-use App\Views\Admin\Pages\Category\Edit;
-use App\Views\Admin\Pages\Category\Index;
+use App\Views\Admin\Pages\Order\Create;
+use App\Views\Admin\Pages\Order\Edit;
+use App\Views\Admin\Pages\Order\Index;
 use App\Validations\CategoryValidation;
 
 class OrderController
@@ -19,8 +20,8 @@ class OrderController
     // hiển thị danh sách
     public static function index()
     {
-        $category = new Category();
-        $data = $category->getAllCategory();
+        $order = new Order();
+        $data = $order->getAllOrderAndNameUser();
 
         Header::render();
         Notification::render();
@@ -113,8 +114,8 @@ class OrderController
     // hiển thị giao diện form sửa
     public static function edit(int $id)
     {
-        $category = new Category();
-        $data = $category->getOneCategory($id);
+        $order = new Order();
+        $data = $order->getOneOrder($id);
 
         if (!$data) {
             NotificationHelper::error('edit', 'Không thể xem loại sản phẩm này');
@@ -134,59 +135,27 @@ class OrderController
     // xử lý chức năng sửa (cập nhật)
 public static function update(int $id)
 {
-    // validation các trường dữ liệu
-    $is_valid = CategoryValidation::edit();
-
-    if (!$is_valid) {
-        NotificationHelper::error('update', 'Cập nhật loại sản phẩm thất bại');
-        header("location: /admin/categories/$id");
-        exit;
-    }
-
-    $category_name = $_POST['category_name'];
-    $status = $_POST['status'];
-    $description = $_POST['description'];
-
-    // Kiểm tra tên loại có tồn tại chưa => không được trùng tên
-    $category = new Category();
-    $is_exist = $category->getOneCategoryByName($category_name);
-
-    if ($is_exist && $is_exist['id'] != $id) {
-        NotificationHelper::error('update', 'Tên loại sản phẩm này đã tồn tại');
-        header("location: /admin/categories/$id");
-        exit;
-    }
-
-    // Kiểm tra và xử lý file ảnh nếu có
-    $image_path = $category->getOneCategory($id)['image']; // giữ lại ảnh cũ nếu không có ảnh mới
-    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        $is_upload = CategoryValidation::uploadImage();
-
-        if ($is_upload) {
-            $image_path = $is_upload; // Đường dẫn của hình ảnh mới
-        } else {
-            NotificationHelper::error('update', 'Lỗi khi tải ảnh lên');
-            header("location: /admin/categories/$id");
-            exit;
-        }
-    }
+   $order = new Order();
 
     // Thực hiện cập nhật
     $data = [
-        'category_name' => $category_name,
-        'status' => $status,
-        'description' => $description,
-        'image' => $image_path
+        'user_id' => $_POST['user_id'],
+        'total_price' => $_POST['total_price'],
+        'status' => $_POST['status'],
+        'phone_number' => $_POST['phone_number'],
+        'shipping_address' => $_POST['shipping_address'],
+        'payment_method' => $_POST['payment_method'],
+        'payment_status' => $_POST['payment_status'],
     ];
 
-    $result = $category->updateCategory($id, $data);
+    $result = $order->updateOrder($id, $data);
 
     if ($result) {
-        NotificationHelper::success('update', 'Cập nhật loại sản phẩm thành công');
-        header('location: /admin/categories');
+        NotificationHelper::success('update', 'Cập nhật đơn hàng thành công');
+        header('location: /admin/orders');
     } else {
-        NotificationHelper::error('update', 'Cập nhật loại sản phẩm thất bại');
-        header("location: /admin/categories/$id");
+        NotificationHelper::error('update', 'Cập nhật đơn hàng thất bại');
+        header("location: /admin/orders/$id");
     }
     var_dump($_POST);
 exit;
@@ -197,16 +166,16 @@ exit;
     // thực hiện xoá
     public static function delete(int $id)
     {
-        $category = new Category();
-        $result = $category->deleteCategory($id);
+        $order = new Order();
+        $result = $order->deleteOrder($id);
 
         // var_dump($result);
         if ($result) {
-            NotificationHelper::success('delete', 'Xóa loại sản phẩm thành công');
+            NotificationHelper::success('delete', 'Xóa đơn hàng thành công');
         } else {
-            NotificationHelper::error('delete', 'Xóa loại sản phẩm thất bại');
+            NotificationHelper::error('delete', 'Xóa đơn hàng thất bại');
         }
 
-        header('location: /admin/categories');
+        header('location: /admin/orders');
     }
 }
