@@ -302,4 +302,72 @@ class AuthHelper
             return false;
         }
     }
+
+    public static function sendEmailOrder($to, $name, $orderId, $totalAmount, $orderDate, $paymentMethod)
+    {
+        // Tạo nội dung email cho khách hàng
+        $body = "
+            <p>Kính gửi $name,</p>
+            <p>Cảm ơn bạn đã đặt hàng tại <strong>Waggy</strong>! Chúng tôi rất vui mừng thông báo rằng đơn hàng của bạn đã được tiếp nhận và đang được xử lý. Dưới đây là thông tin chi tiết về đơn hàng:</p>
+            <p><strong>Thông tin đơn hàng:</strong></p>
+            <ul>
+                <li><strong>Mã đơn hàng:</strong> $orderId</li>
+                <li><strong>Ngày đặt hàng:</strong> $orderDate</li>
+                <li><strong>Phương thức thanh toán:</strong> $paymentMethod</li>
+                <li><strong>Tổng giá trị đơn hàng:</strong> " . number_format($totalAmount) . " VNĐ</li>
+            </ul>
+            <p>Chúng tôi sẽ liên hệ lại với bạn ngay khi đơn hàng được xử lý.</p>
+            <p><strong>Trân trọng,</strong><br>Đội ngũ Waggy</p>
+        ";
+
+        // Cấu hình gửi email
+        header('Content-Type: text/html; charset=utf-8');
+        $mail = new PHPMailer(true);
+        try {
+            // Cấu hình máy chủ gửi email SMTP
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'phamlyvibes2000@gmail.com';
+            $mail->Password = 'gvvy mbgp ggle kizj'; // Nên sử dụng biến môi trường hoặc cách bảo mật khác
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            // Đặt người gửi và người nhận
+            $mail->setFrom('phamlyvibes2000@gmail.com', 'Waggy');
+            $mail->addAddress($to, $name);
+            $mail->addReplyTo('phamlyvibes2000@gmail.com', 'Waggy');
+
+            // Nội dung email cho khách hàng
+            $mail->isHTML(true);
+            $mail->Subject = 'Order at Waggy';
+            $mail->Body = $body;
+
+            // Gửi email đến khách hàng
+            $mail->send();
+            
+            // Gửi email thông báo đến Admin
+            $adminBody = "
+                <p><strong>Lời nhắn từ khách hàng:</strong></p>
+                <p><strong>Tên:</strong> $name</p>
+                <p><strong>Email:</strong> $to</p>
+                ";
+                // <p><strong>Điện thoại:</strong> {$_POST['phone']}</p>
+
+            $mail->clearAddresses();
+            $mail->addAddress('phamlyvibes2000@gmail.com', 'Waggy Admin');
+            $mail->Subject = 'Customer contact information - Waggy';
+            $mail->Body = $adminBody;
+
+            // Gửi email đến Admin
+            $mail->send();
+
+            return true;
+        } catch (Exception $e) {
+            // Trả về thông báo lỗi nếu có vấn đề trong việc gửi email
+            error_log("Không thể gửi email. Lỗi: {$mail->ErrorInfo}");
+            return false;
+        }
+    }
+
 }

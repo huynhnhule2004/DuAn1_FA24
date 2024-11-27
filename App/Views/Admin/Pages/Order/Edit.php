@@ -55,19 +55,19 @@ class Edit extends BaseView
                                     <div class="form-group">
                                         <label for="name">Tên khách hàng*</label>
                                         <input type="hidden" name="user_id" value="<?= $data['user_id'] ?>">
-                                        <input type="text" class="form-control" id="name" placeholder="Nhập tên loại sản phẩm..." name="first_name" value="<?= $data['first_name'] ?>" disabled>
+                                        <input type="text" class="form-control" id="name" placeholder="Nhập tên loại sản phẩm..." name="first_name" value="<?= $data['first_name'] ?>" >
                                     </div>
                                     <div class="form-group">
                                         <label for="total_price">Đơn giá</label>
-                                        <input type="text" class="form-control" id="total_price" placeholder="Nhập tên loại sản phẩm..." name="total_price" value="<?= $data['total_price'] ?>" readonly>
+                                        <input type="text" class="form-control" id="total_price" placeholder="Nhập tên loại sản phẩm..." name="total_price" value="<?= $data['total_price'] ?>" >
                                     </div>
                                     <div class="form-group">
                                         <label for="phone">Số điện thoại</label>
-                                        <input type="text" class="form-control" id="phone" placeholder="Nhập tên loại sản phẩm..." name="phone_number" value="<?= $data['phone_number'] ?>" readonly>
+                                        <input type="text" class="form-control" id="phone" placeholder="Nhập tên loại sản phẩm..." name="phone_number" value="<?= $data['phone_number'] ?>" >
                                     </div>
                                     <div class="form-group">
                                         <label for="shipping_address">Địa chỉ</label>
-                                        <input type="text" class="form-control" id="shipping_address" placeholder="Nhập tên loại sản phẩm..." name="shipping_address" value="<?= $data['shipping_address'] ?>" readonly>
+                                        <input type="text" class="form-control" id="shipping_address" placeholder="Nhập tên loại sản phẩm..." name="shipping_address" value="<?= $data['shipping_address'] ?>" >
                                     </div>
                                     <div class="form-group">
                                         <label for="status">Trạng thái*</label>
@@ -82,10 +82,11 @@ class Edit extends BaseView
                                     <div class="form-group">
                                         <input type="hidden" name="payment_method" value="<?= $data['payment_method'] ?>">
                                         <label for="payment_method">Phương thức thanh toán*</label>
-                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="payment_method" name="payment_method" required disabled>
+                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="payment_method" name="payment_method" required >
                                             <option value="" disabled>Vui lòng chọn...</option>
                                             <option value="COD" <?= ($data['payment_method'] == 'COD' ? 'selected' : '') ?>>Thanh toán khi nhận hàng (COD)</option>
-                                            <option value="Online payment" <?= ($data['payment_method'] == 'Online payment' ? 'selected' : '') ?>>Thanh toán online</option>
+                                            <option value="Online payment" <?= ($data['payment_method'] == 'Online payment' ? 'selected' : '') ?>>Thanh toán MOMO</option>
+                                            <option value="Online payment" <?= ($data['payment_method'] == 'VNPAY' ? 'selected' : '') ?>>Thanh toán VNPAY</option>
                                         </select>
                                     </div>
                                     <div class="form-group">

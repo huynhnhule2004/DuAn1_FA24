@@ -31,4 +31,6 @@ class CheckoutController
         Checkout::render();
         Footer::render();
     }
+
+
 }

@@ -17,6 +17,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 require_once 'config.php';
+require_once('config_vnpay.php');
 
 AuthHelper::middleware();
 
@@ -34,6 +35,8 @@ Route::get('/search', 'App\Controllers\Client\HomeController@search');
 
 // Route::get('/orders', 'App\Controllers\Client\OrderController@index');
 Route::post('/orders', 'App\Controllers\Client\OrderController@index');
+Route::get('/orders/success', 'App\Controllers\Client\OrderController@success');
+
 
 Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');
 Route::get('/products/categories/{id}', 'App\Controllers\Client\ProductController@getProductByCategory');

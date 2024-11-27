@@ -95,7 +95,8 @@ class Checkout extends BaseView
                                 <select class="form-select" id="paymentMethod" required name="payment_method">
                                     <option value="">Chọn phương thức</option>
                                     <option value="COD">Thanh toán khi nhận hàng</option>
-                                    <option value="Online payment">Thanh toán trực tuyến</option>
+                                    <option value="Online payment">Thanh toán MOMO</option>
+                                    <option value="VNPAY">Thanh toán VNPAY</option>
                                 </select>
                             </div>
                         </div>
@@ -148,7 +149,7 @@ class Checkout extends BaseView
                                 </tbody>
                             </table>
 
-                            <button type="submit" class="btn btn-primary">Xác Nhận Thanh Toán</button>
+                            <button type="submit" class="btn btn-primary" name="redirect" id="redirect">Xác Nhận Thanh Toán</button>
                         </div>
                 </form>
 
