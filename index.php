@@ -17,7 +17,6 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 require_once 'config.php';
-require_once('config_vnpay.php');
 
 AuthHelper::middleware();
 

@@ -320,7 +320,7 @@ class OrderController
         ];
         if (isset($_GET['vnp_ResponseCode']) && $_GET['vnp_ResponseCode'] == "00") {
             // Gửi email khi giao dịch thành công
-            $phpEmail = AuthHelper::sendEmailOrder('huynhnhule2004@gmail.com', 'nhu', 1, $_GET['vnp_Amount'] / 100, '22/20/2004', 'VNPAY');
+            $phpEmail = AuthHelper::sendEmailOrder('huynhnhule2004@gmail.com', 'nhu', $_GET['vnp_TxnRef'], $_GET['vnp_Amount'] / 100, '22/20/2004', 'VNPAY');
         }
 
         // echo "<pre>";
