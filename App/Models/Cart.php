@@ -15,33 +15,29 @@ class Cart extends BaseModel
         return ['buy' => []]; // Trả về mảng rỗng nếu không có cookie
     }
 
-    private function saveCartToCookie($cart)
+    public  function saveCartToCookie($cart)
     {
-        setcookie($this->cartKey, json_encode($cart), time() + (3600 * 24 * 30 * 12), '/');
+        setcookie($this->cartKey, json_encode($cart), time() + (3600 * 24 * 30), '/');
     }
 
-    public function addProduct($product, $variantOptions = [])
+    public function addProduct($product, $variantOptions = [], $price = 0)
     {
-
         $cart = $this->getCartFromCookie();
 
         $id = $product['id'];
-        $variantKey = implode('-', array_column($variantOptions, 'id'));
-        $cartKey = $id . ($variantKey ? "-$variantKey" : '');
+        $variantKey = implode('-', array_column($variantOptions, 'id')); // Tạo khóa duy nhất cho biến thể
 
-        if (empty($cartKey)) {
-            echo "Lỗi: Không thể tạo key cho sản phẩm.";
-            return;
-        }
-
+        $cartKey = $id . ($variantKey ? "-$variantKey" : ''); // Đảm bảo tạo khóa duy nhất
 
         if (isset($cart['buy'][$cartKey])) {
+            // Sản phẩm đã có trong giỏ, tăng số lượng
             $qty = $cart['buy'][$cartKey]['qty'] + 1;
         } else {
+            // Thêm sản phẩm mới vào giỏ
             $qty = 1;
         }
 
-
+        // Cập nhật thông tin giỏ hàng
         $cart['buy'][$cartKey] = [
             'id' => $product['id'],
             'product_name' => $product['product_name'],
@@ -50,9 +46,10 @@ class Cart extends BaseModel
             'image' => $product['image'],
             'qty' => $qty,
             'variant_options' => $variantOptions,
-            'sub_total' => ($product['price_default'] - ($product['discount_price'] ?? 0)) * $qty,
+            'sub_total' => $price * $qty,
         ];
 
+        // Cập nhật tổng số lượng và tổng giá trị giỏ hàng
         $number_order = 0;
         $total = 0;
         foreach ($cart['buy'] as $item) {
@@ -63,6 +60,9 @@ class Cart extends BaseModel
 
         $this->saveCartToCookie($cart);
     }
+
+
+
 
     public function deleteItem($id)
     {

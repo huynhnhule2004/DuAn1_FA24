@@ -136,6 +136,13 @@ class AuthHelper
         if (isset($_COOKIE['user'])) {
             setcookie('user', '', time() - 3600 * 24 * 30 * 12, '/');
         }
+        // Xóa cookie giỏ hàng
+        if (isset($_COOKIE['cart'])) {
+            setcookie('cart', '', time() - 3600, '/'); // Xóa cookie giỏ hàng
+        }
+        // Điều hướng về trang chủ hoặc trang đăng nhập
+        header('Location: /login');
+        exit();
     }
 
     public static function edit($id): bool

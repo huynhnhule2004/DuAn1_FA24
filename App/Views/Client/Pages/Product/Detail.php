@@ -46,6 +46,34 @@ class Detail extends BaseView
             .comment-text {
                 margin-left: 10px;
             }
+
+            button:focus {
+                outline: none;
+                box-shadow: none;
+            }
+
+            button {
+                border: none;
+                background: none;
+            }
+
+            .btn-cart {
+                border: 1px solid #D3D4D4;
+                border-radius: 5px;
+                background-color: #f8f9fa;
+                padding: 10px 15px;
+                box-shadow: none;
+            }
+
+            .btn-cart:hover {
+                background-color: #e2e6ea;
+            }
+
+            .btn-cart h6 {
+                margin: 0;
+                font-size: 14px;
+                color: #333;
+            }
         </style>
 
         <section id="selling-product">
@@ -138,9 +166,16 @@ class Detail extends BaseView
                                     </span>
                                 </div>
                                 <div class="d-flex flex-wrap pt-4">
-                                    <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
-                                        <h5 class="text-uppercase m-0">Thêm vào giỏ</h5>
-                                    </a>
+                                    <form action="/cart/add" method="post" class="m-0" id="add-to-cart-form">
+                                        <input type="hidden" name="method" value="POST">
+                                        <input type="hidden" name="id" value="<?= $data['product_detail']['id'] ?>" required>
+                                        <input type="hidden" name="sku" id="selected-sku" value="">
+
+                                        <!-- Nút thêm vào giỏ hàng -->
+                                        <button type="submit" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                            <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                        </button>
+                                    </form>
                                     <a href="#" class="btn-wishlist px-4 pt-3 ">
                                         <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
                                     </a>
@@ -168,6 +203,82 @@ class Detail extends BaseView
             </div>
             </div>
             </div>
+            <script>
+                document.querySelector('#add-to-cart-form').addEventListener('submit', function(event) {
+                    event.preventDefault(); // Ngăn trình duyệt tải lại trang
+
+                    // Lấy thông tin sản phẩm
+                    var productId = document.querySelector('input[name="id"]').value;
+                    var quantity = document.querySelector('.input-number').value;
+
+                    // Lấy thông tin các biến thể
+                    var variantSelects = document.querySelectorAll('.variant-select');
+                    var variantOptions = [];
+                    variantSelects.forEach(function(select) {
+                        var selectedOption = select.options[select.selectedIndex];
+                        if (selectedOption.value) {
+                            variantOptions.push({
+                                name: selectedOption.text, // Tên biến thể (ví dụ: "Size L")
+                                sku: selectedOption.value, // SKU của biến thể
+                                price: selectedOption.dataset.price, // Giá của biến thể
+                            });
+                        }
+                    });
+
+                    // Tạo đối tượng giỏ hàng mới
+                    var cart = JSON.parse(getCookie('cart')) || {
+                        info: {
+                            number_order: 0
+                        },
+                        buy: {}
+                    };
+                    var subTotal = 0;
+
+                    // Tính tổng phụ cho sản phẩm này
+                    variantOptions.forEach((variant) => {
+                        subTotal += parseInt(variant.price) || 0;
+                    });
+                    subTotal = subTotal * quantity;
+
+                    // Thêm sản phẩm vào giỏ hàng
+                    cart.buy[productId] = {
+                        id: productId,
+                        product_name: document.querySelector('.product-title').innerText,
+                        price_default: subTotal, // Giá cuối cùng (tổng phụ)
+                        discount_price: subTotal, // Đặt bằng subTotal nếu không có khuyến mãi
+                        image: document.querySelector('.swiper-slide img').src.split('/').pop(),
+                        qty: quantity,
+                        variant_options: variantOptions,
+                        sub_total: subTotal,
+                    };
+
+                    // Cập nhật số lượng đơn hàng
+                    cart.info.number_order += 1;
+
+                    // Lưu lại giỏ hàng vào cookie
+                    setCookie('cart', JSON.stringify(cart), 7); // Lưu trong 7 ngày
+
+                    // Thông báo thành công
+                    alert('Đã thêm vào giỏ hàng!');
+                });
+
+                // Hàm lấy giá trị cookie
+                function getCookie(name) {
+                    let cookies = document.cookie.split('; ');
+                    for (let cookie of cookies) {
+                        let [key, value] = cookie.split('=');
+                        if (key === name) return decodeURIComponent(value);
+                    }
+                    return null;
+                }
+
+                // Hàm lưu cookie
+                function setCookie(name, value, days) {
+                    const date = new Date();
+                    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+                    document.cookie = `${name}=${encodeURIComponent(value)}; path=/; expires=${date.toUTCString()}`;
+                }
+            </script>
         </section>
 
         <section class="product-info-tabs py-md-5">

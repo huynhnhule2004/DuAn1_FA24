@@ -385,7 +385,9 @@ class Header extends BaseView
                                                 <i class="fa-solid fa-cart-shopping"></i>
                                                 <?php
                                                 $cart = isset($_COOKIE['cart']) ? json_decode($_COOKIE['cart'], true) : ['info' => ['number_order' => 0]];
-                                                $number_order = $cart['info']['number_order'] ?? 0;
+
+                                                // Kiểm tra nếu key 'buy' tồn tại và là một mảng hợp lệ
+                                                $number_order = isset($cart['buy']) && is_array($cart['buy']) ? count($cart['buy']) : 0;
                                                 ?>
                                                 <span class="position-absolute badge rounded-circle bg-primary pt-2" style="transform: translate(-40%, -30%); font-size: 12px">
                                                     <?= $number_order > 0 ? $number_order : '' ?>

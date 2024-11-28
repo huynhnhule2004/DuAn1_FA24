@@ -48,6 +48,10 @@ Route::get('/cart/show', 'App\Controllers\Client\CartController@show');
 // Route::get('/cart', 'App\Controllers\Client\CartController@show');
 Route::delete('/cart/{id}', 'App\Controllers\Client\CartController@delete');
 Route::get('/cart/deleteAll', 'App\Controllers\Client\CartController@deleteAll');
+Route::post('/cart/update', 'App\Controllers\Client\CartController@update');
+
+
+
 
 
 

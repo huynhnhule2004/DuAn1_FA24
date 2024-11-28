@@ -186,6 +186,10 @@ class Home extends BaseView
                                                             <h4 class="secondary-font text-primary"><?= number_format($item['price_default']) ?> VNĐ</h4>
                                                         <?php endif; ?>
 
+                                                        <?php
+                            
+                                                        ?>
+
                                                         <div class="d-flex flex-wrap mt-3">
                                                             <!-- Form với nút thêm giỏ hàng-->
                                                             <form action="/cart/add" method="post" class="m-0">

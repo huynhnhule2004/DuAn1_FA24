@@ -8,12 +8,21 @@ class Show extends BaseView
 {
     public static function render($data = null)
     {
+        // Lấy giỏ hàng từ cookie
         $cart = isset($_COOKIE['cart']) ? json_decode($_COOKIE['cart'], true) : ['info' => ['number_order' => 0]];
         $number_order = $cart['info']['number_order'] ?? 0;
         $total = 0;
 
+        // Tính tổng giỏ hàng từ sub_total của mỗi sản phẩm
         foreach ($data['list_buy'] as $item) {
-            $total += $item['sub_total'];
+            $price = $item['price_default'] - ($item['discount_price'] ?? 0);
+            // Nếu có biến thể, sử dụng giá của biến thể
+            if (!empty($item['variant_options'])) {
+                foreach ($item['variant_options'] as $variant) {
+                    $price = $variant['price'];
+                }
+            }
+            $total += max(0, $price * $item['qty']);
         }
 
 
@@ -49,11 +58,20 @@ class Show extends BaseView
                                         </small>
                                     <?php endif; ?>
                                 </td>
-                                <td class="text-primary fw-semibold"><?= number_format($item['price_default'] - ($item['discount_price'] ?? 0)) ?> đ</td>
-                                <td style="width: 100px;">
-                                    <input type="number" name="qty[<?= $item['id'] ?>]" value="<?= $item['qty'] ?>" class="form-control text-center" min="1" max="10">
+                                <form action="/cart/update" method="post" class="m-0" id="cart-form-<?= $item['id'] ?>">
+                                    <input type="hidden" name="method" value="POST">
+                                    <td class="text-primary fw-semibold">
+                                        <?= number_format(!empty($item['variant_options']) ? $item['variant_options'][0]['price'] : ($item['price_default'] - ($item['discount_price'] ?? 0))) ?> đ
+                                    </td>
+                                    <td style="width: 100px;">
+                                        <input type="number" name="qty[<?= $item['id'] ?>]" value="<?= $item['qty'] ?>" class="form-control text-center" min="1" max="10" onchange="updateCart()">
+                                    </td>
+                                </form>
+
                                 </td>
-                                <td class="fw-bold"><?= number_format(max(0, ($item['price_default'] - ($item['discount_price'] ?? 0)) * $item['qty'])) ?> đ</td>
+                                <td class="fw-bold sub-total">
+                                    <?= number_format(max(0, (!empty($item['variant_options']) ? $item['variant_options'][0]['price'] : ($item['price_default'] - ($item['discount_price'] ?? 0))) * $item['qty'])) ?> đ
+                                </td>
                                 <td>
                                     <form action="/cart/<?= $item['id'] ?>" method="post" onsubmit="return confirm('Chắc chắn muốn xóa?')">
                                         <input type="hidden" name="method" value="DELETE">
@@ -79,12 +97,10 @@ class Show extends BaseView
 
                                     <!-- Phần bên phải -->
                                     <div class="col-md-6 d-flex flex-column align-items-end">
-                                        <p class="fw-bold fs-5 mb-2">
-                                            Tổng giá:
-                                            <span class="text-primary fw-bold fs-5">
-                                            <?= number_format($data['cart_info']['total'] ?? 0) ?> đ
-                                            </span>
+                                        <p id="total-price" class="fw-bold fs-5 mb-2">
+                                            Tổng giá: <span class="text-primary fw-bold fs-5"><?= number_format($total) ?> đ</span>
                                         </p>
+
                                         <a href="/checkout" class="btn btn-primary w-30 mt-1">
                                             <i class="fa-solid fa-credit-card me-2"></i> Thanh toán
                                         </a>
@@ -111,6 +127,49 @@ class Show extends BaseView
     </div>
 
     </div>
+    <script>
+        function updateCart() {
+            // Lấy tất cả các form trong giỏ hàng
+            var forms = document.querySelectorAll('form[id^="cart-form"]');
+
+            // Duyệt qua từng form
+            forms.forEach(function(form) {
+                var formData = new FormData(form);
+
+                // Gửi yêu cầu cập nhật giỏ hàng
+                fetch('/cart/update', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Cập nhật tổng giá trị giỏ hàng
+                            var totalPriceElement = document.getElementById('total-price');
+                            if (totalPriceElement) {
+                                totalPriceElement.innerHTML = 'Tổng giá: <span class="text-primary fw-bold fs-5">' + data.total + ' đ</span>';
+                            }
+
+                            // Cập nhật lại thành tiền của từng sản phẩm
+                            var rows = document.querySelectorAll('table tbody tr');
+                            rows.forEach(function(row) {
+                                var subTotalElement = row.querySelector('.sub-total');
+                                var qtyElement = row.querySelector('input[type="number"]');
+                                var unitPrice = parseInt(row.querySelector('.text-primary').innerText.replace(' đ', '').replace(',', ''));
+                                var subTotal = qtyElement.value * unitPrice;
+
+                                if (subTotalElement) {
+                                    subTotalElement.innerText = new Intl.NumberFormat().format(subTotal) + ' đ'; // Cập nhật thành tiền
+                                }
+                            });
+
+                            // Cập nhật lại giỏ hàng trong cookie
+                            document.cookie = "cart=" + JSON.stringify(data.cart) + "; path=/";
+                        }
+                    });
+            });
+        }
+    </script>
 <?php
     }
 }
