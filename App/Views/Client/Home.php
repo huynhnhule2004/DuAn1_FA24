@@ -163,9 +163,9 @@ class Home extends BaseView
 
                                             </div>
                                             <div class="card position-relative">
-                                                <a href="/product/<?= $item['id'] ?>"><img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image" style="height: 300px; object-fit: cover;"></a>
+                                                <a href="/products/<?= $item['id'] ?>"><img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image" style="height: 300px; object-fit: cover;"></a>
                                                 <div class="card-body p-0">
-                                                    <a href="/product/<?= $item['id'] ?>">
+                                                    <a href="/products/<?= $item['id'] ?>">
                                                         <h4 class="card-title pt-4 m-0"><?= htmlspecialchars($item['product_name']) ?></h4>
                                                     </a>
                                                     <div class="card-text">
@@ -672,10 +672,10 @@ class Home extends BaseView
 
                                     </div>
                                     <div class="card position-relative">
-                                        <a href="single-product.html"><img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>"
+                                        <a href="/products/<?= $item['id'] ?>"><img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>"
                                                 class="img-fluid rounded-4" alt="image" style="height: 300px; object-fit: cover;"></a>
                                         <div class="card-body p-0">
-                                            <a href="single-product.html">
+                                            <a href="/products/<?= $item['id'] ?>">
                                                 <h4 class="card-title pt-4 m-0"><?= $item['product_name'] ?></h4>
                                             </a>
 
