@@ -370,6 +370,88 @@ class Product extends BaseModel
     }
 
 
+    // public function getProductVariant($id)
+    // {
+    //     try {
+    //         $product = $this->getOneProductByStatus($id);
+    //         if (!$product) {
+    //             throw new \Exception("Sản phẩm không tồn tại hoặc đã bị vô hiệu hóa.");
+    //         }
+    //         $sql = "
+    //         SELECT skus.id, skus.sku, skus.price, skus.image, skus.stock_quantity,
+    //                pvoc.product_variant_option_id, pvo.name AS variant_option_name, pvo.product_variant_id, pv.name AS variant_name
+    //         FROM skus
+    //         JOIN product_variant_option_combinations pvoc ON skus.id = pvoc.sku_id
+    //         JOIN product_variant_options pvo ON pvoc.product_variant_option_id = pvo.id
+    //         JOIN product_variations pv ON pv.id = pvo.product_variant_id
+    //         WHERE skus.product_id = ?
+    //     ";
+    //         $conn = $this->_conn->MySQLi();
+    //         $stmt = $conn->prepare($sql);
+    //         $stmt->bind_param('i', $id);
+    //         $stmt->execute();
+    //         $skuResults = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    //         // $variantResults = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    //         $groupedSkus = $this->groupSkusById($skuResults);
+    //         // $groupedVariant = $this->groupVariantsById($variantResults);
+
+    //         $productDetail = [
+    //             'product' => $product,
+    //             'skus' => $groupedSkus,
+    //             // 'variant' => $groupedVariant,
+
+    //         ];
+
+    //         return $productDetail;
+    //     } catch (\Throwable $th) {
+    //         error_log("Lỗi khi lấy chi tiết sản phẩm: " . $th->getMessage());
+    //         return null;
+    //     }
+    // }
+    // private function groupSkusById($skus)
+    // {
+    //     $groupedData = [];
+
+    //     foreach ($skus as $sku) {
+    //         $skuKey = $sku['sku'];
+
+    //         // Khởi tạo dữ liệu nếu SKU chưa được nhóm
+    //         if (!isset($groupedData[$skuKey])) {
+    //             $groupedData[$skuKey] = [
+    //                 'id' => $sku['id'],
+    //                 'sku' => $sku['sku'],
+    //                 'price' => $sku['price'],
+    //                 'image' => $sku['image'],
+    //                 'stock_quantity' => $sku['stock_quantity'],
+    //                 'variant_options' => [],
+    //             ];
+    //         }
+
+    //         // Tạo thông tin variant_option
+    //         $variantOption = [
+    //             'id' => $sku['product_variant_option_id'],
+    //             'name' => $sku['variant_option_name'],
+    //         ];
+
+    //         // Thêm variant_name nếu có
+    //         if (isset($sku['variant_name'])) {
+    //             $variantOption['variant_name'] = $sku['variant_name'];
+    //         }
+
+    //         // Thêm biến thể vào danh sách của SKU
+    //         $groupedData[$skuKey]['variant_options'][] = $variantOption;
+    //     }
+
+    //     // Loại bỏ các biến thể trùng lặp trong danh sách variant_options
+    //     foreach ($groupedData as &$data) {
+    //         // Loại bỏ trùng lặp bằng cách sử dụng `array_map` và `array_unique`
+    //         $data['variant_options'] = array_map("unserialize", array_unique(array_map("serialize", $data['variant_options'])));
+    //     }
+
+    //     // Trả về dữ liệu đã nhóm
+    //     return array_values($groupedData);
+    // }
+
     public function getProductVariant($id)
     {
         try {
@@ -378,7 +460,7 @@ class Product extends BaseModel
                 throw new \Exception("Sản phẩm không tồn tại hoặc đã bị vô hiệu hóa.");
             }
             $sql = "
-            SELECT skus.id, skus.sku, skus.price, skus.image, skus.stock_quantity,
+            SELECT skus.id, skus.sku, skus.price, skus.image, skus.stock_quantity, pvoc.id AS product_variant_option_combination_id,
                    pvoc.product_variant_option_id, pvo.name AS variant_option_name, pvo.product_variant_id, pv.name AS variant_name
             FROM skus
             JOIN product_variant_option_combinations pvoc ON skus.id = pvoc.sku_id
@@ -424,6 +506,7 @@ class Product extends BaseModel
                     'image' => $sku['image'],
                     'stock_quantity' => $sku['stock_quantity'],
                     'variant_options' => [],
+                    'product_variant_option_combination_id' => $sku['product_variant_option_combination_id']
                 ];
             }
 
@@ -441,7 +524,6 @@ class Product extends BaseModel
             // Thêm biến thể vào danh sách của SKU
             $groupedData[$skuKey]['variant_options'][] = $variantOption;
         }
-
         // Loại bỏ các biến thể trùng lặp trong danh sách variant_options
         foreach ($groupedData as &$data) {
             // Loại bỏ trùng lặp bằng cách sử dụng `array_map` và `array_unique`
@@ -477,7 +559,7 @@ class Product extends BaseModel
         return $result;
     }
 
-public function getProductsWithLimit($limit, $offset)
+    public function getProductsWithLimit($limit, $offset)
     {
         $result = [];
         try {
@@ -555,7 +637,7 @@ public function getProductsWithLimit($limit, $offset)
             $conn = $this->_conn->MySQLi();
 
             if ($sql === null) {
-          
+
                 $sql = "SELECT * FROM $this->table";
             }
 
@@ -588,4 +670,3 @@ public function getProductsWithLimit($limit, $offset)
         }
     }
 }
-

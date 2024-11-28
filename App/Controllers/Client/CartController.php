@@ -23,60 +23,63 @@ class CartController
 {
 
     public static function add()
-{
-    // Kiểm tra trạng thái đăng nhập
-    if (!AuthHelper::checkLogin()) {
-        NotificationHelper::error('login_required', 'Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng.');
-        header('Location: /login');
+    {
+        // Kiểm tra trạng thái đăng nhập
+        if (!AuthHelper::checkLogin()) {
+            NotificationHelper::error('login_required', 'Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng.');
+            header('Location: /login');
+            exit();
+        }
+
+        $id = $_POST['id'];
+
+        if (empty($id)) {
+            echo "Lỗi: ID sản phẩm không hợp lệ.";
+            return;
+        }
+
+        $productModel = new Product();
+        $product = $productModel->getOneProduct($id);
+
+        if (!$product) {
+            echo "Lỗi: Sản phẩm không tồn tại.";
+            return;
+        }
+
+        // Lấy thông tin biến thể được chọn
+        $variantOptionIds = $_POST['variant_option_ids'] ?? [];
+        $variantOptions = [];
+
+        if (!empty($variantOptionIds)) {
+            $variantOptionsModel = new Product();
+            $variantOptions = $variantOptionsModel->getVariantOptionsByIds($variantOptionIds);
+        }
+
+        // Nếu có biến thể, lấy giá và SKU
+        $variantPrice = 0;
+        if (!empty($variantOptions)) {
+            $variantPrice = $variantOptions[0]['price']; // Giả sử chỉ có một biến thể
+        }
+
+        // Nếu không có biến thể, dùng giá mặc định
+        $price = $variantPrice > 0 ? $variantPrice : $product['price_default'];
+
+        // Thêm sản phẩm vào giỏ hàng
+        $cartModel = new Cart();
+        $cartModel->addProduct($product, $variantOptions, $price); // Lưu vào giỏ hàng
+
+        // Redirect tới giỏ hàng
+        header('Location: /cart/show');
         exit();
     }
-
-    $id = $_POST['id'];
-
-    if (empty($id)) {
-        echo "Lỗi: ID sản phẩm không hợp lệ.";
-        return;
-    }
-
-    $productModel = new Product();
-    $product = $productModel->getOneProduct($id);
-
-    if (!$product) {
-        echo "Lỗi: Sản phẩm không tồn tại.";
-        return;
-    }
-
-    // Lấy thông tin biến thể được chọn
-    $variantOptionIds = $_POST['variant_option_ids'] ?? [];
-    $variantOptions = [];
-
-    if (!empty($variantOptionIds)) {
-        $variantOptionsModel = new Product();
-        $variantOptions = $variantOptionsModel->getVariantOptionsByIds($variantOptionIds);
-    }
-
-    // Nếu có biến thể, lấy giá và SKU
-    $variantPrice = 0;
-    if (!empty($variantOptions)) {
-        $variantPrice = $variantOptions[0]['price']; // Giả sử chỉ có một biến thể
-    }
-
-    // Nếu không có biến thể, dùng giá mặc định
-    $price = $variantPrice > 0 ? $variantPrice : $product['price_default'];
-
-    // Thêm sản phẩm vào giỏ hàng
-    $cartModel = new Cart();
-    $cartModel->addProduct($product, $variantOptions, $price); // Lưu vào giỏ hàng
-
-    // Redirect tới giỏ hàng
-    header('Location: /cart/show');
-    exit();
-}
 
 
 
     public static function show()
     {
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
+
         $cartModel = new Cart();
         $cart = $cartModel->getCartInfo();
         $category = new Category();
@@ -88,6 +91,7 @@ class CartController
         $data = [
             'list_buy' => $list_buy,
             'cart_info' => $cart_info,
+            'categories' => $categories
         ];
 
         Header::render($data);

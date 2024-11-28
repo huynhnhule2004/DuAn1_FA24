@@ -47,9 +47,10 @@ class Checkout extends BaseView
         // Lấy dữ liệu từ cookie
         $cart = isset($_COOKIE['cart']) ? json_decode($_COOKIE['cart'], true) : ['info' => ['number_order' => 0, 'total' => 0]];
         $user = isset($_COOKIE['user']) ? json_decode($_COOKIE['user'], true) : [];
-
+//         echo "<pre>";
+// var_dump($cart);
         // Kiểm tra nếu có dữ liệu trong mảng 'buy'
-        if (isset($cart['buy']) && !empty($cart['buy'])) {
+        if (isset($cart[0]['buy']) && !empty($cart[0]['buy'])) {
         ?>
 
             <!-- Giao diện Thanh Toán -->
@@ -121,7 +122,7 @@ class Checkout extends BaseView
                                 <tbody>
                                     <?php
                                     // Lặp qua các sản phẩm trong mảng 'buy'
-                                    foreach ($cart['buy'] as $product) {
+                                    foreach ($cart[0]['buy'] as $product) {
                                         $product_name = $product['product_name'];
                                         $qty = $product['qty'];
                                         $price = number_format($product['price_default'] - ($product['discount_price'] ?? 0), 0, ',', '.') . ' VNĐ';
@@ -135,9 +136,9 @@ class Checkout extends BaseView
                                     }
 
                                     // Hiển thị tổng cộng
-                                    $total_order = number_format($cart['info']['total'], 0, ',', '.') . ' VNĐ';
+                                    $total_order = number_format($cart[0]['info']['total'], 0, ',', '.') . ' VNĐ';
                                     // $total_price_payment = number_format($cart['info']['total'], 0, ',', '.');
-                                    $total_price_payment =$cart['info']['total'];
+                                    $total_price_payment =$cart[0]['info']['total'];
 
                                     echo "<input type='hidden' name='total_price_payment' value=' $total_price_payment '>";
                                     

@@ -110,9 +110,9 @@ class Detail extends BaseView
                                     </div>
                                 </div>
 
-                                <strong class="text-primary display-6 fw-bold" id="product-price" data-default-price="<?= htmlspecialchars($defaultPrice) ?>">
-                            <?= number_format($defaultPrice) ?> VNĐ
-                        </strong>
+                                <strong class="text-primary display-6 fw-bold" id="product-price">
+                                    <?= isset($data['product_detail']['price_default']) ? number_format($data['product_detail']['price_default']) : '0 VNĐ' ?> VNĐ
+                                </strong>
                                 <del class="ms-2"><?= isset($data['product_detail']['discount_price']) ? number_format($data['product_detail']['discount_price']) : '0 VNĐ' ?> VNĐ</del>
                             </div>
                             <p><?= isset($data['product_detail']['short_description']) ? $data['product_detail']['short_description'] : 'Không có mô tả ngắn' ?></p>
@@ -133,7 +133,7 @@ class Detail extends BaseView
                                     <div class="swatch product-select pt-3" data-option-index="1">
                                         <h6 class="item-title fw-bold"><?= htmlspecialchars($variantType) ?></h6>
                                         <select class="form-select variant-select">
-                                            <option value="" selected>Chọn size</option>
+                                            <option value="" selected>Chọn <?= htmlspecialchars($variantType) ?></option>
                                             <?php
                                             $usedSkus = [];
                                             $variantNames = [];
@@ -145,7 +145,7 @@ class Detail extends BaseView
                                                         $variantNames[] = $variantOption['name'];
 
                                             ?>
-                                                        <option value="<?= htmlspecialchars($sku['sku']) ?>" data-price="<?= htmlspecialchars($sku['price']) ?>">
+                                                        <option value="<?= htmlspecialchars($sku['sku']) ?>" data-price="<?= htmlspecialchars($sku['price']) ?>" data-product_variant_option_combination_id="<?= $sku['product_variant_option_combination_id'] ?>">
                                                             <?= htmlspecialchars($variantOption['name']) ?>
                                                         </option>
                                             <?php
@@ -197,88 +197,119 @@ class Detail extends BaseView
                 <p>Không có chi tiết sản phẩm.</p>
             <?php endif; ?>
             </div>
-
-
-            </div>
-            </div>
-            </div>
-            </div>
             <script>
                 document.querySelector('#add-to-cart-form').addEventListener('submit', function(event) {
-                    event.preventDefault(); // Ngăn trình duyệt tải lại trang
+                    event.preventDefault();
 
-                    // Lấy thông tin sản phẩm
-                    var productId = document.querySelector('input[name="id"]').value;
-                    var quantity = document.querySelector('.input-number').value;
+                    // Lấy thông tin sản phẩm từ giao diện
+                    const productId = document.querySelector('input[name="id"]').value;
+                    const productName = document.querySelector('.product-title').innerText;
+                    const priceDefault = parseInt(document.querySelector('#product-price').innerText.replace(/[^\d]/g, ''), 10);
+                    const discountPrice = parseInt(document.querySelector('del').innerText.replace(/[^\d]/g, ''), 10) || 0;
+                    const quantity = parseInt(document.querySelector('.input-number').value, 10);
+                    const productImage = document.querySelector('.swiper-slide img').getAttribute('src');
 
-                    // Lấy thông tin các biến thể
-                    var variantSelects = document.querySelectorAll('.variant-select');
-                    var variantOptions = [];
-                    variantSelects.forEach(function(select) {
-                        var selectedOption = select.options[select.selectedIndex];
-                        if (selectedOption.value) {
+                    // Lấy thông tin biến thể (variant)
+                    const variantSelects = document.querySelectorAll('.variant-select');
+                    const variantOptions = [];
+                    variantSelects.forEach(select => {
+                        const selectedOption = select.options[select.selectedIndex];
+                        if (selectedOption && selectedOption.value) {
                             variantOptions.push({
-                                name: selectedOption.text, // Tên biến thể (ví dụ: "Size L")
-                                sku: selectedOption.value, // SKU của biến thể
-                                price: selectedOption.dataset.price, // Giá của biến thể
+                                name: selectedOption.text,
+                                sku: selectedOption.value,
+                                price: selectedOption.dataset.price,
+                                product_variant_option_combination_id: selectedOption.dataset.product_variant_option_combination_id
                             });
                         }
                     });
 
-                    // Tạo đối tượng giỏ hàng mới
-                    var cart = JSON.parse(getCookie('cart')) || {
-                        info: {
-                            number_order: 0
-                        },
-                        buy: {}
-                    };
-                    var subTotal = 0;
+                    // Lấy giỏ hàng từ cookies (nếu có)
+                    const existingCart = document.cookie
+                        .split('; ')
+                        .find(row => row.startsWith('cart='))?.split('=')[1];
+                    let cartData = existingCart ? JSON.parse(decodeURIComponent(existingCart)) : [];
 
-                    // Tính tổng phụ cho sản phẩm này
-                    variantOptions.forEach((variant) => {
-                        subTotal += parseInt(variant.price) || 0;
+                    // Đảm bảo `cartData` là một mảng
+                    if (!Array.isArray(cartData)) {
+                        cartData = [];
+                    }
+
+                    // Tạo chuỗi variant để phân biệt các sản phẩm khác size
+                    const variantKey = variantOptions.map(v => v.sku).join('-'); // Tạo chuỗi key từ các SKU của variants
+
+                    // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
+                    let productExists = false;
+                    cartData.forEach(item => {
+                        if (item.buy[productId] && item.buy[productId].variantKey === variantKey) {
+                            // Nếu sản phẩm tồn tại với size (variant) này, tăng số lượng và cập nhật tổng tiền
+                            item.buy[productId].qty += quantity;
+                            item.buy[productId].sub_total = item.buy[productId].qty * priceDefault;
+                            item.info.number_order += quantity;
+                            item.info.total += priceDefault * quantity;
+                            productExists = true;
+                        }
                     });
-                    subTotal = subTotal * quantity;
 
-                    // Thêm sản phẩm vào giỏ hàng
-                    cart.buy[productId] = {
-                        id: productId,
-                        product_name: document.querySelector('.product-title').innerText,
-                        price_default: subTotal, // Giá cuối cùng (tổng phụ)
-                        discount_price: subTotal, // Đặt bằng subTotal nếu không có khuyến mãi
-                        image: document.querySelector('.swiper-slide img').src.split('/').pop(),
-                        qty: quantity,
-                        variant_options: variantOptions,
-                        sub_total: subTotal,
-                    };
+                    if (!productExists) {
+                        // Nếu sản phẩm chưa tồn tại (với size/variant mới), thêm mới
+                        cartData.push({
+                            buy: {
+                                [productId]: {
+                                    id: parseInt(productId),
+                                    product_name: productName,
+                                    price_default: priceDefault,
+                                    discount_price: discountPrice,
+                                    image: productImage,
+                                    qty: quantity,
+                                    variant_options: variantOptions,
+                                    variantKey: variantKey, // Lưu thông tin key của variant
+                                    sub_total: priceDefault * quantity
+                                }
+                            },
+                            info: {
+                                number_order: quantity,
+                                total: priceDefault * quantity
+                            }
+                        });
+                    }
 
-                    // Cập nhật số lượng đơn hàng
-                    cart.info.number_order += 1;
+                    // Lưu lại giỏ hàng vào cookies
+                    document.cookie = `cart=${encodeURIComponent(JSON.stringify(cartData))}; path=/; max-age=${7 * 24 * 60 * 60}; secure`;
 
-                    // Lưu lại giỏ hàng vào cookie
-                    setCookie('cart', JSON.stringify(cart), 7); // Lưu trong 7 ngày
-
-                    // Thông báo thành công
-                    alert('Đã thêm vào giỏ hàng!');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thêm vào giỏ hàng',
+                        text: 'Sản phẩm đã được thêm vào giỏ hàng!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
                 });
 
-                // Hàm lấy giá trị cookie
-                function getCookie(name) {
-                    let cookies = document.cookie.split('; ');
-                    for (let cookie of cookies) {
-                        let [key, value] = cookie.split('=');
-                        if (key === name) return decodeURIComponent(value);
-                    }
-                    return null;
-                }
+                // Hàm render giỏ hàng (sửa lỗi `Object.values()` ở đây)
+                function renderCart() {
+                    const existingCart = document.cookie
+                        .split('; ')
+                        .find(row => row.startsWith('cart='))?.split('=')[1];
+                    let cartData = existingCart ? JSON.parse(decodeURIComponent(existingCart)) : [];
 
-                // Hàm lưu cookie
-                function setCookie(name, value, days) {
-                    const date = new Date();
-                    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-                    document.cookie = `${name}=${encodeURIComponent(value)}; path=/; expires=${date.toUTCString()}`;
+                    // Đảm bảo rằng cartData là một mảng hợp lệ
+                    if (!Array.isArray(cartData)) {
+                        cartData = [];
+                    }
+
+                    // Lấy giá trị từ cartData và render (sử dụng Object.values() an toàn)
+                    cartData.forEach(item => {
+                        if (item.buy && typeof item.buy === 'object') { // Kiểm tra item.buy là một đối tượng hợp lệ
+                            Object.values(item.buy).forEach(product => {
+                                console.log(product); // Hoặc render dữ liệu sản phẩm ra giao diện
+                            });
+                        }
+                    });
                 }
             </script>
+
+
         </section>
 
         <section class="product-info-tabs py-md-5">
