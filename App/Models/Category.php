@@ -74,8 +74,5 @@ class Category extends BaseModel
             return [];
         }
     }
-    public function countTotalCategory()
-    {
-        return $this->countTotal();
-    }
+    
 }

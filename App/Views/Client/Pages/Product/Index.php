@@ -15,7 +15,6 @@ class Index extends BaseView
 {
   public static function render($data = null)
   {
-    // $products = $data['products'] ?? [];
     $remainingProducts = $data['remainingProducts'] ?? 0;
     $currentOffset = $data['currentOffset'] ?? 0;
 ?>
@@ -56,29 +55,24 @@ class Index extends BaseView
             <?php
             // Search::render();
             ?>
-            <!-- <div class="mt-5"> -->
-              <?php
-               Category::render($data['categories']);
-
-              Filter::render();
-              ?>
-            <!-- </div> -->
+            <?php
+            Category::render($data['categories']);
+            ?>
+            <?php
+            Filter::render();
+            ?>
           </div>
 
         </div>
         <div class="col-md-9">
-
           <div class="d-flex justify-content-between align-items-center mb-3">
-
             <?php
             SortBy::render();
             ?>
-
             <?php if (!empty($data['products'])): ?>
               <div class="row g-4 ">
-                <?php foreach ($data['products'] as $item): ?>
+                <?php foreach ($data['filteredProducts'] as $item): ?>
                   <div class="col-md-4 mb-4">
-
                     <div class="swiper-slide">
                       <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
                         <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
@@ -129,46 +123,46 @@ class Index extends BaseView
 
                 <?php endforeach; ?>
               </div>
-              <?php if ($remainingProducts > 0): ?>
-          <div class="pagination loop-pagination d-flex justify-content-center align-items-center">
-            <!-- Nút mũi tên trái -->
-            <?php if ($currentOffset > 1): ?>
-              <a href="javascript:void(0)"
-                class="pagination-arrow d-flex align-items-center mx-3"
-                data-page="<?= $currentOffset - 1 ?>">
-                <iconify-icon icon="ic:baseline-keyboard-arrow-left" class="pagination-arrow fs-1"></iconify-icon>
-              </a>
             <?php else: ?>
-              <span class="pagination-arrow d-flex align-items-center mx-3 disabled">
-                <iconify-icon icon="ic:baseline-keyboard-arrow-left" class="pagination-arrow fs-1"></iconify-icon>
-              </span>
+              <p>Không có sản phẩm nào trong khoảng giá này.</p>
             <?php endif; ?>
+            <?php if ($remainingProducts > 0): ?>
+              <div class="pagination loop-pagination d-flex justify-content-center align-items-center">
+                <!-- Nút mũi tên trái -->
+                <?php if ($currentOffset > 1): ?>
+                  <a href="javascript:void(0)"
+                    class="pagination-arrow d-flex align-items-center mx-3"
+                    data-page="<?= $currentOffset - 1 ?>">
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-left" class="pagination-arrow fs-1"></iconify-icon>
+                  </a>
+                <?php else: ?>
+                  <span class="pagination-arrow d-flex align-items-center mx-3 disabled">
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-left" class="pagination-arrow fs-1"></iconify-icon>
+                  </span>
+                <?php endif; ?>
 
-            <!-- Các số trang -->
-            <?php for ($i = 1; $i <= ceil($remainingProducts / 12); $i++): ?>
-              <?php if ($i == $currentOffset): ?>
-                <span aria-current="page" class="page-numbers mt-2 fs-3 mx-3 current"><?= $i ?></span>
-              <?php else: ?>
-                <a class="page-numbers mt-2 fs-3 mx-3" href="javascript:void(0)" data-page="<?= $i ?>"><?= $i ?></a>
-              <?php endif; ?>
-            <?php endfor; ?>
+                <!-- Các số trang -->
+                <?php for ($i = 1; $i <= ceil($remainingProducts / 12); $i++): ?>
+                  <?php if ($i == $currentOffset): ?>
+                    <span aria-current="page" class="page-numbers mt-2 fs-3 mx-3 current"><?= $i ?></span>
+                  <?php else: ?>
+                    <a class="page-numbers mt-2 fs-3 mx-3" href="javascript:void(0)" data-page="<?= $i ?>"><?= $i ?></a>
+                  <?php endif; ?>
+                <?php endfor; ?>
 
-            <!-- Nút mũi tên phải -->
-            <?php if ($currentOffset < ceil($remainingProducts / 12)): ?>
-              <a href="javascript:void(0)"
-                class="pagination-arrow d-flex align-items-center mx-3"
-                data-page="<?= $currentOffset + 1 ?>">
-                <iconify-icon icon="ic:baseline-keyboard-arrow-right" class="pagination-arrow fs-1"></iconify-icon>
-              </a>
-            <?php else: ?>
-              <span class="pagination-arrow d-flex align-items-center mx-3 disabled">
-                <iconify-icon icon="ic:baseline-keyboard-arrow-right" class="pagination-arrow fs-1"></iconify-icon>
-              </span>
-            <?php endif; ?>
-          </div>
-        <?php endif; ?>
-            <?php else: ?>
-              <h3 class="text-center text-danger">Không có sản phẩm</h3>
+                <!-- Nút mũi tên phải -->
+                <?php if ($currentOffset < ceil($remainingProducts / 12)): ?>
+                  <a href="javascript:void(0)"
+                    class="pagination-arrow d-flex align-items-center mx-3"
+                    data-page="<?= $currentOffset + 1 ?>">
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-right" class="pagination-arrow fs-1"></iconify-icon>
+                  </a>
+                <?php else: ?>
+                  <span class="pagination-arrow d-flex align-items-center mx-3 disabled">
+                    <iconify-icon icon="ic:baseline-keyboard-arrow-right" class="pagination-arrow fs-1"></iconify-icon>
+                  </span>
+                <?php endif; ?>
+              </div>
             <?php endif; ?>
           </div>
         </div>
@@ -300,50 +294,50 @@ class Index extends BaseView
         </div>
       </div>
       <script>
-      $(document).ready(function() {
-        function loadPage(page) {
-          // Hiển thị loader
-          $('.loading').html("<img src='public/images/loading.gif'/>").fadeIn('fast');
+        $(document).ready(function() {
+          function loadPage(page) {
+            // Hiển thị loader
+            $('.loading').html("<img src='public/images/loading.gif'/>").fadeIn('fast');
 
-          // Gọi AJAX
-          $.ajax({
-            url: '/product/paginationproduct',
-            method: 'GET',
-            data: {
-              page: page
-            },
-            dataType: 'json',
-            success: function(response) {
-              console.log(response); // Log response để debug
+            // Gọi AJAX
+            $.ajax({
+              url: '/product/paginationproduct',
+              method: 'GET',
+              data: {
+                page: page
+              },
+              dataType: 'json',
+              success: function(response) {
+                console.log(response); // Log response để debug
 
-              // Tắt loader
-              $('.loading').fadeOut('fast');
+                // Tắt loader
+                $('.loading').fadeOut('fast');
 
-              // Cập nhật nội dung blog
-              $('.row.g-4').html(response.productHtml);
+                // Cập nhật nội dung blog
+                $('.row.g-4').html(response.productHtml);
 
-              // Cập nhật phân trang
-              $('.pagination').html(response.paginationLinks);
-            },
-            error: function(xhr, status, error) {
-              console.error("Chi tiết lỗi:", xhr.responseText, status, error);
-              alert('Lỗi: ' + error);
+                // Cập nhật phân trang
+                $('.pagination').html(response.paginationLinks);
+              },
+              error: function(xhr, status, error) {
+                console.error("Chi tiết lỗi:", xhr.responseText, status, error);
+                alert('Lỗi: ' + error);
+              }
+            });
+          }
+
+          $(document).on('click', '.pagination-arrow, .page-numbers:not(.current)', function() {
+            const page = $(this).data('page'); // Lấy số trang từ thuộc tính data-page
+            if (page) {
+              loadPage(page); // Gọi hàm loadPage với số trang
             }
           });
-        }
 
-        $(document).on('click', '.pagination-arrow, .page-numbers:not(.current)', function() {
-          const page = $(this).data('page'); // Lấy số trang từ thuộc tính data-page
-          if (page) {
-            loadPage(page); // Gọi hàm loadPage với số trang
-          }
+
+          // Tải trang đầu tiên khi khởi động
+          loadPage(1);
         });
-
-
-        // Tải trang đầu tiên khi khởi động
-        loadPage(1);
-      });
-    </script>
+      </script>
   <?php
   }
 }

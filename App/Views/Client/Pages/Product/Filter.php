@@ -4,10 +4,10 @@ namespace App\Views\Client\Pages\Product;
 
 use App\Views\BaseView;
 use App\Views\Client\Components\Category;
-use App\Views\Client\Components\Filter;
 use App\Views\Client\Components\SortBy;
+use App\Views\Client\Components\Filter as ComponentFilter;
 
-class Search extends BaseView
+class Filter extends BaseView
 {
     public static function render($data = null)
     {
@@ -18,14 +18,12 @@ class Search extends BaseView
                 <div class="col-md-3">
                     <div class="category-section mb-4 mt-3">
                         <?php
-                        // Search::render();
+                        Category::render($data['categories']);
                         ?>
-                        <!-- <div class="mt-5"> -->
-                            <?php
-                            Category::render($data['categories']);
-                            Filter::render();
-                            ?>
-                        <!-- </div> -->
+                        <?php
+
+                        ComponentFilter::render();
+                        ?>
                     </div>
 
                 </div>
@@ -37,9 +35,9 @@ class Search extends BaseView
                         SortBy::render();
                         ?>
 
-                        <?php if (count($data) && count($data['result'])) :?>
+                        <?php if (count($data) && count($data['filteredProducts'])) : ?>
                             <div class="row">
-                                <?php foreach ($data['result'] as $item) : ?>
+                                <?php foreach ($data['filteredProducts'] as $item) : ?>
                                     <div class="col-md-4 mb-4">
 
                                         <div class="swiper-slide">
@@ -48,7 +46,7 @@ class Search extends BaseView
                                             </div>
                                             <div class="card position-relative">
                                                 <a href="/products/<?= $item['id'] ?>">
-                                                    <img src="<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
+                                                    <img src="<?= APP_URL ?>public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
                                                 </a>
                                                 <div class="card-body p-0">
                                                     <a href="/products/<?= $item['id'] ?>">
@@ -210,7 +208,7 @@ class Search extends BaseView
                     <a href="#">
                         <img src="/public/assets/client/images/insta5.jpg" alt="insta-img" class="img-fluid rounded-3">
                     </a>
-                </div>  
+                </div>
                 <div class="col instagram-item  text-center position-relative">
                     <div class="icon-overlay d-flex justify-content-center position-absolute">
                         <iconify-icon class="text-white" icon="la:instagram"></iconify-icon>

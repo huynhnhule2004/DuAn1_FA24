@@ -55,6 +55,8 @@ Route::post('/cart/update', 'App\Controllers\Client\CartController@update');
 
 
 
+Route::get('/filter', 'App\Controllers\Client\ProductController@filterByPrice');
+
 
 Route::get('/blog/paginationblog', 'App\Controllers\Client\BlogController@paginateBlog');
 Route::get('/product/paginationproduct', 'App\Controllers\Client\ProductController@paginateProduct');

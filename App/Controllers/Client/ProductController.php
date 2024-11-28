@@ -15,9 +15,7 @@ use App\Views\Client\Pages\Product\ProductDetail;
 use App\Views\Client\Pages\Product\Index;
 use App\Views\Client\Pages\Product\Detail;
 use App\Models\Sku;
-
-
-
+use App\Views\Client\Pages\Product\Filter;
 
 class ProductController
 {
@@ -28,19 +26,12 @@ class ProductController
 
         $product = new Product();
         $products = $product->getAllProductByStatus();
-        $productsPerPage = 9; // Số bài viết trên mỗi trang
-        $currentPage = 1;  // Trang hiện tại
-        $offset = 0;       // Vị trí bắt đầu
-
-        // Lấy danh sách product
+        $productsPerPage = 12; 
+        $currentPage = 1; 
+        $offset = 0;      
         $products = $product->getProductsWithLimit($productsPerPage, $offset);
-        
-        // Đếm tổng số bài viết
         $totalProducts = $product->countTotalProducts();
-        
-        // Tính tổng số trang
         $totalPages = ceil($totalProducts / $productsPerPage);
-
         $data = [
             'products' => $products,
             'categories' => $categories,
@@ -98,6 +89,8 @@ class ProductController
         Header::render($data);
         Detail::render($data);
         Footer::render();
+        // echo '<pre>';
+        // var_dump($product_detail);
 
     }      
     
@@ -125,40 +118,23 @@ class ProductController
     // public static function getProductByCategory($id) {}
     public function paginateProduct()
     {
-        // Thiết lập header
+
         header('Content-Type: application/json');
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET');
-
-        // Lấy trang hiện tại, đảm bảo là số nguyên dương
-        $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-        
-        $productsPerPage = 9;
-        
-        // Tính offset
+        $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;      
+        $productsPerPage = 12;
         $offset = ($page - 1) * $productsPerPage;
-
         $product = new Product();
-        
-        // Lấy danh sách product cho trang hiện tại
         $products = $product->getProductsWithLimit($productsPerPage, $offset);
-        
-        // Đếm tổng số bài viết
         $totalProducts = $product->countTotalProducts();
-        
-        // Tính tổng số trang
         $totalPages = ceil($totalProducts / $productsPerPage);
-
-        // Sinh HTML cho các bài product
         $productHtml = '';
         foreach ($products as $item) {
             $productHtml .= $this->generateProductItemHtml($item);
         }
-
-        // Sinh liên kết phân trang
         $paginationLinks = $this->generatePaginationLinks($page, $totalPages);
 
-        // Trả về JSON
         echo json_encode([
             'productHtml' => $productHtml,
             'paginationLinks' => $paginationLinks,
@@ -223,7 +199,6 @@ class ProductController
     {
         $links = '<div class="pagination loop-pagination d-flex justify-content-center align-items-center">';
     
-        // Nút mũi tên trái (Previous)
         if ($currentPage > 1) {
             $links .= '<a href="javascript:void(0)" 
                           class="pagination-arrow d-flex align-items-center mx-3" 
@@ -235,8 +210,6 @@ class ProductController
                             <iconify-icon icon="ic:baseline-keyboard-arrow-left" class="pagination-arrow fs-1"></iconify-icon>
                        </span>';
         }
-    
-        // Tính toán các trang hiển thị
         $maxPagesToShow = 4;
         $startPage = max(1, $currentPage - 2);
         $endPage = min($totalPages, $currentPage + 1);
@@ -279,6 +252,23 @@ class ProductController
                       data-page="' . $page . '">' . $page . '</a>';
         }
     }
-    
+    public function filterByPrice()
+    {
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
+
+        $priceRange = $_GET['priceRange'] ?? 'all';
+        $product = new Product();
+        $filteredProducts = $product->filterByPriceRange($priceRange);
+
+        $data = [
+            'filteredProducts' => $filteredProducts,
+            'categories' => $categories
+        ];
+
+        Header::render();
+        Filter::render($data);
+        Footer::render();
+    }
     
 }

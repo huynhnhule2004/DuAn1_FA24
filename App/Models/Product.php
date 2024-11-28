@@ -669,4 +669,44 @@ class Product extends BaseModel
             return null;
         }
     }
+
+    public function filterByPriceRange($priceRange)
+    {
+        try {
+            $sql = "SELECT * FROM products";
+            if ($priceRange !== 'all') {
+                [$min, $max] = explode('-', $priceRange);
+                $min = (int)$min;
+                $max = $max !== '' ? (int)$max : null;
+    
+                if ($max !== null) {
+                    $sql .= " WHERE price_default >= ? AND price_default <= ?";
+                } else {
+                    $sql .= " WHERE price_default >= ?";
+                }
+            }
+            $conn = $this->_conn->MySQLi(); 
+            $stmt = $conn->prepare($sql);
+    
+            if ($priceRange !== 'all') {
+                if ($max !== null) {
+                    $stmt->bind_param("ii", $min, $max);
+                } else {
+                    $stmt->bind_param("i", $min);
+                }
+            }
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $products = $result->fetch_all(MYSQLI_ASSOC);
+                return $products;
+            } else {
+                return [];
+            }
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lọc sản phẩm theo khoảng giá: ' . $th->getMessage());
+            return []; 
+        }
+    }
 }
