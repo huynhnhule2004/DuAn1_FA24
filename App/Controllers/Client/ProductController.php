@@ -266,7 +266,7 @@ class ProductController
             'categories' => $categories
         ];
 
-        Header::render();
+        Header::render($data);
         Filter::render($data);
         Footer::render();
     }
