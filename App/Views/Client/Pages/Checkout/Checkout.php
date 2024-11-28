@@ -125,7 +125,7 @@ class Checkout extends BaseView
                                     foreach ($cart[0]['buy'] as $product) {
                                         $product_name = $product['product_name'];
                                         $qty = $product['qty'];
-                                        $price = number_format($product['price_default'] - ($product['discount_price'] ?? 0), 0, ',', '.') . ' VNĐ';
+                                        $price = number_format($product['price_default'], 0, ',', '.') . ' VNĐ';
                                         $total = number_format($product['sub_total'], 0, ',', '.') . ' VNĐ';
                                         echo "<tr>
                                     <td>$product_name</td>

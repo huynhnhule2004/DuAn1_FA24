@@ -67,7 +67,7 @@ class Show extends BaseView
                 cart.forEach(entry => {
                     if (entry.buy && typeof entry.buy === 'object') {
                         Object.values(entry.buy).forEach(item => {
-                            const unitPrice = item.price_default - (item.discount_price || 0);
+                            const unitPrice = item.price_default;
                             const subTotal = unitPrice * item.qty;
                             totalPrice += subTotal;
 

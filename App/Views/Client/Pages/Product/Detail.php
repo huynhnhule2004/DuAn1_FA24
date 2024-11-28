@@ -110,10 +110,12 @@ class Detail extends BaseView
                                     </div>
                                 </div>
 
-                                <strong class="text-primary display-6 fw-bold" id="product-price">
-                                    <?= isset($data['product_detail']['price_default']) ? number_format($data['product_detail']['price_default']) : '0 VNĐ' ?> VNĐ
+                                <strong class="text-primary display-6 fw-bold"
+                                    id="product-price"
+                                    >
+                                    <?= number_format($defaultPrice - $data['product']['discount_price']) ?> VNĐ
                                 </strong>
-                                <del class="ms-2"><?= isset($data['product_detail']['discount_price']) ? number_format($data['product_detail']['discount_price']) : '0 VNĐ' ?> VNĐ</del>
+                                <del class="ms-2"><?= htmlspecialchars($defaultPrice) ?> VNĐ</del>
                             </div>
                             <p><?= isset($data['product_detail']['short_description']) ? $data['product_detail']['short_description'] : 'Không có mô tả ngắn' ?></p>
                             <div class="swatch product-select pt-3" data-option-index="1">
@@ -133,7 +135,7 @@ class Detail extends BaseView
                                     <div class="swatch product-select pt-3" data-option-index="1">
                                         <h6 class="item-title fw-bold"><?= htmlspecialchars($variantType) ?></h6>
                                         <select class="form-select variant-select">
-                                            <option value="" selected>Chọn <?= htmlspecialchars($variantType) ?></option>
+                                            <option value="" selected disabled>Chọn <?= htmlspecialchars($variantType) ?></option>
                                             <?php
                                             $usedSkus = [];
                                             $variantNames = [];
