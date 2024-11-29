@@ -290,25 +290,48 @@ class AuthHelper
             $mail->addAddress($to, $name);
             $mail->addReplyTo('phamlyvibes2000@gmail.com', 'Waggy');
 
-            //Content
+            // Content for customer
+            $customerBody = "
+        <div style='font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px;'>
+            <h2 style='color: #DEAD6F;'>Cảm ơn bạn đã liên hệ Waggy!</h2>
+            <p>Chúng tôi đã nhận được lời nhắn từ bạn và sẽ phản hồi sớm nhất có thể.</p>
+            <div style='padding: 10px; border: 1px solid #DEAD6F; border-radius: 5px; background-color: #fff;'>
+                <strong>Lời nhắn của bạn:</strong>
+                <p style='font-style: italic; color: #555;'>{$message}</p>
+            </div>
+            <p style='margin-top: 20px;'>Trân trọng,</p>
+            <p><strong>Đội ngũ Waggy</strong></p>
+        </div>";
             $mail->isHTML(true);
             $mail->Subject = 'Contact of Waggy';
-            $mail->Body = "<p>Cảm ơn bạn đã liên hệ tới Waggy. Chúng tôi sẽ phản hồi sớm nhất ^^.</p><p><strong>Lời nhắn của bạn:</strong><br>{$message}</p>";
+            $mail->Body = $customerBody;
             $mail->AltBody = "Cảm ơn bạn đã liên hệ! Lời nhắn của bạn: {$message}";
             $mail->send();
 
+            // Content for admin
+            $adminBody = "
+        <div style='font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px;'>
+            <h2 style='color: #DEAD6F;'>Thông tin liên hệ từ khách hàng</h2>
+            <div style='padding: 10px; border: 1px solid #DEAD6F; border-radius: 5px; background-color: #fff;'>
+                <p><strong>Tên: </strong>{$name}</p>
+                <p><strong>Email: </strong>{$to}</p>
+                <p><strong>Điện thoại: </strong>{$_POST['phone']}</p>
+                <p><strong>Lời nhắn:</strong><br>{$message}</p>
+            </div>
+        </div>";
             $mail->clearAddresses();
             $mail->addAddress('phamlyvibes2000@gmail.com', 'Waggy Admin');
             $mail->Subject = 'Customer contact information - Waggy';
-            $mail->Body = "<p><strong>Lời nhắn từ khách hàng:</strong></p><p><strong>Tên: </strong>{$name}</p><p><strong>Email: </strong>{$to}</p><p><strong>Điện thoại: </strong>{$_POST['phone']}</p><p><strong>Lời nhắn:</strong><br>{$message}</p>";
+            $mail->Body = $adminBody;
             $mail->AltBody = "Lời nhắn từ khách hàng: {$name} - {$message}";
             $mail->send();
-
+            
             return true;
         } catch (Exception $e) {
             return false;
         }
     }
+
 
     public static function sendEmailOrder($to, $name, $orderId, $totalAmount, $orderDate, $paymentMethod)
     {
@@ -451,8 +474,6 @@ class AuthHelper
                 <p>Vui lòng kiểm tra và xử lý đơn hàng càng sớm càng tốt.</p>
                 <p class='admin-footer'><strong>Trân trọng,</strong><br>Hệ thống Waggy</p>
             ";
-
-            // <p><strong>Điện thoại:</strong> {$_POST['phone']}</p>
 
             $mail->clearAddresses();
             $mail->addAddress('phamlyvibes2000@gmail.com', 'Waggy Admin');

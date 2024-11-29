@@ -20,7 +20,7 @@ class Header extends BaseView
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <title>Admin</title>
             <!-- Favicon icon -->
-            <link rel="icon" type="image/png" sizes="16x16" href="<?= APP_URL ?>/public/assets/admin/images/favicon.png">
+            <link rel="icon" type="image/png" sizes="50x50" href="<?= APP_URL ?>/public/assets/admin/images/logo.png">
             <!-- CSS -->
             <link href="<?= APP_URL ?>/public/assets/admin/libs/flot/css/float-chart.css" rel="stylesheet">
             <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>/public/assets/admin/extra-libs/multicheck/multicheck.css">

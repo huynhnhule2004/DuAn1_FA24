@@ -66,8 +66,8 @@ class Filter extends BaseView
                                                         </h4>
 
                                                         <div class="d-flex flex-wrap mt-3">
-                                                            <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
-                                                                <h5 class="m-0">Thêm vào giỏ</h5>
+                                                            <a href="/products/<?= $item['id'] ?>" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                                                <h6 class="text-uppercase m-0">Xem sản phẩm</h6>
                                                             </a>
                                                             <a href="#" class="btn-wishlist px-4 pt-3 ">
                                                                 <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>

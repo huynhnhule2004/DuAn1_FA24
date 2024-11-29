@@ -454,91 +454,129 @@ class About extends BaseView
     </section>
 
     <section id="latest-blog" class="my-5">
-      <div class="container py-5 my-5">
-        <div class="row mt-5">
-          <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
-            <h2 class="display-5 fw-normal">Bài Viết</h2>
-            <div>
-              <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-                Đọc Ngay
-                <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
-                  <use xlink:href="#arrow-right"></use>
-                </svg></a>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 my-4 my-md-0">
-            <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
-              <h3 class="secondary-font text-primary m-0">20</h3>
-              <p class="secondary-font fs-6 m-0">Tháng mười</p>
-
-            </div>
-            <div class="card position-relative">
-              <a href="single-post.html"><img src="public/assets/client/images/blog1.jpg" class="img-fluid rounded-4" alt="image"></a>
-              <div class="card-body p-0">
-                <a href="single-post.html">
-                  <h3 class="card-title pt-4 pb-3 m-0">lý do để giúp đỡ bất kỳ loài động vật nào</h3>
-                </a>
-
-                <div class="card-text">
-                  <p class="blog-paragraph fs-6">Bảo vệ hệ sinh thái,
-                    Thể hiện lòng nhân ái,
-                    Ngăn ngừa tuyệt chủng,
-                    Cải thiện sức khỏe,
-                    Giáo dục cộng đồng,
-                    Phát triển bền vững.</p>
-                  <!-- <a href="single-post.html" class="blog-read">Đọc ngay</a> -->
+            <div class="container py-5 my-5">
+                <div class="row mt-5">
+                    <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
+                        <h2 class="display-6 fw-normal">Bài viết mới nhất</h2>
+                        <div>
+                            <a href="/blogs" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+                                Xem thêm
+                                <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
+                                    <use xlink:href="#arrow-right"></use>
+                                </svg></a>
+                        </div>
+                    </div>
                 </div>
+                <div class="row">
+                    <?php if (!empty($data['latestBlogs'])): ?>
+                        <?php foreach ($data['latestBlogs'] as $item): ?>
+                            <?php
+                            $create_at = $item['created_at'];
+                            $date = date_create($create_at);
+                            $day = date_format($date, 'd');
+                            $monthNumber = date_format($date, 'm');
 
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 my-4 my-md-0">
-            <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
-              <h3 class="secondary-font text-primary m-0">12</h3>
-              <p class="secondary-font fs-6 m-0">Tháng chín</p>
+                            $months = [
+                                '01' => 'JAN',
+                                '02' => 'FEB',
+                                '03' => 'MAR',
+                                '04' => 'APR',
+                                '05' => 'MAY',
+                                '06' => 'JUN',
+                                '07' => 'JUL',
+                                '08' => 'AUG',
+                                '09' => 'SEP',
+                                '10' => 'OCT',
+                                '11' => 'NOV',
+                                '12' => 'DEC'
+                            ];
 
-            </div>
-            <div class="card position-relative">
-              <a href="single-post.html"><img src="public/assets/client/images/blog2.jpg" class="img-fluid rounded-4" alt="image"></a>
-              <div class="card-body p-0">
-                <a href="single-post.html">
-                  <h3 class="card-title pt-4 pb-3 m-0">Làm thế nào để biết thú cưng của bạn đang đói</h3>
-                </a>
+                            $month = $months[$monthNumber];
+                            ?>
+                            <div class="col-md-4 my-4 my-md-0">
+                                <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
+                                    <h3 class="secondary-font text-primary m-0"><?= $day ?></h3>
+                                    <p class="secondary-font fs-6 m-0"><?= strtoupper($month) ?></p>
 
-                <div class="card-text">
-                  <p class="blog-paragraph fs-6">Thú cưng có thể đói nếu chúng kêu la, đứng gần chỗ cho ăn, biểu hiện nôn nóng, hoặc ăn nhanh hơn bình thường..</p>
-                  <!-- <a href="single-post.html" class="blog-read">read more</a> -->
+                                </div>
+                                <div class="card position-relative">
+                                    <a href="/blogs/<?= $item['id'] ?>"><img src="<?= APP_URL ?>public/uploads/blogs/<?= $item['image'] ?>"
+                                            class="img-fluid rounded-4" alt="image" style="height: 300px; object-fit: cover;"></a>
+                                    <div class="card-body p-0">
+                                        <a href="/blogs/<?= $item['id'] ?>">
+                                            <h4 class="card-title pt-4 pb-3 m-0"><?= $item['title'] ?></h4>
+                                        </a>
+
+                                        <div class="card-text">
+                                            <p class="blog-paragraph fs-6">
+                                                <?= strlen($item['content']) > 150 ? substr($item['content'], 0, 150) . '...' : $item['content'] ?>
+                                            </p>
+                                            <a href="/blogs/<?= $item['id'] ?>" class="blog-read" >Đọc thêm</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        <?php
+                        endforeach;
+                        ?>
+                    <?php else: ?>
+                        <p>Không có bài viết mới nhất.</p>
+                    <?php endif; ?>
+
+                    <!-- <div class="col-md-4 my-4 my-md-0">
+                        <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
+                            <h3 class="secondary-font text-primary m-0">21</h3>
+                            <p class="secondary-font fs-6 m-0">Feb</p>
+
+                        </div>
+                        <div class="card position-relative">
+                            <a href="single-post.html"><img src="public/assets/client/images/blog2.jpg"
+                                    class="img-fluid rounded-4" alt="image"></a>
+                            <div class="card-body p-0">
+                                <a href="single-post.html">
+                                    <h3 class="card-title pt-4 pb-3 m-0">How to know your pet is hungry</h3>
+                                </a>
+
+                                <div class="card-text">
+                                    <p class="blog-paragraph fs-6">At the core of our practice is the idea that cities are the
+                                        incubators of
+                                        our greatest
+                                        achievements, and the best hope for a sustainable future.</p>
+                                    <a href="single-post.html" class="blog-read">Đọc thêm</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 my-4 my-md-0">
+                        <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
+                            <h3 class="secondary-font text-primary m-0">22</h3>
+                            <p class="secondary-font fs-6 m-0">Feb</p>
+
+                        </div>
+                        <div class="card position-relative">
+                            <a href="single-post.html"><img src="public/assets/client/images/blog3.jpg"
+                                    class="img-fluid rounded-4" alt="image"></a>
+                            <div class="card-body p-0">
+                                <a href="single-post.html">
+                                    <h3 class="card-title pt-4 pb-3 m-0">Best home for your pets</h3>
+                                </a>
+
+                                <div class="card-text">
+                                    <p class="blog-paragraph fs-6">At the core of our practice is the idea that cities are the
+                                        incubators of
+                                        our greatest
+                                        achievements, and the best hope for a sustainable future.</p>
+                                    <a href="single-post.html" class="blog-read">Đọc thêm</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
-
-              </div>
             </div>
-          </div>
-          <div class="col-md-4 my-4 my-md-0">
-            <div class="z-1 position-absolute rounded-3 m-2 px-3 pt-1 bg-light">
-              <h3 class="secondary-font text-primary m-0">4</h3>
-              <p class="secondary-font fs-6 m-0">Tháng ba</p>
-
-            </div>
-            <div class="card position-relative">
-              <a href="single-post.html"><img src="public/assets/client/images/blog3.jpg" class="img-fluid rounded-4" alt="image"></a>
-              <div class="card-body p-0">
-                <a href="single-post.html">
-                  <h3 class="card-title pt-4 pb-3 m-0">Ngôi nhà tốt nhất cho thú cưng của bạn</h3>
-                </a>
-
-                <div class="card-text">
-                  <p class="blog-paragraph fs-6">Ngôi nhà tốt nhất cho thú cưng cần đủ không gian, an toàn, tiện nghi thoải mái, dễ vệ sinh và có khu vực chơi riêng.</p>
-                  <!-- <a href="single-post.html" class="blog-read">read more</a> -->
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
     <section class="container1">
       <div class="testimonial mySwiper">

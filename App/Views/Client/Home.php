@@ -192,13 +192,9 @@ class Home extends BaseView
 
                                                         <div class="d-flex flex-wrap mt-3">
                                                             <!-- Form với nút thêm giỏ hàng-->
-                                                            <form action="/cart/add" method="post" class="m-0">
-                                                                <input type="hidden" name="method" value="POST">
-                                                                <input type="hidden" name="id" value="<?= $item['id'] ?>" required>
-                                                                <button type="submit" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                                    <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
-                                                                </button>
-                                                            </form>
+                                                            <a href="/products/<?= $item['id'] ?>" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                                        <h6 class="text-uppercase m-0">Xem chi tiết sản phẩm</h6>
+                                                    </a>
 
 
                                                             <!-- Nút Wishlist -->
@@ -280,7 +276,7 @@ class Home extends BaseView
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                            <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                            <h6 class="text-uppercase m-0">Xem chi tiết sản phẩm</h6>
                                         </a>
                                         <a href="/wishlist" class="btn-wishlist px-4 pt-3 ">
                                             <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -319,7 +315,7 @@ class Home extends BaseView
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                            <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                            <h6 class="text-uppercase m-0">Xem chi tiết sản phẩm</h6>
                                         </a>
                                         <a href="#" class="btn-wishlist px-4 pt-3 ">
                                             <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -358,7 +354,7 @@ class Home extends BaseView
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                            <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                            <h6 class="text-uppercase m-0">Xem chi tiết sản phẩm</h6>
                                         </a>
                                         <a href="#" class="btn-wishlist px-4 pt-3 ">
                                             <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -397,7 +393,7 @@ class Home extends BaseView
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                            <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                            <h6 class="text-uppercase m-0">Xem chi tiết sản phẩm</h6>
                                         </a>
                                         <a href="#" class="btn-wishlist px-4 pt-3 ">
                                             <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -436,7 +432,7 @@ class Home extends BaseView
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                            <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                            <h6 class="text-uppercase m-0">Xem chi tiết sản phẩm</h6>
                                         </a>
                                         <a href="#" class="btn-wishlist px-4 pt-3 ">
                                             <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -475,7 +471,7 @@ class Home extends BaseView
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                            <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                            <h6 class="text-uppercase m-0">Xem chi tiết sản phẩm</h6>
                                         </a>
                                         <a href="#" class="btn-wishlist px-4 pt-3 ">
                                             <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -514,7 +510,7 @@ class Home extends BaseView
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                            <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                            <h6 class="text-uppercase m-0">Xem chi tiết sản phẩm</h6>
                                         </a>
                                         <a href="#" class="btn-wishlist px-4 pt-3 ">
                                             <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -551,7 +547,7 @@ class Home extends BaseView
 
                                     <div class="d-flex flex-wrap mt-3">
                                         <a href="#" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                            <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                            <h6 class="text-uppercase m-0">Xem chi tiết sản phẩm</h6>
                                         </a>
                                         <a href="#" class="btn-wishlist px-4 pt-3 ">
                                             <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -698,8 +694,8 @@ class Home extends BaseView
                                                 <?php endif; ?>
 
                                                 <div class="d-flex flex-wrap mt-3">
-                                                    <a href="/cart" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                        <h6 class="text-uppercase m-0">Thêm vào giỏ hàng</h6>
+                                                    <a href="/products/<?= $item['id'] ?>" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                                        <h6 class="text-uppercase m-0">Xem chi tiết sản phẩm</h6>
                                                     </a>
                                                     <a href="/wishlist" class="btn-wishlist px-4 pt-3">
                                                         <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -760,7 +756,7 @@ class Home extends BaseView
                     <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
                         <h2 class="display-6 fw-normal">Bài viết mới nhất</h2>
                         <div>
-                            <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+                            <a href="/blogs" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                                 Xem thêm
                                 <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
                                     <use xlink:href="#arrow-right"></use>

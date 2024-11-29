@@ -52,7 +52,7 @@ class Category extends BaseView
                                             </div>
                                             <div class="card position-relative">
                                                 <a href="/products/<?= $item['id'] ?>">
-                                                    <img src="<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
+                                                    <img src="<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image" style="height: 300px; object-fit: cover;">
                                                 </a>
                                                 <div class="card-body p-0">
                                                     <a href="/products/<?= $item['id'] ?>">
@@ -72,8 +72,8 @@ class Category extends BaseView
                                                         </h4>
 
                                                         <div class="d-flex flex-wrap mt-3">
-                                                            <a href="#" class="btn-cart me-3 px-4 pt-3 pb-3">
-                                                                <h5 class="m-0">Thêm vào giỏ</h5>
+                                                            <a href="/products/<?= $item['id'] ?>" class="btn-cart me-3 px-3 pt-3 pb-3">
+                                                                <h6 class="text-uppercase m-0">Xem sản phẩm</h6>
                                                             </a>
                                                             <a href="#" class="btn-wishlist px-4 pt-3 ">
                                                                 <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>

@@ -11,6 +11,8 @@ class Index extends BaseView
     $blogs = $data['blogs'] ?? [];
     $remainingPosts = $data['remainingPosts'] ?? 0;
     $currentOffset = $data['currentOffset'] ?? 0;
+
+    
 ?>
     <div class="container pt-5">
       <?php if (!empty($blogs)): ?>

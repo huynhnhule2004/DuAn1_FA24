@@ -56,19 +56,19 @@ class Footer extends BaseView
                             <h3>Liên kết nhanh</h3>
                             <ul class="menu-list list-unstyled">
                                 <li class="menu-item">
-                                    <a href="#" class="nav-link">Trang chủ</a>
+                                    <a href="/" class="nav-link">Trang chủ</a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#" class="nav-link">Sản phẩm</a>
+                                    <a href="/products" class="nav-link">Sản phẩm</a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#" class="nav-link">Giới thiệu</a>
+                                    <a href="/about" class="nav-link">Giới thiệu</a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#" class="nav-link">Bài viết </a>
+                                    <a href="/blogs" class="nav-link">Bài viết </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#" class="nav-link">Liên hệ</a>
+                                    <a href="/contact" class="nav-link">Liên hệ</a>
                                 </li>
                             </ul>
                         </div>
@@ -97,7 +97,7 @@ class Footer extends BaseView
                     </div>
                     <div class="col-md-3">
                         <div>
-                            <h3>Bản tin</h3>
+                            <h3>Bảng tin</h3>
                             <p class="blog-paragraph fs-6">Đăng ký nhận bản tin của chúng tôi để nhận thông tin cập nhật về các ưu đãi lớn.
                             </p>
                             <div class="search-bar border rounded-pill border-dark-subtle px-2">
