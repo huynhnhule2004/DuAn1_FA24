@@ -49,8 +49,10 @@ class Checkout extends BaseView
         $user = isset($_COOKIE['user']) ? json_decode($_COOKIE['user'], true) : [];
 //         echo "<pre>";
 // var_dump($cart);
+// exit;
         // Kiểm tra nếu có dữ liệu trong mảng 'buy'
-        if (isset($cart[0]['buy']) && !empty($cart[0]['buy'])) {
+        if (isset($cart) && !empty($cart)) {
+            
         ?>
 
             <!-- Giao diện Thanh Toán -->
@@ -121,24 +123,41 @@ class Checkout extends BaseView
                                 </thead>
                                 <tbody>
                                     <?php
-                                    // Lặp qua các sản phẩm trong mảng 'buy'
-                                    foreach ($cart[0]['buy'] as $product) {
-                                        $product_name = $product['product_name'];
-                                        $qty = $product['qty'];
-                                        $price = number_format($product['price_default'], 0, ',', '.') . ' VNĐ';
-                                        $total = number_format($product['sub_total'], 0, ',', '.') . ' VNĐ';
-                                        echo "<tr>
-                                    <td>$product_name</td>
-                                    <td>$qty</td>
-                                    <td>$price</td>
-                                    <td>$total</td>
-                                </tr>";
-                                    }
+                                   $totalPrice = 0; // Khởi tạo biến tổng giá trị
+
+                                   // Lặp qua các sản phẩm trong mảng 'buy'
+                                   foreach ($cart as $order) {
+                                       foreach ($order['buy'] as $product) {
+                                           $product_name = $product['product_name'];
+                                           $product_combo = $product['variant_options'][0]['product_variant_option_combination_id'];
+                                           $qty = $product['qty'];
+                                           $price_default = (float) $product['price_default']; // Chuyển đổi giá thành số
+                                           $productTotal = $qty * $price_default; // Tính tổng giá trị của sản phẩm
+                                           
+                                           $totalPrice += $productTotal; // Cộng vào tổng giá trị của đơn hàng
+                                           
+                                           // Định dạng lại giá trị để hiển thị
+                                           $formattedPrice = number_format($price_default, 0, ',', '.') . ' VNĐ';
+                                           $formattedTotal = number_format($productTotal, 0, ',', '.') . ' VNĐ';
+                                           
+                                           // In ra thông tin sản phẩm
+                                           echo "<tr>
+                                               <td>$product_name</td>
+                                               <td>$qty</td>
+                                               <td>$formattedPrice</td>
+                                               <td>$formattedTotal</td>
+                                                <td><input type='hidden' name='qty[]' value='$qty'></td>
+                                               <td><input type='hidden' name='product_combo[]' value='$product_combo '></td>
+                                               <td><input type='hidden' name='price[]' value='$price_default '></td>
+                                           </tr>";
+                                       }
+                                   }
 
                                     // Hiển thị tổng cộng
-                                    $total_order = number_format($cart[0]['info']['total'], 0, ',', '.') . ' VNĐ';
+                                    $total_order = number_format($totalPrice, 0, ',', '.') . ' VNĐ';
                                     // $total_price_payment = number_format($cart['info']['total'], 0, ',', '.');
-                                    $total_price_payment =$cart[0]['info']['total'];
+                                    $total_price_payment = number_format($totalPrice, 0, '', ''); // Không có dấu phân cách
+                                    // echo $total_price_payment;
 
                                     echo "<input type='hidden' name='total_price_payment' value=' $total_price_payment '>";
                                     

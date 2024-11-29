@@ -2,45 +2,43 @@
 
 namespace App\Models;
 
-class Order extends BaseModel
+class OrderDetail extends BaseModel
 {
-    protected $table = 'orders';
+    protected $table = 'order_details';
     protected $id = 'id';
 
-    public function getAllOrderAndNameUser()
+    public function getAllOrderDetailByOrderId($id)
     {
         $result = [];
         try {
-            // $sql = "SELECT * FROM $this->table";
-            $sql = "SELECT o.*, u.first_name
-            FROM orders o 
-            JOIN users u 
-            ON o.user_id = u.id;
-";
+            $sql = "SELECT 
+            od.order_id, 
+            od.quantity, 
+            od.price, 
+            s.sku, 
+            s.product_id, 
+            pvo.product_variant_id, 
+            pvo.name AS variant_name, 
+            p.product_name,
+            p.image 
+        FROM 
+            order_details od
+        INNER JOIN 
+            product_variant_option_combinations pvoc ON od.product_variant_option_combinations_id = pvoc.id
+        INNER JOIN 
+            product_variant_options pvo ON pvoc.product_variant_option_id = pvo.id
+        INNER JOIN 
+            skus s ON pvoc.sku_id = s.id
+        INNER JOIN 
+            products p ON p.id = s.product_id
+        WHERE 
+            od.order_id = $id";
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {
             error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
             return $result;
         }
-    }
-
-    public function getAllOrderByUserId($id)
-    {
-        $result = [];
-        try {
-            // $sql = "SELECT * FROM $this->table";
-            $sql = "SELECT * FROM `orders` WHERE user_id = $id;";
-            $result = $this->_conn->MySQLi()->query($sql);
-            return $result->fetch_all(MYSQLI_ASSOC);
-        } catch (\Throwable $th) {
-            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
-            return $result;
-        }
-    }
-    public function getOneById($id)
-    {
-        return $this->getOne($id);
     }
     public function getOneOrder($id)
     {
@@ -65,77 +63,15 @@ class Order extends BaseModel
         }
     }
 
-    public function createOrder($data)
+    public function createOrderDetail($data)
     {
-        try {
-            $sql = "INSERT INTO $this->table (";
-
-            // Tạo phần danh sách các trường trong bảng
-            foreach ($data as $key => $value) {
-                $sql .= "$key, ";
-            }
-
-            // Xóa dấu phẩy thừa ở cuối
-            $sql = rtrim($sql, ", ");
-
-            $sql .= " ) VALUES (";
-
-            // Tạo phần giá trị tương ứng
-            foreach ($data as $key => $value) {
-                $sql .= "'$value', ";
-            }
-
-            // Xóa dấu phẩy thừa ở cuối
-            $sql = rtrim($sql, ", ");
-
-            $sql .= ")";
-
-            // Kết nối với cơ sở dữ liệu
-            $conn = $this->_conn->MySQLi();
-            $stmt = $conn->prepare($sql);
-
-            // Thực thi câu lệnh
-            $stmt->execute();
-
-            // Lấy ID của bản ghi vừa được chèn
-            $lastInsertedId = $conn->insert_id;
-
-            return $lastInsertedId; // Trả về ID đơn hàng vừa tạo
-        } catch (\Throwable $th) {
-            error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
-            return false;
-        }
+        return $this->create($data);
     }
     public function updateOrder($id, $data)
     {
         return $this->update($id, $data);
     }
-    public function updatePaymentStatus(int $id, string $status)
-    {
-        try {
-            // Tạo câu lệnh SQL
-            $sql = "UPDATE $this->table SET payment_status = ? WHERE $this->id = ?";
-            
-            // Kết nối MySQL
-            $conn = $this->_conn->MySQLi();
-            $stmt = $conn->prepare($sql);
-    
-            if (!$stmt) {
-                throw new \Exception('Không thể chuẩn bị câu lệnh SQL: ' . $conn->error);
-            }
-    
-            // Liên kết tham số (prepared statement)
-            $stmt->bind_param('si', $status, $id);
-    
-            // Thực thi câu lệnh và trả kết quả
-            return $stmt->execute();
-        } catch (\Throwable $th) {
-            // Ghi log lỗi nếu có
-            error_log('Lỗi khi cập nhật trạng thái thanh toán: ' . $th->getMessage());
-            return false;
-        }
-    }
-    
+
     public function deleteOrder($id)
     {
         return $this->delete($id);

@@ -25,20 +25,20 @@ class Index extends BaseView
                                     <p class="lead fw-normal mb-0 text-primary fw-bold">Chi Tiết Đơn Hàng</p>
                                     <p class="small text-muted mb-0">Mã Đơn Hàng: <?= htmlspecialchars($data['order_id']) ?></p>
                                 </div>
-                                <?php if (!empty($data['orders'])): ?>
-                                    <?php foreach ($data['orders'] as $item): ?>
+                                <?php if (!empty($data['order_details'])): ?>
+                                    <?php foreach ($data['order_details'] as $item): ?>
                                         <div class="card shadow-0 border mb-4">
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-md-2">
-                                                        <img src="<?= APP_URL ?>/public/assets/client/images/<?= htmlspecialchars($item['image']) ?>"
-                                                            class="img-fluid rounded-3" alt="<?= htmlspecialchars($item['name']) ?>">
+                                                        <img src="<?= APP_URL ?>/public/uploads/products/<?= htmlspecialchars($item['image']) ?>"
+                                                            class="img-fluid rounded-3" alt="<?= htmlspecialchars($item['product_name']) ?>">
                                                     </div>
                                                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                                        <p class="text-muted mb-0"><?= htmlspecialchars($item['name']) ?></p>
+                                                        <p class="text-muted mb-0"><?= htmlspecialchars($item['product_name']) ?></p>
                                                     </div>
                                                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                                        <p class="text-muted mb-0 small">Size: <?= htmlspecialchars($item['size']) ?></p>
+                                                        <p class="text-muted mb-0 small">Size: <?= htmlspecialchars($item['variant_name']) ?></p>
                                                     </div>
                                                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                                                         <p class="text-muted mb-0 small">Số lượng: <?= htmlspecialchars($item['quantity']) ?></p>
@@ -61,12 +61,12 @@ class Index extends BaseView
                                     <div class="row pt-2">
                                         <div class="col-6">
                                             <p class="text-muted mb-0">
-                                                Phương thức thanh toán: <?= htmlspecialchars($data['payment_method']) === 'Online payment' ? 'Chuyển khoản' : 'COD' ?>
+                                                Phương thức thanh toán: <?= htmlspecialchars($data['payment_method']) === 'Online payment' ? 'Thanh toán bằng MOMO' : 'COD' ?>
                                             </p>
                                         </div>
                                         <div class="col-6 text-end">
                                             <p class="text-muted mb-0">
-                                                <span class="fw-bold me-2">Tổng:</span> <?= number_format($data['total_amount'], 0, ',', '.') ?> VNĐ
+                                                <span class="fw-bold me-2">Tổng:</span> <?= number_format($data['orders']['total_price'], 0, ',', '.') ?> VNĐ
                                             </p>
                                         </div>
                                     </div>
@@ -75,17 +75,17 @@ class Index extends BaseView
                                         <div class="col-6">
                                             <p class="text-muted mb-0">Mã đơn hàng: <?= htmlspecialchars($data['order_id']) ?></p>
                                         </div>
-                                        <div class="col-6 text-end">
+                                        <!-- <div class="col-6 text-end">
                                             <p class="text-muted mb-0">
                                                 <span class="fw-bold me-2">Phí vận chuyển:</span> <?= number_format($data['shipping_fee'], 0, ',', '.') ?> VNĐ
                                             </p>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="card-footer border-0 px-4 py-4 bg-primary rounded-3 mt-3">
                                     <h5 class="d-flex align-items-center justify-content-end text-white mb-0 fs-4">
                                         Tổng Số Tiền Thanh Toán:
-                                        <span class="h3 mb-0 ms-2"><?= number_format($data['total_amount'] + $data['shipping_fee'], 0, ',', '.') ?> VNĐ</span>
+                                        <span class="h3 mb-0 ms-2"><?= number_format($data['orders']['total_price'], 0, ',', '.') ?> VNĐ</span>
                                     </h5>
                                 </div>
                             </div>

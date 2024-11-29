@@ -314,18 +314,57 @@ class AuthHelper
     {
         // Tạo nội dung email cho khách hàng
         $body = "
-            <p>Kính gửi $name,</p>
-            <p>Cảm ơn bạn đã đặt hàng tại <strong>Waggy</strong>! Chúng tôi rất vui mừng thông báo rằng đơn hàng của bạn đã được tiếp nhận và đang được xử lý. Dưới đây là thông tin chi tiết về đơn hàng:</p>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                margin: 20px;
+                padding: 10px;
+            }
+            p {
+                margin: 10px 0;
+            }
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 10px 0;
+            }
+            li {
+                margin-bottom: 8px;
+            }
+            strong {
+                color: #2c3e50;
+            }
+            .order-details {
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 15px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .footer {
+                margin-top: 20px;
+                font-style: italic;
+                color: #555;
+            }
+        </style>
+        <p>Kính gửi <strong>$name</strong>,</p>
+        <p>Cảm ơn bạn đã đặt hàng tại <strong>Waggy</strong>! Chúng tôi rất vui mừng thông báo rằng đơn hàng của bạn đã được tiếp nhận và đang được xử lý. Dưới đây là thông tin chi tiết về đơn hàng:</p>
+        <div class='order-details'>
             <p><strong>Thông tin đơn hàng:</strong></p>
             <ul>
                 <li><strong>Mã đơn hàng:</strong> $orderId</li>
                 <li><strong>Ngày đặt hàng:</strong> $orderDate</li>
                 <li><strong>Phương thức thanh toán:</strong> $paymentMethod</li>
+                <li><strong>Trạng thái thanh toán:</strong> Đã thanh toán</li>
                 <li><strong>Tổng giá trị đơn hàng:</strong> " . number_format($totalAmount) . " VNĐ</li>
             </ul>
-            <p>Chúng tôi sẽ liên hệ lại với bạn ngay khi đơn hàng được xử lý.</p>
-            <p><strong>Trân trọng,</strong><br>Đội ngũ Waggy</p>
-        ";
+        </div>
+        <p>Chúng tôi sẽ liên hệ lại với bạn ngay khi đơn hàng được xử lý.</p>
+        <p class='footer'><strong>Trân trọng,</strong><br>Đội ngũ Waggy</p>
+    ";
+
 
         // Cấu hình gửi email
         header('Content-Type: text/html; charset=utf-8');
@@ -352,14 +391,68 @@ class AuthHelper
 
             // Gửi email đến khách hàng
             $mail->send();
-            
+
             // Gửi email thông báo đến Admin
             $adminBody = "
-                <p><strong>Lời nhắn từ khách hàng:</strong></p>
-                <p><strong>Tên:</strong> $name</p>
-                <p><strong>Email:</strong> $to</p>
-                ";
-                // <p><strong>Điện thoại:</strong> {$_POST['phone']}</p>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        line-height: 1.6;
+                        color: #333;
+                        margin: 20px;
+                        padding: 10px;
+                    }
+                    p {
+                        margin: 10px 0;
+                    }
+                    ul {
+                        list-style: none;
+                        padding: 0;
+                        margin: 10px 0;
+                    }
+                    li {
+                        margin-bottom: 8px;
+                    }
+                    strong {
+                        color: #2c3e50;
+                    }
+                    .admin-details {
+                        background-color: #eaf0f8;
+                        border: 1px solid #b0c7d7;
+                        border-radius: 8px;
+                        padding: 15px;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    }
+                    .admin-footer {
+                        margin-top: 20px;
+                        font-style: italic;
+                        color: #555;
+                    }
+                    .header {
+                        font-size: 1.2em;
+                        margin-bottom: 15px;
+                        color: #2c3e50;
+                    }
+                </style>
+                <p class='header'>Thông báo mới: Đơn hàng được đặt trên hệ thống</p>
+                <p>Kính gửi Admin,</p>
+                <p>Đơn hàng mới đã được tiếp nhận trên hệ thống. Dưới đây là thông tin chi tiết về đơn hàng:</p>
+                <div class='admin-details'>
+                    <p><strong>Thông tin đơn hàng:</strong></p>
+                    <ul>
+                        <li><strong>Mã đơn hàng:</strong> $orderId</li>
+                        <li><strong>Tên khách hàng:</strong> $name</li>
+                        <li><strong>Ngày đặt hàng:</strong> $orderDate</li>
+                        <li><strong>Phương thức thanh toán:</strong> $paymentMethod</li>
+                        <li><strong>Trạng thái thanh toán:</strong> Đã thanh toán</li>
+                        <li><strong>Tổng giá trị đơn hàng:</strong> " . number_format($totalAmount) . " VNĐ</li>
+                    </ul>
+                </div>
+                <p>Vui lòng kiểm tra và xử lý đơn hàng càng sớm càng tốt.</p>
+                <p class='admin-footer'><strong>Trân trọng,</strong><br>Hệ thống Waggy</p>
+            ";
+
+            // <p><strong>Điện thoại:</strong> {$_POST['phone']}</p>
 
             $mail->clearAddresses();
             $mail->addAddress('phamlyvibes2000@gmail.com', 'Waggy Admin');
@@ -376,5 +469,4 @@ class AuthHelper
             return false;
         }
     }
-
 }

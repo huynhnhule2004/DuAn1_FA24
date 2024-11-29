@@ -4,21 +4,29 @@ namespace App\Controllers\Client;
 
 use App\Helpers\AuthHelper;
 use App\Helpers\NotificationHelper;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
+use App\Views\Client\Pages\Order\History;
 use App\Views\Client\Pages\Order\Index;
 use App\Views\Client\Layouts\Header;
 use App\Views\Client\Pages\Order\Success;
+use App\Views\Client\Pages\Order\Detail;
 
 class OrderController
 {
     // Hiển thị danh sách
     public static function index()
     {
+        // echo "<pre>";
+        // var_dump($_POST);
+        // exit;
         // Lấy danh sách danh mục
         $category = new Category();
+
         $categories = $category->getAllCategoryByStatus();
 
         $data = [
@@ -32,7 +40,29 @@ class OrderController
 
         ];
         $order = new Order();
+        $order_detail = new OrderDetail();
+
         $results = $order->createOrder($data);
+
+        $qtyArray = $_POST['qty'];
+        $productComboArray = $_POST['product_combo'];
+        $priceArray = $_POST['price'];
+
+        for ($i = 0; $i < count($qtyArray); $i++) {
+            $qty = $qtyArray[$i];
+            $productCombo = trim($productComboArray[$i]);
+            $price = (float) trim($priceArray[$i]);
+
+            $data = [
+                'order_id' => $results,
+                'product_variant_option_combinations_id ' => $productCombo,
+                'quantity' => $qty,
+                'price' => $price
+            ];
+
+            $action = $order_detail->createOrderDetail($data);
+        }
+
 
 
         // Lấy phương thức thanh toán từ POST
@@ -111,6 +141,8 @@ class OrderController
                 'data' => $vnp_Url
             );
             if (isset($_POST['redirect'])) {
+                $cart = new Cart();
+                $cart->clearCart();
                 header('Location: ' . $vnp_Url);
                 die();
             } else {
@@ -182,27 +214,12 @@ class OrderController
                 $errorMessage = "Không xác định được phương thức thanh toán.";
             }
 
-            // Dữ liệu đơn hàng giả định
-            $orders = [
-                [
-                    'id' => 1,
-                    'name' => 'Áo Hoodie Xám',
-                    'price' => 400000,
-                    'image' => 'item1.jpg',
-                    'status' => 1,
-                    'size' => 'M',
-                    'quantity' => 1
-                ],
-                [
-                    'id' => 2,
-                    'name' => 'Áo Hoodie Đen',
-                    'price' => 450000,
-                    'image' => 'item2.jpg',
-                    'status' => 1,
-                    'size' => 'L',
-                    'quantity' => 2
-                ]
-            ];
+            $category = new Category();
+            $categories = $category->getAllCategoryByStatus();
+            $order = new Order();
+            $orders = $order->getOneById($orderId);
+            $order_detail = new OrderDetail();
+            $order_details = $order_detail->getAllOrderDetailByOrderId( $orderId);
 
             // Dữ liệu để render giao diện
             $data = [
@@ -213,11 +230,16 @@ class OrderController
                 'categories' => $categories,
                 'order_id' => $orderId,
                 'shipping_fee' => $shippingFee,
-                'total_amount' => $totalAmount
+                'total_amount' => $totalAmount,
+                'order_details' => $order_details
             ];
-
+            $cart = new Cart();
+            $cart->clearCart();
+            // echo '<pre>';
+            // var_dump($data['order_details']);
+            // exit;
             // Render giao diện
-            Header::render(); // Hiển thị header
+            Header::render($data); // Hiển thị header
             Index::render($data); // Render trang đơn hàng với dữ liệu
             Footer::render(); // Hiển thị footer
         }
@@ -319,13 +341,83 @@ class OrderController
             'vnp_TxnRef' => $_GET['vnp_TxnRef']
         ];
         if (isset($_GET['vnp_ResponseCode']) && $_GET['vnp_ResponseCode'] == "00") {
+            $order = new Order();
+            $order->updatePaymentStatus($_GET['vnp_TxnRef'], 'Paid');
+            $currentDate = date("d/m/Y");
+            if (isset($_COOKIE['user'])) {
+                $userData = json_decode($_COOKIE['user'], true);
+
+                // Kiểm tra xem các trường 'username' và 'email' có tồn tại không
+                if (isset($userData['first_name']) && isset($userData['email'])) {
+                    $name = $userData['first_name'];
+                    $email = $userData['email'];
+                } else {
+                    echo "Thông tin username hoặc email không tồn tại trong cookie.";
+                }
+            } else {
+                echo "Cookie 'user' không tồn tại.";
+            }
             // Gửi email khi giao dịch thành công
-            $phpEmail = AuthHelper::sendEmailOrder('huynhnhule2004@gmail.com', 'nhu', $_GET['vnp_TxnRef'], $_GET['vnp_Amount'] / 100, '22/20/2004', 'VNPAY');
+            $phpEmail = AuthHelper::sendEmailOrder($email, $name, $_GET['vnp_TxnRef'], $_GET['vnp_Amount'] / 100, $currentDate, 'VNPAY');
         }
 
         // echo "<pre>";
         // var_dump($_GET);
         // exit;
         Success::render($data);
+    }
+
+    public function history()
+    {
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
+
+
+        $order = new Order();
+
+        if (isset($_COOKIE['user'])) {
+            $userData = json_decode($_COOKIE['user'], true);
+
+            // Kiểm tra xem các trường 'username' và 'email' có tồn tại không
+            if (isset($userData['id'])) {
+                $id = $userData['id'];
+            } else {
+                echo "Thông tin không tồn tại trong cookie.";
+            }
+        } else {
+            echo "Cookie 'user' không tồn tại.";
+        }
+
+        $orders = $order->getAllOrderByUserId($id);
+        $data = [
+            'categories' => $categories,
+            'orders' => $orders
+        ];
+
+        Header::render($data);
+        History::render($data);
+        Footer::render();
+    }
+
+    public static function detail($id)
+    {
+
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
+        $order = new Order();
+        $orders = $order->getOneById($id);
+        $order_detail = new OrderDetail();
+        $order_details = $order_detail->getAllOrderDetailByOrderId($id);
+        $data = [
+            'categories' => $categories,
+            'orders' => $orders,
+            'order_details' => $order_details
+        ];
+        // echo '<pre>';
+        // var_dump($data['order_details']);
+        // exit;
+        Header::render($data);
+        Detail::render($data);
+        Footer::render();
     }
 }

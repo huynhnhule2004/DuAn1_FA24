@@ -62,7 +62,12 @@ class Cart extends BaseModel
     }
 
 
-
+    public function clearCart() {
+        // Kiểm tra nếu cookie giỏ hàng tồn tại
+        if (isset($_COOKIE['cart'])) {
+            setcookie('cart', '', time() - 3600, '/'); // Xóa cookie giỏ hàng
+        }
+    }
 
     public function deleteItem($id)
     {

@@ -126,7 +126,7 @@ class Success extends BaseView
                         <p><strong>Thời gian thanh toán:</strong> <?= htmlspecialchars($data['vnp_PayDate']) ?></p>
                         <p><strong>Thông tin đơn hàng:</strong> <?= htmlspecialchars($data['vnp_OrderInfo']) ?></p>
                         <p><strong>Mã tham chiếu:</strong> <?= htmlspecialchars($data['vnp_TxnRef']) ?></p>
-                        <a href="/" class="btn btn-primary">Quay lại cửa hàng</a> 
+                        <a href="/orders/<?= $data['vnp_TxnRef']; ?>" class="btn btn-primary">Xem chi tiết đơn hàng</a> 
                     </div>
                 </div>
             </div>
