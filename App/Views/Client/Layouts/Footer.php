@@ -131,7 +131,12 @@ class Footer extends BaseView
                 </div> -->
             </div>
         </div>
-
+        <div id="chat-icon" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+    <a href="https://chat.example.com" target="_blank">
+        <iconify-icon icon="mdi:chat-outline" style="font-size: 48px; color: #007bff;"></iconify-icon>
+    </a>
+</div>
+        <script lang="javascript">var __vnp = {code : 23609,key:'', secret : '9fc00ace2dd2671f429cb46a14ceb0ec'};(function() {var ga = document.createElement('script');ga.type = 'text/javascript';ga.async=true; ga.defer=true;ga.src = 'https://core.vchat.vn/code/tracking.js?v=95821'; var s = document.getElementsByTagName('script');s[0].parentNode.insertBefore(ga, s[0]);})();</script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="<?= APP_URL ?>/public/assets/client/js/jquery-1.11.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>

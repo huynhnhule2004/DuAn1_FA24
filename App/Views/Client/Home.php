@@ -979,6 +979,7 @@ class Home extends BaseView
                 </div>
             </div>
         </section>
+        
 <?php
     }
 }
