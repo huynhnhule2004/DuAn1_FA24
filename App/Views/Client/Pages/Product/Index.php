@@ -70,7 +70,7 @@ class Index extends BaseView
             SortBy::render();
             ?>
             <?php if (!empty($data['products'])): ?>
-              <div class="row mt-3">
+              <div class="row g-4 ">
                 <?php foreach ($data['products'] as $item): ?>
                   <div class="col-md-4 mb-4">
                     <div class="swiper-slide">
@@ -310,7 +310,7 @@ class Index extends BaseView
                 $('.loading').fadeOut('fast');
 
                 // Cập nhật nội dung blog
-                $('.row.mt-3').html(response.productHtml);
+                $('.row.g-4').html(response.productHtml);
 
                 // Cập nhật phân trang
                 $('.pagination').html(response.paginationLinks);
