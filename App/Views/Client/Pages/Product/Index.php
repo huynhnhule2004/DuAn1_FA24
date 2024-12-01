@@ -70,8 +70,8 @@ class Index extends BaseView
             SortBy::render();
             ?>
             <?php if (!empty($data['products'])): ?>
-              <div class="row g-4 ">
-                <?php foreach ($data['filteredProducts'] as $item): ?>
+              <div class="row mt-3">
+                <?php foreach ($data['products'] as $item): ?>
                   <div class="col-md-4 mb-4">
                     <div class="swiper-slide">
                       <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
@@ -105,7 +105,7 @@ class Index extends BaseView
 
                             <div class="d-flex flex-wrap mt-3">
                               <a href="/products/<?= $item['id'] ?>" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                <h6 class="text-uppercase m-0">Xem sản phẩm</h6>
+                                <h6 class="text-uppercase m-0">Xem chi tiết</h6>
                               </a>
                               <a href="#" class="btn-wishlist px-4 pt-3 ">
                                 <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
@@ -120,7 +120,7 @@ class Index extends BaseView
                 <?php endforeach; ?>
               </div>
             <?php else: ?>
-              <p>Không có sản phẩm nào trong khoảng giá này.</p>
+              <p>Không có sản phẩm.</p>
             <?php endif; ?>
             <?php if ($remainingProducts > 0): ?>
               <div class="pagination loop-pagination d-flex justify-content-center align-items-center">
@@ -304,13 +304,13 @@ class Index extends BaseView
               },
               dataType: 'json',
               success: function(response) {
-                console.log(response); // Log response để debug
+                console.log(response); 
 
                 // Tắt loader
                 $('.loading').fadeOut('fast');
 
                 // Cập nhật nội dung blog
-                $('.row.g-4').html(response.productHtml);
+                $('.row.mt-3').html(response.productHtml);
 
                 // Cập nhật phân trang
                 $('.pagination').html(response.paginationLinks);

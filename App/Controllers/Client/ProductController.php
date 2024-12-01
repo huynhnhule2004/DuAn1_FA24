@@ -177,13 +177,13 @@ class ProductController
                                 ' . $originalPrice . '
                             </h4>
                             <div class="d-flex flex-wrap mt-3">
-                                <form action="/cart/add" method="post" class="m-0">
+                                <a href="/products/'.$item['id'].'">
                                     <input type="hidden" name="method" value="POST">
                                     <input type="hidden" name="id" value="'. $item['id'] .'" required>
                                     <button type="submit" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                        <h6 class="text-uppercase m-0">Thêm vào giỏ</h6>
+                                        <h6 class="text-uppercase m-0">Xem chi tiết</h6>
                                     </button>
-                                </form>
+                                </a>
                                 <a href="#" class="btn-wishlist px-4 pt-3">
                                     <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>
                                 </a>
