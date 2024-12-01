@@ -48,7 +48,7 @@ class Search extends BaseView
                                             </div>
                                             <div class="card position-relative">
                                                 <a href="/products/<?= $item['id'] ?>">
-                                                    <img src="<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image">
+                                                    <img src="<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>" class="img-fluid rounded-4" alt="image" style="height: 300px; object-fit: cover;">
                                                 </a>
                                                 <div class="card-body p-0">
                                                     <a href="/products/<?= $item['id'] ?>">
@@ -82,11 +82,6 @@ class Search extends BaseView
                                     </div>
 
                                 <?php endforeach; ?>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col text-center">
-                                    <a href="#" class="btn btn-outline-primary">Xem thêm 79 sản phẩm khác</a>
-                                </div>
                             </div>
                         <?php else: ?>
                             <h3 class="text-center text-danger">Không có sản phẩm</h3>
