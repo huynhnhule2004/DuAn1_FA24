@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Views\Admin\Components\Notification;
 use App\Views\Admin\Home;
+use App\Models\Order;
 use App\Views\Admin\Layouts\Footer;
 use App\Views\Admin\Layouts\Header;
 
@@ -31,7 +32,9 @@ class HomeController
         $total_comment = $comment->countTotalComment();
         $comment_by_product = $comment->countCommentByProduct();
 
-
+        $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
+        $order = new Order();
+        $revenue_by_month = $order->getRevenueByMonth($year);
         // var_dump($total_user);
 
         $data = [
@@ -41,6 +44,7 @@ class HomeController
             'total_comment' => $total_comment['total'],
             'product_by_category' => $product_by_category,
             'comment_by_product' => $comment_by_product,
+            'revenue_by_month' => $revenue_by_month,
         ];
 
         Header::render();

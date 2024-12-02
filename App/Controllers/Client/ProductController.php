@@ -252,23 +252,6 @@ class ProductController
                       data-page="' . $page . '">' . $page . '</a>';
         }
     }
-    public function filterByPrice()
-    {
-        $category = new Category();
-        $categories = $category->getAllCategoryByStatus();
-
-        $priceRange = $_GET['priceRange'] ?? 'all';
-        $product = new Product();
-        $filteredProducts = $product->filterByPriceRange($priceRange);
-
-        $data = [
-            'filteredProducts' => $filteredProducts,
-            'categories' => $categories
-        ];
-
-        Header::render($data);
-        Filter::render($data);
-        Footer::render();
-    }
+   
     
 }

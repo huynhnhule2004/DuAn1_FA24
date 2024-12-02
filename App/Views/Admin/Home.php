@@ -86,6 +86,15 @@ class Home extends BaseView
                             <canvas id="comment_by_product"></canvas>
                         </div>
                     </div>
+
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Thông kê doanh thu theo tháng</h4>
+                        </div>
+                        <canvas id="revenue_by_month"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -175,9 +184,70 @@ class Home extends BaseView
                     });
                 }
 
+                function revenueByMonthChart() {
+                    var php_data = <?= json_encode($data['revenue_by_month']) ?>;
+
+                    console.log("Dữ liệu từ PHP:", php_data);
+                    var labels = [];
+                    var data = [];
+
+                    for (let i of php_data) {
+                        labels.push("Tháng " + i.month);
+                        data.push(i.revenue);
+                    }
+
+                    console.log("Labels:", labels);
+                    console.log("Data:", data);
+
+                    const ctx = document.getElementById('revenue_by_month');
+
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Doanh thu (VND)',
+                                data: data,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 2,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top',
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Tháng'
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Doanh thu (VND)'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+
+
+
 
                 productByCategoryChart();
-                commentByProductChart()
+                commentByProductChart();
+                revenueByMonthChart()
             </script>
 
     <?php

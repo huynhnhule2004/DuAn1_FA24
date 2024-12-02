@@ -185,4 +185,26 @@ class Order extends BaseModel
             return [];
         }
     }
+    public function getRevenueByMonth($year)
+{
+    $result = [];
+    try {
+        $sql = "SELECT MONTH(created_at) AS month, SUM(total_price) AS revenue
+                FROM {$this->table}
+                WHERE YEAR(created_at) = ?
+                GROUP BY MONTH(created_at)
+                ORDER BY MONTH(created_at)";
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param('i', $year);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } catch (\Throwable $th) {
+        error_log('Lỗi khi truy xuất doanh thu theo tháng: ' . $th->getMessage());
+    }
+
+    return $result;
+}
+
 }
