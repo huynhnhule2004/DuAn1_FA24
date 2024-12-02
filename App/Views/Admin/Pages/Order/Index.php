@@ -69,7 +69,7 @@ class Index extends BaseView
                                                     <tr>
                                                         <td><?= $item['id'] ?></td>
                                                         <td><?= $item['first_name'] ?></td>
-                                                        <td><?= $item['total_price'] ?></td>
+                                                        <td><?= number_format($item['total_price']) ?></td>
                                                         <td>
                                                             <?php
                                                             switch ($item['status']) {
