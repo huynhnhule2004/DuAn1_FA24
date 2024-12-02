@@ -7,6 +7,7 @@ use App\Models\BlogCategory;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Pages\Blog\Index;
+use App\Views\Client\Pages\Blog\Category as BlogsCategory;
 use App\Views\Client\Pages\Blog\Detail;
 use App\Views\Client\Layouts\Header;
 use App\Models\Blog;
@@ -53,6 +54,9 @@ class BlogController
 
     public static function detail($id)
     {
+        $category1 = new Category();
+        $categories1 = $category1->getAllCategoryByStatus();
+
         $category = new BlogCategory;
         $categories = $category->getAll();
         $blog = new Blog();
@@ -63,9 +67,13 @@ class BlogController
             'blog_detail' => $blog_detail
         ];
 
+        $data1 = [
+            'categories' => $categories1,
+        ];
+
         // echo "<pre>";
-        // var_dump($data);
-        Header::render();
+        // var_dump($data1);
+        Header::render($data1);
         Detail::render($data);
         Footer::render();
     }
@@ -75,17 +83,24 @@ class BlogController
         $category = new BlogCategory();
         $categories = $category->getAllCategory();
 
+        $category1 = new Category();
+        $categories1 = $category1->getAllCategoryByStatus();
+
         $blog = new Blog();
         $blogs = $blog->getAllBlogsByCategory($id);
 
         $data = [
             'blogs' => $blogs
         ];
-//       echo "<pre/>";
-//       var_dump($data);
 
-        Header::render($data);
-        Index::render($data);
+        $data1 = [
+            'categories' => $categories1,
+        ];
+    //   echo "<pre/>";
+    //   var_dump($data);
+
+        Header::render($data1);
+        BlogsCategory::render($data);
         Footer::render();
     }
     // Phương thức xử lý phân trang AJAX
