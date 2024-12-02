@@ -680,9 +680,9 @@ class Product extends BaseModel
                 $max = $max !== '' ? (int)$max : null;
     
                 if ($max !== null) {
-                    $sql .= " WHERE price_default >= ? AND price_default <= ?";
+                    $sql .= " WHERE price_default > ? AND price_default < ?";
                 } else {
-                    $sql .= " WHERE price_default >= ?";
+                    $sql .= " WHERE price_default > ?";
                 }
             }
             $conn = $this->_conn->MySQLi(); 

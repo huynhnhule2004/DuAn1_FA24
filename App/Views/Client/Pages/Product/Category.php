@@ -67,13 +67,13 @@ class Category extends BaseView
                                                             <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                                             5.0
                                                         </span>
-                                                        <h4 class="secondary-font text-primary"><?= number_format($item['price_default']) ?> VNĐ
+                                                        <h4 class="secondary-font text-primary"><?= number_format($item['price_default'] - $item['discount_price']) ?> VNĐ
                                                             <strike style="font-size: medium; color: #333"><?= number_format($item['price_default']) ?> VNĐ</strike>
                                                         </h4>
 
                                                         <div class="d-flex flex-wrap mt-3">
                                                             <a href="/products/<?= $item['id'] ?>" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                                                <h6 class="text-uppercase m-0">Xem sản phẩm</h6>
+                                                                <h6 class="text-uppercase m-0">Chi tiết sản phẩm</h6>
                                                             </a>
                                                             <a href="#" class="btn-wishlist px-4 pt-3 ">
                                                                 <iconify-icon icon="fluent:heart-28-filled" class="fs-5"></iconify-icon>

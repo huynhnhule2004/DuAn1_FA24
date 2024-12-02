@@ -181,7 +181,7 @@ class ProductController
                                     <input type="hidden" name="method" value="POST">
                                     <input type="hidden" name="id" value="'. $item['id'] .'" required>
                                     <button type="submit" class="btn-cart me-3 px-3 pt-3 pb-3">
-                                        <h6 class="text-uppercase m-0">Xem chi tiết</h6>
+                                        <h6 class="text-uppercase m-0">Chi tiết sản phẩm</h6>
                                     </button>
                                 </a>
                                 <a href="#" class="btn-wishlist px-4 pt-3">

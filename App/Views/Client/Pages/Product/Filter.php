@@ -61,7 +61,7 @@ class Filter extends BaseView
                                                             <iconify-icon icon="clarity:star-solid" class="text-primary"></iconify-icon>
                                                             5.0
                                                         </span>
-                                                        <h4 class="secondary-font text-primary"><?= number_format($item['price_default']) ?> VNĐ
+                                                        <h4 class="secondary-font text-primary"><?= number_format($item['price_default'] - $item['discount_price']) ?> VNĐ
                                                             <strike style="font-size: medium; color: #333"><?= number_format($item['price_default']) ?> VNĐ</strike>
                                                         </h4>
 
