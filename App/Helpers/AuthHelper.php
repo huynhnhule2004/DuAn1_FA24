@@ -325,7 +325,7 @@ class AuthHelper
             $mail->Body = $adminBody;
             $mail->AltBody = "Lời nhắn từ khách hàng: {$name} - {$message}";
             $mail->send();
-            
+
             return true;
         } catch (Exception $e) {
             return false;
@@ -333,8 +333,38 @@ class AuthHelper
     }
 
 
-    public static function sendEmailOrder($to, $name, $orderId, $totalAmount, $orderDate, $paymentMethod)
+    public static function sendEmailOrder($to, $name, $orderId, $totalAmount, $orderDate, $paymentMethod, $data)
     {
+        $details = $data['order_details'];
+
+        // Tạo nội dung chi tiết sản phẩm trong email cho khách hàng
+        ob_start();
+?>
+        <table style="border-collapse: collapse;" border="1">
+            <thead>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Kích thước/ Trọng lượng</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($details as $product) : ?>
+                    <tr>
+                        <td><?= htmlspecialchars($product['product_name']) ?></td>
+                        <td><?= htmlspecialchars($product['variant_name']) ?></td>
+                        <td><?= number_format($product['price'], 0, ',', '.') ?> VNĐ</td>
+                        <td><?= htmlspecialchars($product['quantity']) ?></td>
+                        <td><?= number_format($product['price'] * $product['quantity'], 0, ',', '.') ?> VNĐ</td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+<?php
+        $productTable = ob_get_clean();
+
         // Tạo nội dung email cho khách hàng
         $body = "
         <style>
@@ -366,10 +396,26 @@ class AuthHelper
                 padding: 15px;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 15px;
+            }
+            .table th, .table td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+            }
+            .table th {
+                background-color: #f2f2f2;
+            }
             .footer {
                 margin-top: 20px;
                 font-style: italic;
                 color: #555;
+            }
+            .footer strong {
+                color: #2c3e50;
             }
         </style>
         <p>Kính gửi <strong>$name</strong>,</p>
@@ -381,12 +427,14 @@ class AuthHelper
                 <li><strong>Ngày đặt hàng:</strong> $orderDate</li>
                 <li><strong>Phương thức thanh toán:</strong> $paymentMethod</li>
                 <li><strong>Trạng thái thanh toán:</strong> Đã thanh toán</li>
-                <li><strong>Tổng giá trị đơn hàng:</strong> " . number_format($totalAmount) . " VNĐ</li>
+                <li><strong>Tổng giá trị đơn hàng:</strong> " . number_format($totalAmount, 0, ',', '.') . " VNĐ</li>
             </ul>
+            <h4>Sản phẩm đã đặt</h4>
+            $productTable
         </div>
         <p>Chúng tôi sẽ liên hệ lại với bạn ngay khi đơn hàng được xử lý.</p>
         <p class='footer'><strong>Trân trọng,</strong><br>Đội ngũ Waggy</p>
-    ";
+        ";
 
 
         // Cấu hình gửi email

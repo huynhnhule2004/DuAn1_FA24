@@ -357,8 +357,17 @@ class OrderController
             } else {
                 echo "Cookie 'user' không tồn tại.";
             }
+            $id = $_GET['vnp_TxnRef'];
+            $order = new Order();
+            $orders = $order->getOneById($id);
+            $order_detail = new OrderDetail();
+            $order_details = $order_detail->getAllOrderDetailByOrderId($id);
+            $data1 = [
+                'orders' => $orders,
+                'order_details' => $order_details
+            ];
             // Gửi email khi giao dịch thành công
-            $phpEmail = AuthHelper::sendEmailOrder($email, $name, $_GET['vnp_TxnRef'], $_GET['vnp_Amount'] / 100, $currentDate, 'VNPAY');
+            $phpEmail = AuthHelper::sendEmailOrder($email, $name, $_GET['vnp_TxnRef'], $_GET['vnp_Amount'] / 100, $currentDate, 'VNPAY', $data1);
         }
 
         // echo "<pre>";
