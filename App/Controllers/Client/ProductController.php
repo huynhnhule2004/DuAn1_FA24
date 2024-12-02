@@ -152,7 +152,7 @@ class ProductController
         return '
         <div class="col-md-4 mb-4">
             <div class="swiper-slide">
-                <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
+                <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle" style="background-color: orange; color: #fff; font-weight: bold; border: orangered !important;">
                     ' . $discountPercentage . ' %
                 </div>
                 <div class="card position-relative">

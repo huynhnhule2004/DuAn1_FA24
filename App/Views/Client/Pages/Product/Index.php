@@ -74,7 +74,7 @@ class Index extends BaseView
                 <?php foreach ($data['products'] as $item): ?>
                   <div class="col-md-4 mb-4">
                     <div class="swiper-slide">
-                      <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
+                      <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle" style="background-color: #FFA500;">
                         <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
                       </div>
                       <div class="card position-relative">
