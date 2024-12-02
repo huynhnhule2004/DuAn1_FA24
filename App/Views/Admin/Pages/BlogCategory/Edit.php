@@ -19,12 +19,12 @@ class Edit extends BaseView
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">QUẢN LÝ LOẠI SẢN PHẨM</h4>
+                        <h4 class="page-title">QUẢN LÝ DAMH MỤC BÀI VIẾT</h4>
                         <div class="ms-auto text-end">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/admin">Trang chủ</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Sửa loại sản phẩm</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Sửa danh mục bài viết</li>
                                 </ol>
                             </nav>
                         </div>
@@ -46,7 +46,7 @@ class Edit extends BaseView
                         <div class="card">
                             <form class="form-horizontal" action="/admin/blog_categories/<?= $data['id'] ?>" method="POST" enctype="multipart/form-data">
                                 <div class="card-body">
-                                    <h4 class="card-title">Sửa loại sản phẩm</h4>
+                                    <h4 class="card-title">Sửa danh mục bài viết</h4>
                                     <input type="hidden" name="method" id="" value="PUT">
                                     <div class="form-group">
                                         <label for="id">ID</label>

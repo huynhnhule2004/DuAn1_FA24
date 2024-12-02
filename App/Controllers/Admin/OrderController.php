@@ -22,14 +22,29 @@ class OrderController
     {
         $order = new Order();
         $data = $order->getAllOrderAndNameUser();
-
+    
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $itemsPerPage = 10;
+    
+        $totalItems = count($data);
+        $totalPages = ceil($totalItems / $itemsPerPage);
+    
+        if ($currentPage < 1) $currentPage = 1;
+        if ($currentPage > $totalPages) $currentPage = $totalPages;
+    
+        $offset = ($currentPage - 1) * $itemsPerPage;
+        $pageData = array_slice($data, $offset, $itemsPerPage);
+    
         Header::render();
         Notification::render();
         NotificationHelper::unset();
-        // hiển thị giao diện danh sách
-        Index::render($data);
+    
+        // Truyền $totalItems vào view để tính toán phân trang
+        Index::render($pageData, $currentPage, $itemsPerPage, $totalItems);
         Footer::render();
     }
+    
+    
 
 
     // hiển thị giao diện form thêm

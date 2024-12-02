@@ -6,8 +6,10 @@ use App\Views\BaseView;
 
 class Index extends BaseView
 {
-    public static function render($data = null)
+    public static function render($data = null, $currentPage = 1, $itemsPerPage = 10, $totalItems = 0)
     {
+        $totalPages = ceil($totalItems / $itemsPerPage);
+
 ?>
         <div class="page-wrapper">
             <!-- ============================================================== -->
@@ -62,7 +64,7 @@ class Index extends BaseView
                                                     <tr>
                                                         <td><?= ($item['id']) ?></td>
                                                         <td>
-                                                            <a href="/admin/users/<?=($item['user_id']) ?>"><?= ($item['username']) ?></a>
+                                                            <a href="/admin/users/<?= ($item['user_id']) ?>"><?= ($item['username']) ?></a>
                                                         </td>
                                                         <td>
                                                             <a href="/admin/products/<?= ($item['product_id']) ?>"><?= ($item['product_name']) ?></a>
@@ -82,6 +84,36 @@ class Index extends BaseView
                                             </tbody>
                                         </table>
                                     </div>
+                                    <!-- Pagination -->
+                                    <?php if ($totalPages > 1) : ?>
+                                        <div class="pagination">
+                                            <nav aria-label="Page navigation">
+                                                <ul class="pagination justify-content-center">
+                                                    <?php if ($currentPage > 1) : ?>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="?page=<?= $currentPage - 1 ?>" aria-label="Previous">
+                                                                <span aria-hidden="true">&laquo;</span>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+
+                                                    <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                                                        <li class="page-item <?= ($i == $currentPage) ? 'active' : '' ?>">
+                                                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                                        </li>
+                                                    <?php endfor; ?>
+
+                                                    <?php if ($currentPage < $totalPages) : ?>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="?page=<?= $currentPage + 1 ?>" aria-label="Next">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    <?php endif; ?>
                                 <?php else : ?>
                                     <h4 class="text-center text-danger">Không có dữ liệu</h4>
                                 <?php endif; ?>

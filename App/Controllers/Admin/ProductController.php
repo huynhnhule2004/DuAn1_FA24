@@ -27,13 +27,25 @@ class ProductController
         $product = new Product();
         $data = $product->getAllProductJoinCategory();
 
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $itemsPerPage = 10;
+    
+        $totalItems = count($data);
+        $totalPages = ceil($totalItems / $itemsPerPage);
+    
+        if ($currentPage < 1) $currentPage = 1;
+        if ($currentPage > $totalPages) $currentPage = $totalPages;
+    
+        $offset = ($currentPage - 1) * $itemsPerPage;
+        $pageData = array_slice($data, $offset, $itemsPerPage);
+
         // echo "<pre>";
         // var_dump($data);
         Header::render();
         Notification::render();
         NotificationHelper::unset();
         // hiển thị giao diện danh sách
-        Index::render($data);
+        Index::render($pageData, $currentPage, $itemsPerPage, $totalItems);
         Footer::render();
     }
 
