@@ -47,18 +47,18 @@ class Checkout extends BaseView
         // Lấy dữ liệu từ cookie
         $cart = isset($_COOKIE['cart']) ? json_decode($_COOKIE['cart'], true) : ['info' => ['number_order' => 0, 'total' => 0]];
         $user = isset($_COOKIE['user']) ? json_decode($_COOKIE['user'], true) : [];
-//         echo "<pre>";
-// var_dump($cart);
-// exit;
+        //         echo "<pre>";
+        // var_dump($cart);
+        // exit;
         // Kiểm tra nếu có dữ liệu trong mảng 'buy'
         if (isset($cart) && !empty($cart)) {
-            
+
         ?>
 
             <!-- Giao diện Thanh Toán -->
             <h1 class="text-center my-3" style="color: var(--bs-primary)">Thanh toán</h1>
             <div class="container p-5 rounded" style="background-color: #F9F3EC;">
-                <form action="/orders" method="POST">
+                <form action="/orders" method="POST" id="myForm">
                     <div class="row">
                         <!-- Thông tin người mua -->
                         <div class="col-md-6 left-panel">
@@ -72,18 +72,19 @@ class Checkout extends BaseView
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Số Điện Thoại</label>
                                 <input type="tel" class="form-control" name="phone_number" id="phone" required>
+                                <div id="phone-error"  style="display: none; color: red">Số điện thoại chỉ 10 chữ số</div>
                             </div>
                             <h3>Địa Chỉ Giao Hàng</h3>
                             <div class="css_select_div mb-3">
-                                <select class="css_select" id="tinh" name="tinh" title="Chọn Tỉnh Thành">
+                                <select class="css_select" id="tinh" name="tinh" title="Chọn Tỉnh Thành" required>
                                     <option value="0">Tỉnh Thành</option>
                                 </select>
 
-                                <select class="css_select" id="quan" name="quan" title="Chọn Quận Huyện">
+                                <select class="css_select" id="quan" name="quan" title="Chọn Quận Huyện" required>
                                     <option value="0">Quận Huyện</option>
                                 </select>
 
-                                <select class="css_select" id="phuong" name="phuong" title="Chọn Phường Xã">
+                                <select class="css_select" id="phuong" name="phuong" title="Chọn Phường Xã" required>
                                     <option value="0">Phường Xã</option>
                                 </select>
                             </div>
@@ -105,8 +106,8 @@ class Checkout extends BaseView
                         </div>
                         <input type="hidden" name="status" value="Pending">
                         <input type="hidden" name="payment_status" value="Unpaid">
-                       
-                        
+
+
 
 
                         <!-- Tóm Tắt Đơn Hàng -->
@@ -123,25 +124,25 @@ class Checkout extends BaseView
                                 </thead>
                                 <tbody>
                                     <?php
-                                   $totalPrice = 0; // Khởi tạo biến tổng giá trị
+                                    $totalPrice = 0; // Khởi tạo biến tổng giá trị
 
-                                   // Lặp qua các sản phẩm trong mảng 'buy'
-                                   foreach ($cart as $order) {
-                                       foreach ($order['buy'] as $product) {
-                                           $product_name = $product['product_name'];
-                                           $product_combo = $product['variant_options'][0]['product_variant_option_combination_id'];
-                                           $qty = $product['qty'];
-                                           $price_default = (float) $product['price_default']; // Chuyển đổi giá thành số
-                                           $productTotal = $qty * $price_default; // Tính tổng giá trị của sản phẩm
-                                           
-                                           $totalPrice += $productTotal; // Cộng vào tổng giá trị của đơn hàng
-                                           
-                                           // Định dạng lại giá trị để hiển thị
-                                           $formattedPrice = number_format($price_default, 0, ',', '.') . ' VNĐ';
-                                           $formattedTotal = number_format($productTotal, 0, ',', '.') . ' VNĐ';
-                                           
-                                           // In ra thông tin sản phẩm
-                                           echo "<tr>
+                                    // Lặp qua các sản phẩm trong mảng 'buy'
+                                    foreach ($cart as $order) {
+                                        foreach ($order['buy'] as $product) {
+                                            $product_name = $product['product_name'];
+                                            $product_combo = $product['variant_options'][0]['product_variant_option_combination_id'];
+                                            $qty = $product['qty'];
+                                            $price_default = (float) $product['price_default']; // Chuyển đổi giá thành số
+                                            $productTotal = $qty * $price_default; // Tính tổng giá trị của sản phẩm
+
+                                            $totalPrice += $productTotal; // Cộng vào tổng giá trị của đơn hàng
+
+                                            // Định dạng lại giá trị để hiển thị
+                                            $formattedPrice = number_format($price_default, 0, ',', '.') . ' VNĐ';
+                                            $formattedTotal = number_format($productTotal, 0, ',', '.') . ' VNĐ';
+
+                                            // In ra thông tin sản phẩm
+                                            echo "<tr>
                                                <td>$product_name</td>
                                                <td>$qty</td>
                                                <td>$formattedPrice</td>
@@ -150,8 +151,8 @@ class Checkout extends BaseView
                                                <td><input type='hidden' name='product_combo[]' value='$product_combo '></td>
                                                <td><input type='hidden' name='price[]' value='$price_default '></td>
                                            </tr>";
-                                       }
-                                   }
+                                        }
+                                    }
 
                                     // Hiển thị tổng cộng
                                     $total_order = number_format($totalPrice, 0, ',', '.') . ' VNĐ';
@@ -160,7 +161,7 @@ class Checkout extends BaseView
                                     // echo $total_price_payment;
 
                                     echo "<input type='hidden' name='total_price_payment' value=' $total_price_payment '>";
-                                    
+
                                     echo "<tr>
                                 <td class='text-start fw-bold'>Tổng Cộng</td>
                                 <td colspan='3'>$total_order</td>
@@ -233,6 +234,23 @@ class Checkout extends BaseView
                 // Gọi hàm này khi người dùng thay đổi hoặc nhập vào bất kỳ trường nào
                 $("#tinh, #quan, #phuong, #address").on("change keyup", function() {
                     updateHiddenAddress();
+                });
+
+
+                document.getElementById("myForm").addEventListener("submit", function(event) {
+                    const phoneInput = document.getElementById("phone");
+                    const errorDiv = document.getElementById("phone-error");
+                    const phonePattern = /^\d{10}$/;
+
+                    // Kiểm tra số điện thoại
+                    if (!phonePattern.test(phoneInput.value)) {
+                        // Nếu số điện thoại không hợp lệ, hiển thị lỗi và ngừng gửi form
+                        errorDiv.style.display = "block";
+                        event.preventDefault(); // Ngừng hành động gửi form
+                    } else {
+                        // Nếu số điện thoại hợp lệ, ẩn thông báo lỗi (nếu có)
+                        errorDiv.style.display = "none";
+                    }
                 });
             </script>
 <?php

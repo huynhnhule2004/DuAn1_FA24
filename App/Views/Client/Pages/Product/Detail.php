@@ -111,8 +111,7 @@ class Detail extends BaseView
                                 </div>
 
                                 <strong class="text-primary display-6 fw-bold"
-                                    id="product-price"
-                                    >
+                                    id="product-price">
                                     <?= number_format($defaultPrice - $data['product']['discount_price']) ?> VNĐ
                                 </strong>
                                 <del class="ms-2"><?= htmlspecialchars($defaultPrice) ?> VNĐ</del>
@@ -134,7 +133,7 @@ class Detail extends BaseView
                                 ?>
                                     <div class="swatch product-select pt-3" data-option-index="1">
                                         <h6 class="item-title fw-bold"><?= htmlspecialchars($variantType) ?></h6>
-                                        <select class="form-select variant-select">
+                                        <select class="form-select variant-select" required>
                                             <option value="" selected disabled>Chọn <?= htmlspecialchars($variantType) ?></option>
                                             <?php
                                             $usedSkus = [];
@@ -225,7 +224,15 @@ class Detail extends BaseView
                             });
                         }
                     });
-
+                    if (variantOptions.length === 0) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Không có biến thể',
+                            text: 'Vui lòng chọn biến thể!',
+                            confirmButtonText: 'OK'
+                        });
+                        return;
+                    }
                     // Lấy giỏ hàng từ cookies (nếu có)
                     const existingCart = document.cookie
                         .split('; ')

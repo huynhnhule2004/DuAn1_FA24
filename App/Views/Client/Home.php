@@ -158,7 +158,7 @@ class Home extends BaseView
                                 <div class="swiper-wrapper">
                                     <?php foreach ($data['categorizedProducts'][$category['category_name']] as $item): ?>
                                         <div class="swiper-slide">
-                                            <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
+                                            <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle"  style="background-color: orange; color: #fff; font-weight: bold; border: orangered !important;">
                                                 <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
 
                                             </div>
@@ -663,7 +663,7 @@ class Home extends BaseView
                         <?php if (isset($data['featuredProducts']) && count($data['featuredProducts']) > 0): ?>
                             <?php foreach ($data['featuredProducts'] as $item): ?>
                                 <div class="swiper-slide">
-                                    <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle">
+                                    <div class="z-1 position-absolute rounded-3 m-3 px-3 border border-dark-subtle"  style="background-color: orange; color: #fff; font-weight: bold; border: orangered !important;">
                                         <?= number_format((($item['discount_price']) / $item['price_default']) * 100) ?>%
 
                                     </div>
