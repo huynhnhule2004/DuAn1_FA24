@@ -115,18 +115,18 @@ class Order extends BaseModel
         try {
             // Tạo câu lệnh SQL
             $sql = "UPDATE $this->table SET payment_status = ? WHERE $this->id = ?";
-            
+
             // Kết nối MySQL
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
-    
+
             if (!$stmt) {
                 throw new \Exception('Không thể chuẩn bị câu lệnh SQL: ' . $conn->error);
             }
-    
+
             // Liên kết tham số (prepared statement)
             $stmt->bind_param('si', $status, $id);
-    
+
             // Thực thi câu lệnh và trả kết quả
             return $stmt->execute();
         } catch (\Throwable $th) {
@@ -135,7 +135,7 @@ class Order extends BaseModel
             return false;
         }
     }
-    
+
     public function deleteOrder($id)
     {
         return $this->delete($id);
@@ -186,25 +186,41 @@ class Order extends BaseModel
         }
     }
     public function getRevenueByMonth($year)
-{
-    $result = [];
-    try {
-        $sql = "SELECT MONTH(created_at) AS month, SUM(total_price) AS revenue
+    {
+        $result = [];
+        try {
+            $sql = "SELECT MONTH(created_at) AS month, SUM(total_price) AS revenue
                 FROM {$this->table}
                 WHERE YEAR(created_at) = ?
                 GROUP BY MONTH(created_at)
                 ORDER BY MONTH(created_at)";
-        $conn = $this->_conn->MySQLi();
-        $stmt = $conn->prepare($sql);
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
 
-        $stmt->bind_param('i', $year);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    } catch (\Throwable $th) {
-        error_log('Lỗi khi truy xuất doanh thu theo tháng: ' . $th->getMessage());
+            $stmt->bind_param('i', $year);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi truy xuất doanh thu theo tháng: ' . $th->getMessage());
+        }
+
+        return $result;
     }
 
-    return $result;
-}
-
+    public function searchByStatus(string $status)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT o.*, u.first_name 
+                    FROM orders o
+                    JOIN users u 
+                    ON o.user_id = u.id
+                    WHERE o.status LIKE '%$status%';";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
 }

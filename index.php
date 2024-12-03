@@ -99,6 +99,7 @@ Route::get('/checkout', 'App\Controllers\Client\CheckoutController@index');
 // *** Admin
 
 Route::get('/admin', 'App\Controllers\Admin\HomeController@index');
+Route::get('/orders/search', 'App\Controllers\Admin\OrderController@search');
 
 //  *** Category
 // GET /categories (lấy danh sách loại sản phẩm)

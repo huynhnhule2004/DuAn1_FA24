@@ -4,7 +4,7 @@ namespace App\Views\Admin\Pages\Order;
 
 use App\Views\BaseView;
 
-class Index extends BaseView
+class Search extends BaseView
 {
     public static function render($data = null, $currentPage = 1, $itemsPerPage = 10, $totalItems = 0)
     {
@@ -144,23 +144,26 @@ class Index extends BaseView
                                         <div class="pagination">
                                             <nav aria-label="Page navigation">
                                                 <ul class="pagination justify-content-center">
+                                                    <!-- Previous Page Link -->
                                                     <?php if ($currentPage > 1) : ?>
                                                         <li class="page-item">
-                                                            <a class="page-link" href="?page=<?= $currentPage - 1 ?>" aria-label="Previous">
+                                                            <a class="page-link" href="?page=<?= $currentPage - 1 ?>&keyword=<?= urlencode($_GET['keyword']) ?>" aria-label="Previous">
                                                                 <span aria-hidden="true">&laquo;</span>
                                                             </a>
                                                         </li>
                                                     <?php endif; ?>
 
+                                                    <!-- Page Number Links -->
                                                     <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
                                                         <li class="page-item <?= ($i == $currentPage) ? 'active' : '' ?>">
-                                                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                                            <a class="page-link" href="?page=<?= $i ?>&keyword=<?= urlencode($_GET['keyword']) ?>"><?= $i ?></a>
                                                         </li>
                                                     <?php endfor; ?>
 
+                                                    <!-- Next Page Link -->
                                                     <?php if ($currentPage < $totalPages) : ?>
                                                         <li class="page-item">
-                                                            <a class="page-link" href="?page=<?= $currentPage + 1 ?>" aria-label="Next">
+                                                            <a class="page-link" href="?page=<?= $currentPage + 1 ?>&keyword=<?= urlencode($_GET['keyword']) ?>" aria-label="Next">
                                                                 <span aria-hidden="true">&raquo;</span>
                                                             </a>
                                                         </li>
@@ -185,3 +188,4 @@ class Index extends BaseView
 <?php
     }
 }
+?>
