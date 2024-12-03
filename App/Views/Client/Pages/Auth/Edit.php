@@ -70,7 +70,7 @@ class Edit extends BaseView
             }
         </style>
 
-        <div class="row">
+        <div class="row" style="margin-left: 0 !important; margin-right: 0 !important;">
             <div class="col-12">
 
                 <!-- Page title -->
@@ -81,7 +81,7 @@ class Edit extends BaseView
                 <!-- Form START -->
                 <form action="/users/<?= $data['id'] ?>" method="post" class="file-upload" enctype="multipart/form-data">
                     <input type="hidden" name="method" value="PUT">
-                    <div class="row mb-5 gx-5">
+                    <div class="row mb-5 gx-5" style="margin-left: 0 !important; margin-right: 0 !important;">
                         <!-- Chi tiết liên lạc -->
                         <div class="col-xxl-8 mb-5 mb-xxl-0">
                             <div class="bg-secondary-soft px-4 py-5 rounded">
