@@ -202,6 +202,21 @@ class Detail extends BaseView
                 document.querySelector('#add-to-cart-form').addEventListener('submit', function(event) {
                     event.preventDefault();
 
+                    // Kiểm tra xem người dùng đã đăng nhập chưa
+                    <?php if (!$is_login): ?>
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Vui lòng đăng nhập',
+                            text: 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!',
+                            confirmButtonText: 'Đăng nhập',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "/login"; // Điều hướng người dùng tới trang đăng nhập
+                            }
+                        });
+                        return;
+                    <?php endif; ?>
+
                     // Lấy thông tin sản phẩm từ giao diện
                     const productId = document.querySelector('input[name="id"]').value;
                     const productName = document.querySelector('.product-title').innerText;
@@ -362,8 +377,9 @@ class Detail extends BaseView
                                                                     <!-- Nút Sửa -->
                                                                     <button type="button" class="btn btn-outline-secondary btn-sm me-2" data-bs-toggle="collapse" data-bs-target="#editComment<?= $item['id'] ?>">Sửa</button>
                                                                     <!-- Nút Xoá -->
-                                                                    <form action="/comments/<?= $item['id'] ?>" method="post" class="d-inline-block" onsubmit="return confirm('Chắc chưa?')">
+                                                                    <form action="/comments/<?= $item['id'] ?>" method="post" class="d-inline-block" onsubmit="return handleDelete(event)">
                                                                         <input type="hidden" name="method" value="DELETE">
+                                                                        <input type="hidden" name="product_id" value="<?= $data['product']['id'] ?>">
                                                                         <button type="submit" class="btn btn-outline-danger btn-sm">Xoá</button>
                                                                     </form>
                                                                 </div>
@@ -395,7 +411,7 @@ class Detail extends BaseView
                                                 </div>
                                             <?php endforeach; ?>
                                         <?php else : ?>
-                                            <p class="text-center text-danger">Chưa có bình luận.</p>
+                                            <p class="text-center text-dark">Chưa có bình luận.</p>
                                         <?php endif; ?>
 
                                         <!-- Form Thêm Bình Luận -->
@@ -411,7 +427,7 @@ class Detail extends BaseView
                                                 </form>
                                             </div>
                                         <?php else : ?>
-                                            <p class="text-center text-warning mt-4">Vui lòng <a href="/login">đăng nhập</a> để bình luận.</p>
+                                            <p class="text-center text-dark mt-4">Vui lòng <a href="/login">đăng nhập</a> để bình luận.</p>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -573,6 +589,25 @@ class Detail extends BaseView
                     priceElement.textContent = new Intl.NumberFormat('vi-VN').format(defaultPrice) + ' VNĐ';
                 });
             });
+
+            // Hàm xử lý xác nhận xóa bằng SweetAlert2
+            function handleDelete(event) {
+                event.preventDefault(); // Ngừng việc gửi form mặc định
+
+                Swal.fire({
+                    title: 'Chắc chưa?',
+                    text: 'Bạn không thể khôi phục sau khi xóa!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Đồng ý',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Nếu xác nhận, gửi form
+                        event.target.submit();
+                    }
+                });
+            }
         </script>
 
 

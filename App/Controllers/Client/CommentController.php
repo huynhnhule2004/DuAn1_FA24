@@ -88,17 +88,25 @@ class CommentController
         $result = $comment->deleteComment($id);
 
         // var_dump($result);
+        // die();
+
         if ($result) {
-            NotificationHelper::success('delete', 'Xóa bình luận thành công');
+            NotificationHelper::success('delete_comment', 'Xóa bình luận thành công');
+            if (isset($_POST['product_id']) && $_POST['product_id']) {
+                $product_id = $_POST['product_id'];
+                header("location: /products/$product_id");
+            } else {
+                header("location: /products");
+            }
         } else {
-            NotificationHelper::error('delete', 'Xóa bình luận thất bại');
+            NotificationHelper::error('delete_comment', 'Xóa bình luận thất bại');
+            if (isset($_POST['product_id']) && $_POST['product_id']) {
+                $product_id = $_POST['product_id'];
+                header("location: /products/$product_id");
+            } else {
+                header("location: /products");
+            }
         }
 
-        if (isset($_POST['product_id']) && $_POST['product_id']) {
-            $product_id = $_POST['product_id'];
-            header("location: /products/$product_id");
-        } else {
-            header("location: /products");
-        }
     }
 }
