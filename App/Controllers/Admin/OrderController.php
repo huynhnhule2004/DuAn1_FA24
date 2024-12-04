@@ -207,6 +207,11 @@ class OrderController
         $keyword = urldecode($_GET['keyword']);
         $keyword1 = mb_strtolower($keyword);
         $statusEnglish = $statusMapping[$keyword1] ?? null;
+        if ($statusEnglish === null) {
+            NotificationHelper::error('invalid_status', 'Trạng thái không hợp lệ');
+            header('location: /admin/orders');
+            exit();
+        }
         $order = new Order();
         $data = $order->searchByStatus($statusEnglish);
 
@@ -221,6 +226,7 @@ class OrderController
 
         $offset = ($currentPage - 1) * $itemsPerPage;
         $pageData = array_slice($data, $offset, $itemsPerPage);
+        $statusEnglish = $statusMapping[$keyword1] ?? null;
 
 
         // echo "<pre>";
