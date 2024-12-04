@@ -4,15 +4,11 @@ namespace App\Views\Client\Pages\Order;
 
 use App\Views\BaseView;
 
-class History extends BaseView
+class Search extends BaseView
 {
     public static function render($data = null,  $currentPage = 1, $itemsPerPage = 10, $totalItems = 0)
     {
         $totalPages = ceil($totalItems / $itemsPerPage);
-        // echo $totalPages;
-        // echo $totalItems;
-        // die();
-
 ?>
         <div class="container mt-5 mb-5">
 
@@ -115,7 +111,7 @@ class History extends BaseView
                             <ul class="pagination justify-content-center">
                                 <?php if ($currentPage > 1) : ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=<?= $currentPage - 1 ?>" aria-label="Previous">
+                                        <a class="page-link" href="?page=<?= $currentPage - 1 ?>&keyword=<?= urlencode($_GET['keyword']) ?>" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
@@ -123,13 +119,13 @@ class History extends BaseView
 
                                 <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
                                     <li class="page-item <?= ($i == $currentPage) ? 'active' : '' ?>">
-                                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                        <a class="page-link" href="?page=<?= $i ?>&keyword=<?= urlencode($_GET['keyword']) ?>"><?= $i ?></a>
                                     </li>
                                 <?php endfor; ?>
 
                                 <?php if ($currentPage < $totalPages) : ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=<?= $currentPage + 1 ?>" aria-label="Next">
+                                        <a class="page-link" href="?page=<?= $currentPage + 1 ?>&keyword=<?= urlencode($_GET['keyword']) ?>" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>

@@ -51,9 +51,16 @@ class Search extends BaseView
 
                                     <!-- Form tìm kiếm nằm bên phải -->
                                     <form action="/orders/search" method="GET" class="d-flex">
-                                        <input type="text" class="form-control me-2" placeholder="Search Here" value="<?= $_GET['keyword'] ?? '' ?>" name="keyword" />
-                                        <button type="submit" class="btn btn-info">Search</button>
+                                        <select class="select2 form-select shadow-none me-2" name="keyword">
+                                            <option value="" disabled>-- Chọn trạng thái--</option>
+                                            <option value="Pending" <?= (isset($_GET['keyword']) && $_GET['keyword'] == 'Pending') ? 'selected' : '' ?>>Đang chờ xử lý</option>
+                                            <option value="Shipped" <?= (isset($_GET['keyword']) && $_GET['keyword'] == 'Shipped') ? 'selected' : '' ?>>Đang giao hàng</option>
+                                            <option value="Delivered" <?= (isset($_GET['keyword']) && $_GET['keyword'] == 'Delivered') ? 'selected' : '' ?>>Đã giao hàng</option>
+                                            <option value="Cancelled" <?= (isset($_GET['keyword']) && $_GET['keyword'] == 'Cancelled') ? 'selected' : '' ?>>Đã hủy</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-info" style="white-space: nowrap;">Tìm kiếm</button>
                                     </form>
+
                                 </div>
 
                                 <?php

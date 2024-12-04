@@ -41,7 +41,7 @@ class OrderController
         NotificationHelper::unset();
 
         // Truyền $totalItems vào view để tính toán phân trang
-        Index::render($pageData, $currentPage, $itemsPerPage, $totalItems);
+        Index::render($data,$pageData, $currentPage, $itemsPerPage, $totalItems);
         Footer::render();
     }
 
@@ -193,27 +193,27 @@ class OrderController
 
     public static function search()
     {
-        $statusMapping = [
-            'đang chờ xử lý' => 'Pending',
-            'đang giao' => 'Shipped',
-            'đã giao' => 'Delivered',
-            'đã hủy' => 'Cancelled'
-        ];
+        // $statusMapping = [
+        //     'đang chờ xử lý' => 'Pending',
+        //     'đang giao' => 'Shipped',
+        //     'đã giao' => 'Delivered',
+        //     'đã hủy' => 'Cancelled'
+        // ];
         if (!isset($_GET['keyword']) || $_GET['keyword'] == '') {
             header('location: /admin/orders');
             exit();
         }
 
         $keyword = urldecode($_GET['keyword']);
-        $keyword1 = mb_strtolower($keyword);
-        $statusEnglish = $statusMapping[$keyword1] ?? null;
-        if ($statusEnglish === null) {
-            NotificationHelper::error('invalid_status', 'Trạng thái không hợp lệ');
-            header('location: /admin/orders');
-            exit();
-        }
+        // $keyword1 = mb_strtolower($keyword);
+        // $statusEnglish = $statusMapping[$keyword1] ?? null;
+        // if ($statusEnglish === null) {
+        //     NotificationHelper::error('invalid_status', 'Trạng thái không hợp lệ');
+        //     header('location: /admin/orders');
+        //     exit();
+        // }
         $order = new Order();
-        $data = $order->searchByStatus($statusEnglish);
+        $data = $order->searchByStatus($keyword);
 
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $itemsPerPage = 10;
@@ -226,7 +226,7 @@ class OrderController
 
         $offset = ($currentPage - 1) * $itemsPerPage;
         $pageData = array_slice($data, $offset, $itemsPerPage);
-        $statusEnglish = $statusMapping[$keyword1] ?? null;
+        // $statusEnglish = $statusMapping[$keyword1] ?? null;
 
 
         // echo "<pre>";

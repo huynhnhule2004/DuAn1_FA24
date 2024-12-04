@@ -15,6 +15,7 @@ use App\Views\Client\Pages\Order\Index;
 use App\Views\Client\Layouts\Header;
 use App\Views\Client\Pages\Order\Success;
 use App\Views\Client\Pages\Order\Detail;
+use App\Views\Client\Pages\Order\Search;
 
 class OrderController
 {
@@ -380,33 +381,51 @@ class OrderController
     {
         $category = new Category();
         $categories = $category->getAllCategoryByStatus();
-
-
+    
         $order = new Order();
-
+        $id = null;
+    
+        // Kiểm tra cookie 'user'
         if (isset($_COOKIE['user'])) {
             $userData = json_decode($_COOKIE['user'], true);
-
-            // Kiểm tra xem các trường 'username' và 'email' có tồn tại không
+    
             if (isset($userData['id'])) {
                 $id = $userData['id'];
             } else {
-                echo "Thông tin không tồn tại trong cookie.";
+                // Chuyển hướng đến trang đăng nhập nếu không có ID trong cookie
+                header("Location: /login");
+                exit;
             }
         } else {
-            echo "Cookie 'user' không tồn tại.";
+            // Chuyển hướng đến trang đăng nhập nếu không có cookie
+            header("Location: /login");
+            exit;
         }
-
+    
+        // Lấy danh sách đơn hàng của người dùng
         $orders = $order->getAllOrderByUserId($id);
-        $data = [
-            'categories' => $categories,
-            'orders' => $orders
-        ];
-
-        Header::render($data);
-        History::render($data);
+    
+        // Nếu không có đơn hàng, hiển thị thông báo
+        if (empty($orders)) {
+            $orders = [];
+        }
+    
+        // Phân trang
+        $currentPage = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+        $itemsPerPage = 10;
+        $totalItems = count($orders);
+        $totalPages = ceil($totalItems / $itemsPerPage);
+    
+        $currentPage = max(1, min($currentPage, $totalPages));
+        $offset = ($currentPage - 1) * $itemsPerPage;
+        $pageData = array_slice($orders, $offset, $itemsPerPage);
+    
+        // Hiển thị giao diện
+        Header::render(['categories' => $categories]);
+        History::render($pageData, $currentPage, $itemsPerPage, $totalItems);
         Footer::render();
     }
+    
 
     public static function detail($id)
     {
@@ -427,6 +446,62 @@ class OrderController
         // exit;
         Header::render($data);
         Detail::render($data);
+        Footer::render();
+    }
+
+    public static function search()
+    {
+
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
+
+        if (!isset($_GET['keyword']) || $_GET['keyword'] == '') {
+            header('location: /orders/history');
+            exit();
+        }
+
+        $keyword = urldecode($_GET['keyword']);
+        $order = new Order();
+        $id = null;
+
+        if (isset($_COOKIE['user'])) {
+            $userData = json_decode($_COOKIE['user'], true);
+    
+            if (isset($userData['id'])) {
+                $id = $userData['id'];
+            } else {
+                header("Location: /login");
+                exit;
+            }
+        } else {
+            header("Location: /login");
+            exit;
+        }
+    
+        // Lấy danh sách đơn hàng của người dùng
+        $orders = $order->getAllOrderByUserIdAndStatus($id,$keyword);
+    
+        if (empty($orders)) {
+            $orders = [];
+        }
+    
+        // Phân trang
+        $currentPage = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+        $itemsPerPage = 10;
+        $totalItems = count($orders);
+        $totalPages = ceil($totalItems / $itemsPerPage);
+    
+        $currentPage = max(1, min($currentPage, $totalPages));
+        $offset = ($currentPage - 1) * $itemsPerPage;
+        $pageData = array_slice($orders, $offset, $itemsPerPage);
+
+        // echo "<pre>";
+        // var_dump($data);
+
+        Header::render(['categories' => $categories]);
+        Notification::render();
+        NotificationHelper::unset();
+        Search::render($pageData, $currentPage, $itemsPerPage, $totalItems);
         Footer::render();
     }
 }

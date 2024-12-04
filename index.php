@@ -36,6 +36,7 @@ Route::get('/search', 'App\Controllers\Client\HomeController@search');
 Route::post('/orders', 'App\Controllers\Client\OrderController@index');
 Route::get('/orders/{id}', 'App\Controllers\Client\OrderController@detail');
 Route::get('/orders/history', 'App\Controllers\Client\OrderController@history');
+Route::get('/orders/history/search', 'App\Controllers\Client\OrderController@search');
 
 Route::get('/orders/success', 'App\Controllers\Client\OrderController@success');
 

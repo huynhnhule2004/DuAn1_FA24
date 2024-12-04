@@ -223,4 +223,17 @@ class Order extends BaseModel
             return $result;
         }
     }
+    public function getAllOrderByUserIdAndStatus($id, $status)
+    {
+        $result = [];
+        try {
+            // $sql = "SELECT * FROM $this->table";
+            $sql = "SELECT * FROM `orders` WHERE user_id = $id AND status LIKE '%$status%';";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
 }
