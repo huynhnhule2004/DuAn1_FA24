@@ -151,7 +151,7 @@ class Home extends BaseView
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: 'Số lượng sản phẩm',
+                                label: 'Số lượng bình luận',
                                 data: data,
                                 backgroundColor: [
                                     'rgba(255, 99, 132, 0.2)',
