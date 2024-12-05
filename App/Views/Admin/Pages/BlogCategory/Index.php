@@ -79,7 +79,7 @@ class Index extends BaseView
                                                             </a>
                                                             <form action="/admin/blog_categories/<?= $item['id'] ?>" method="post"
                                                                 style="display: inline-block; width: 40px; height: 40px; margin-top: 2px; "
-                                                                onsubmit="return confirm('Bạn có chắc muốn xóa?')">
+                                                                onsubmit="return handleDelete(event)">
                                                                 <input type="hidden" name="method" value="DELETE">
                                                                 <button type="submit" class="btn btn-danger text-white"
                                                                     style="width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; padding: 0;">
@@ -110,7 +110,26 @@ class Index extends BaseView
                     </div>
                 </div>
             </div>
+            <script>
+                // Hàm xử lý xác nhận xóa bằng SweetAlert2
+                function handleDelete(event) {
+                    event.preventDefault(); // Ngừng việc gửi form mặc định
 
+                    Swal.fire({
+                        title: 'Bạn chắc chắn muốn xóa?',
+                        text: 'Bạn không thể khôi phục sau khi xóa!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Đồng ý',
+                        cancelButtonText: 'Hủy'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Nếu xác nhận, gửi form
+                            event.target.submit();
+                        }
+                    });
+                }
+            </script>
             <?php
     }
 }

@@ -100,7 +100,7 @@ class Index extends BaseView
                                                         <td style="white-space: nowrap;"><?= strlen($item['short_description']) > 50 ? substr($item['short_description'], 0, 50) . '...' : $item['short_description'] ?></td>
                                                         <td style="white-space: nowrap;">
                                                             <a href="/admin/products/<?= $item['id'] ?>" class="btn btn-primary ">Sửa</a>
-                                                            <form action="/admin/products/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
+                                                            <form action="/admin/products/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return handleDelete(event)">
                                                                 <input type="hidden" name="method" value="DELETE" id="">
                                                                 <button type="submit" class="btn btn-danger text-white">Xoá</button>
                                                             </form>
@@ -172,7 +172,26 @@ class Index extends BaseView
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
             <!-- ============================================================== -->
+            <script>
+                // Hàm xử lý xác nhận xóa bằng SweetAlert2
+                function handleDelete(event) {
+                    event.preventDefault(); // Ngừng việc gửi form mặc định
 
+                    Swal.fire({
+                        title: 'Bạn chắc chắn muốn xóa?',
+                        text: 'Bạn không thể khôi phục sau khi xóa!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Đồng ý',
+                        cancelButtonText: 'Hủy'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Nếu xác nhận, gửi form
+                            event.target.submit();
+                        }
+                    });
+                }
+            </script>
 
     <?php
     }

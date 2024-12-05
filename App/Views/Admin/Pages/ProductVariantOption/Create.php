@@ -96,7 +96,7 @@ class Create extends BaseView
                                                 <td style="white-space: nowrap;"><?= $item['name'] ?></td>
                                                 <td style="white-space: nowrap;">
                                                     <a href="/admin/products/product_variant_options/<?= $item['id'] ?>" class="btn btn-primary ">Sửa</a>
-                                                    <form action="/admin/products/product_variant_options/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa thuộc tính này?')">
+                                                    <form action="/admin/products/product_variant_options/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return handleDelete(event)">
                                                         <input type="hidden" name="method" value="DELETE" id="">
                                                         <button type="submit" class="btn btn-danger text-white">Xoá</button>
                                                     </form>
@@ -172,6 +172,27 @@ class Create extends BaseView
                             });
                         })
                         .catch(error => console.error('Error fetching attributes:', error));
+                }
+
+
+
+                // Hàm xử lý xác nhận xóa bằng SweetAlert2
+                function handleDelete(event) {
+                    event.preventDefault(); // Ngừng việc gửi form mặc định
+
+                    Swal.fire({
+                        title: 'Bạn chắc chắn muốn xóa?',
+                        text: 'Bạn không thể khôi phục sau khi xóa!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Đồng ý',
+                        cancelButtonText: 'Hủy'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Nếu xác nhận, gửi form
+                            event.target.submit();
+                        }
+                    });
                 }
             </script>
 

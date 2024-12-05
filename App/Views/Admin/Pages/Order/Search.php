@@ -131,7 +131,7 @@ class Search extends BaseView
                                                             <a href="/admin/orders/<?= $item['id'] ?>" class="btn btn-primary text-white" style="width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; padding: 0;">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>
-                                                            <form action="/admin/orders/<?= $item['id'] ?>" method="post" style="display: inline-block; width: 40px; height: 40px; margin-top: 2px; " onsubmit="return confirm('Chắc chưa?')">
+                                                            <form action="/admin/orders/<?= $item['id'] ?>" method="post" style="display: inline-block; width: 40px; height: 40px; margin-top: 2px; " onsubmit="return handleDelete(event)">
                                                                 <input type="hidden" name="method" value="DELETE">
                                                                 <button type="submit" class="btn btn-danger text-white" style="width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; padding: 0;">
                                                                     <i class="fas fa-trash-alt"></i>
@@ -192,6 +192,26 @@ class Search extends BaseView
                 </div>
             </div>
         </div>
+        <script>
+            // Hàm xử lý xác nhận xóa bằng SweetAlert2
+            function handleDelete(event) {
+                event.preventDefault(); // Ngừng việc gửi form mặc định
+
+                Swal.fire({
+                    title: 'Bạn chắc chắn muốn xóa?',
+                    text: 'Bạn không thể khôi phục sau khi xóa!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Đồng ý',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Nếu xác nhận, gửi form
+                        event.target.submit();
+                    }
+                });
+            }
+        </script>
 <?php
     }
 }

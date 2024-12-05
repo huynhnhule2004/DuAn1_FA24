@@ -595,7 +595,7 @@ class Detail extends BaseView
                 event.preventDefault(); // Ngừng việc gửi form mặc định
 
                 Swal.fire({
-                    title: 'Chắc chưa?',
+                    title: 'Bạn chắc chắn muốn xóa?',
                     text: 'Bạn không thể khôi phục sau khi xóa!',
                     icon: 'warning',
                     showCancelButton: true,

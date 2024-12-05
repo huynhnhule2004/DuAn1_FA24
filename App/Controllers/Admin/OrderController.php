@@ -41,7 +41,7 @@ class OrderController
         NotificationHelper::unset();
 
         // Truyền $totalItems vào view để tính toán phân trang
-        Index::render($data,$pageData, $currentPage, $itemsPerPage, $totalItems);
+        Index::render($pageData, $currentPage, $itemsPerPage, $totalItems);
         Footer::render();
     }
 
