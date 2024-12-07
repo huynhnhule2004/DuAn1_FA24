@@ -94,6 +94,33 @@ class Search extends BaseView
                                     echo "<span class=\"$statusClass\">" . htmlspecialchars($statusText) . "</span>";
                                     ?>
                                 </td>
+                                <td>
+                                    <?php
+                                    $status = $order['status'];
+                                    $statusClass = '';
+                                    $statusText = '';
+
+                                    switch ($status) {
+                                        case 'Pending':
+                                            $statusText = 'Đang chờ xử lý';
+                                            break;
+                                        case 'Shipped':
+                                            $statusText = 'Đang giao hàng';
+                                            break;
+                                        case 'Delivered':
+                                            $statusText = 'Đã giao hàng';
+                                            break;
+                                        case 'Cancelled':
+                                            $statusText = 'Đã hủy';
+                                            break;
+                                        default:
+                                            $statusClass = 'text-muted';
+                                            $statusText = 'Không xác định';
+                                    }
+
+                                    echo "<span class=\"$statusClass\">" . htmlspecialchars($statusText) . "</span>";
+                                    ?>
+                                </td>
                                 <td><?php echo number_format($order['total_price'], 0, ',', '.'); ?> VNĐ</td>
                                 <td>
                                     <a href="/orders/<?php echo htmlspecialchars($order['id']); ?>" class="btn btn-primary btn-sm" style="padding: 10px">

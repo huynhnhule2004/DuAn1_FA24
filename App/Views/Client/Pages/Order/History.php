@@ -41,6 +41,7 @@ class History extends BaseView
                             <th>Ngày Đặt Hàng</th>
                             <th>Phương thức thanh toán</th>
                             <th>Trạng Thái Thanh Toán</th>
+                            <th>Trạng Thái Giao Hàng</th>
                             <th>Tổng Tiền</th>
                             <th>Chi Tiết</th>
                         </tr>
@@ -89,6 +90,33 @@ class History extends BaseView
                                             break;
                                         case 'Refunded':
                                             $statusText = 'Đã hoàn tiền';
+                                            break;
+                                        default:
+                                            $statusClass = 'text-muted';
+                                            $statusText = 'Không xác định';
+                                    }
+
+                                    echo "<span class=\"$statusClass\">" . htmlspecialchars($statusText) . "</span>";
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    $status = $order['status'];
+                                    $statusClass = '';
+                                    $statusText = '';
+
+                                    switch ($status) {
+                                        case 'Pending':
+                                            $statusText = 'Đang chờ xử lý';
+                                            break;
+                                        case 'Shipped':
+                                            $statusText = 'Đang giao hàng';
+                                            break;
+                                        case 'Delivered':
+                                            $statusText = 'Đã giao hàng';
+                                            break;
+                                        case 'Cancelled':
+                                            $statusText = 'Đã hủy';
                                             break;
                                         default:
                                             $statusClass = 'text-muted';
