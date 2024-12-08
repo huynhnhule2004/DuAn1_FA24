@@ -37,6 +37,7 @@ class Search extends BaseView
                             <th>Ngày Đặt Hàng</th>
                             <th>Phương thức thanh toán</th>
                             <th>Trạng Thái Thanh Toán</th>
+                            <th>Trạng Thái Giao hàng</th>
                             <th>Tổng Tiền</th>
                             <th>Chi Tiết</th>
                         </tr>
