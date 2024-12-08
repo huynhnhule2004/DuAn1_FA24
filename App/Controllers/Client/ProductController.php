@@ -26,7 +26,7 @@ class ProductController
 
         $product = new Product();
         $products = $product->getAllProductByStatus();
-        $productsPerPage = 12; 
+        $productsPerPage = 9; 
         $currentPage = 1; 
         $offset = 0;      
         $products = $product->getProductsWithLimit($productsPerPage, $offset);
@@ -123,7 +123,7 @@ class ProductController
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET');
         $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;      
-        $productsPerPage = 12;
+        $productsPerPage = 9;
         $offset = ($page - 1) * $productsPerPage;
         $product = new Product();
         $products = $product->getProductsWithLimit($productsPerPage, $offset);

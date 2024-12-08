@@ -23,20 +23,12 @@ class BlogController
 
 
         $blog = new Blog();
-        $postsPerPage = 3; // Số bài viết trên mỗi trang
-        $currentPage = 1;  // Trang hiện tại
-        $offset = 0;       // Vị trí bắt đầu
-
-        // Lấy danh sách blog
+        $postsPerPage = 3;
+        $currentPage = 1; 
+        $offset = 0; 
         $blogs = $blog->getBlogsWithLimit($postsPerPage, $offset);
-        
-        // Đếm tổng số bài viết
         $totalPosts = $blog->countTotalBlogs();
-        
-        // Tính tổng số trang
         $totalPages = ceil($totalPosts / $postsPerPage);
-
-        // Chuẩn bị dữ liệu để render
         $data = [
             'blogs' => $blogs,
             'remainingPosts' => $totalPosts,

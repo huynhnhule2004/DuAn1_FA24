@@ -138,7 +138,7 @@ class Index extends BaseView
                 <?php endif; ?>
 
                 <!-- Các số trang -->
-                <?php for ($i = 1; $i <= ceil($remainingProducts / 12); $i++): ?>
+                <?php for ($i = 1; $i <= ceil($remainingProducts / 9); $i++): ?>
                   <?php if ($i == $currentOffset): ?>
                     <span aria-current="page" class="page-numbers mt-2 fs-3 mx-3 current"><?= $i ?></span>
                   <?php else: ?>
@@ -147,7 +147,7 @@ class Index extends BaseView
                 <?php endfor; ?>
 
                 <!-- Nút mũi tên phải -->
-                <?php if ($currentOffset < ceil($remainingProducts / 12)): ?>
+                <?php if ($currentOffset < ceil($remainingProducts / 9)): ?>
                   <a href="javascript:void(0)"
                     class="pagination-arrow d-flex align-items-center mx-3"
                     data-page="<?= $currentOffset + 1 ?>">

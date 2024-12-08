@@ -32,7 +32,7 @@ class HomeController
         $total_comment = $comment->countTotalComment();
         $comment_by_product = $comment->countCommentByProduct();
 
-        $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
+        $year = isset($_GET['year']) ? : date('Y');
         $order = new Order();
         $revenue_by_month = $order->getRevenueByMonth($year);
         // var_dump($total_user);
