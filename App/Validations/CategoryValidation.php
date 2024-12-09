@@ -21,7 +21,7 @@ class CategoryValidation
         if (
             !isset($_POST['status']) || $_POST['status'] === ''
         ) {
-            NotificationHelper::error('category_name', 'Không để trống tên loại sản phẩm');
+            NotificationHelper::error('category_name', 'Không để trống trạng thái loại sản phẩm');
             $is_valid = false;
         }
         return $is_valid;

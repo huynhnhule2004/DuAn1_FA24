@@ -579,14 +579,9 @@ class Detail extends BaseView
                         if (price) {
                             priceElement.textContent = new Intl.NumberFormat('vi-VN').format(price) + ' VNĐ';
                         } else {
-                            // Hiển thị giá mặc định
                             priceElement.textContent = new Intl.NumberFormat('vi-VN').format(defaultPrice) + ' VNĐ';
                         }
                     });
-                });
-                // Xử lý click để quay lại giá mặc định
-                priceElement.addEventListener('click', function() {
-                    priceElement.textContent = new Intl.NumberFormat('vi-VN').format(defaultPrice) + ' VNĐ';
                 });
             });
 
