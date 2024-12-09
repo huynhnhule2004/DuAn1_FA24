@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Helpers\NotificationHelper;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Views\Admin\Layouts\Footer;
 use App\Views\Admin\Layouts\Header;
 use App\Views\Admin\Components\Notification;
@@ -12,6 +13,7 @@ use App\Views\Admin\Pages\Order\Create;
 use App\Views\Admin\Pages\Order\Edit;
 use App\Views\Admin\Pages\Order\Index;
 use App\Validations\CategoryValidation;
+use App\Views\Admin\Pages\Order\Detail;
 use App\Views\Admin\Pages\Order\Search;
 
 class OrderController
@@ -236,6 +238,23 @@ class OrderController
         Notification::render();
         NotificationHelper::unset();
         Search::render($pageData, $currentPage, $itemsPerPage, $totalItems);
+        Footer::render();
+    }
+
+    public static function detail($id)
+    {
+        $order = new Order();
+        $orders = $order->getOneOrder($id);
+        $order_detail = new OrderDetail();
+        $order_details = $order_detail->getAllOrderDetailByOrderId($id);
+        
+
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+
+        // Truyền $totalItems vào view để tính toán phân trang
+        Detail::render($orders, $order_details);
         Footer::render();
     }
 }

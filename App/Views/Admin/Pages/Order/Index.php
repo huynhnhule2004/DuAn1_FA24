@@ -128,6 +128,9 @@ class Index extends BaseView
                                                             ?>
                                                         </td>
                                                         <td>
+                                                            <a href="/admin/orders/details/<?= $item['id'] ?>" class="btn btn-info text-white" style="width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; padding: 0;">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
                                                             <a href="/admin/orders/<?= $item['id'] ?>" class="btn btn-primary text-white" style="width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; padding: 0;">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>

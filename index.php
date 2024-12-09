@@ -257,8 +257,10 @@ Route::delete('/admin/comments/{id}', 'App\Controllers\Admin\CommentController@d
 
 
 //  *** Order
-// GET /users (lấy danh sách người dùng)
+// GET /users (lấy danh sách đơn hàng)
 Route::get('/admin/orders', 'App\Controllers\Admin\OrderController@index');
+Route::get('/admin/orders/details/{id}', 'App\Controllers\Admin\OrderController@detail');
+
 
 // GET /users/create (hiển thị form thêm người dùng)
 // Route::get('/admin/users/create', 'App\Controllers\Admin\UserController@create');
