@@ -43,10 +43,7 @@ class PaginationProduct extends Product
     {
         $sql = "SELECT * FROM products LIMIT {$this->start}, {$this->limit}";
         $result = $this->select($sql);
-        
-        if (!$result) {
-            return [];  // Trả về mảng rỗng thay vì HTML
-        }
+    
 
         $products = [];
         while ($row = $this->fetchArrayTable($result)) {

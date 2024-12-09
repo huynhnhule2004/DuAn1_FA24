@@ -285,10 +285,8 @@ class Blog extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT blogs.*, blog_categories.category_name, users.username 
+            $sql = "SELECT *
                     FROM blogs
-                    INNER JOIN blog_categories ON blogs.category_id = blog_categories.id
-                    INNER JOIN users ON blogs.user_id = users.id
                     ORDER BY blogs.created_at DESC 
                     LIMIT ? OFFSET ?";
 

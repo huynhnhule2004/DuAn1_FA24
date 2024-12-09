@@ -563,11 +563,10 @@ class Product extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT products.*, categories.category_name
-                    FROM products
-                    INNER JOIN categories ON products.category_id = categories.id
-                    ORDER BY products.created_at DESC 
-                    LIMIT ? OFFSET ?";
+            $sql = "SELECT * 
+            FROM products
+            ORDER BY products.created_at DESC 
+            LIMIT ? OFFSET ?";
 
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
